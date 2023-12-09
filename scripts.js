@@ -1,9 +1,9 @@
 const map = new maplibregl.Map({
     container: 'map',
     style:
-        'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+        'https://api.maptiler.com/maps/streets-v2/style.json?key=LURvXrlYSjugh8dlAFR3',
     center: [-71.5430, -35.6751],
-    zoom: 3
+    zoom: 4
 });
 
 
