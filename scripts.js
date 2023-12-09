@@ -47,49 +47,6 @@ function locateUser() {
     });
 }); 
 
-/* map.on('click', function () {
-    map.addSource('eleamSource', {
-        type: 'geojson',
-        data: 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
-    });
-
-    map.addLayer({
-        id: 'eleam',
-        type: 'circle',
-        source: 'eleamSource',
-        paint: {
-            'circle-color': 'blue',
-            'circle-radius': 6,
-            'circle-stroke-width': 2,
-            'circle-stroke-color': 'rgba(0, 0, 0, 1)'
-        }
-    });
-});
-
-
-map.on('click', function () {
-    map.addSource('senadisSource', {
-        type: 'geojson',
-        data: 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
-    });
-
-    map.addLayer({
-        id: 'senadis',
-        type: 'circle',
-        source: 'senadisSource',
-        paint: {
-            'circle-color': 'red',
-            'circle-radius': 6,
-            'circle-stroke-width': 2,
-            'circle-stroke-color': 'rgba(0, 0, 0, 1)'
-        }
-    });
-}); */
-
-
-/*      // Define el filtro por región
-     var filter = ['==', 'CUT_REG', '13']; // Reemplaza con tus propios valores */
-
 
 // Maneja el clic en el botón de alternar capa SENAME
 $('#toggleSename').click(function () {
@@ -126,8 +83,6 @@ $('#toggleSename').click(function () {
     })
     }
  });
-
-
 
 
 // Maneja el clic en el botón de alternar capa ELEAM
@@ -204,17 +159,24 @@ $('#toggleSenadis').click(function () {
 
 // Añade un pop-up al mapa SENAME
 map.on('click', 'sename', function (e) {
-    var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var title = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var content = e.features[0].properties.direccion; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+    // var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
 
-  // Actualiza el contenido de la caja flotante
-  document.getElementById('popup-imagen').innerHTML = imagen;
-  document.getElementById('popup-title').innerHTML = title;
-  document.getElementById('popup-content').innerHTML = content;
+ // Actualiza el contenido de la caja flotante
 
-  // Muestra la caja flotante
-  document.getElementById('floating-box').style.display = 'block';
+ document.getElementById('popup-content').innerHTML =
+ `<h6><img style="width:10%" src="/sename-icon.png"></h6>
+ <img src="#">
+ <h2>${nombre}</h2>
+ <h6>${direccion}</h6>
+ <h6>${telefono}</h6>
+ <p>Residencia de ancianos</p>
+ 
+ `
+ // Muestra la caja flotante
+ document.getElementById('floating-box').style.display = 'block';
 });
 
 function closeFloatingBox() {
@@ -222,67 +184,90 @@ function closeFloatingBox() {
   document.getElementById('floating-box').style.display = 'none';
 }
 
-    
+
+ 
+
 // Añade un pop-up al mapa ELEAM
 map.on('click', 'eleam', function (e) {
-    var coordinates = e.features[0].geometry.coordinates.slice();
-    var properties = e.features[0].properties;
+    var nombre = e.features[0].properties.nom_eleam; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var direccion = e.features[0].properties.direccion; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+    var telefono = e.features[0].properties.fono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
 
-    // Crea el contenido del pop-up con información del punto
-    var popupContent = `
-        <div class="map-popup">
-            <img src="https://lh5.googleusercontent.com/p/AF1QipMdH223nZmMwHatnTCkeL_B2d63ceZnLtkAObzG=w533-h240-k-no">
-            <h4>${properties.nom_eleam}</h4>
-            <p style="color:grey"><i>Residencia de ancianos</i></p>
-            <h6>${properties.calle}</h6><h6>${properties.numero}</h6>
-            <h6>Contacto ${properties.mail}</h6>
-            <h6><div class="icon-container"><i class="fas fa-phone"></i></div> ${properties.fono}</h6>
-            <div id="directionsPanel"></div>
-        </div>
-    `;
 
-    // Añade el pop-up al mapa
-    new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(popupContent)
-        .addTo(map);
+  // Actualiza el contenido de la caja flotante
+
+  document.getElementById('popup-content').innerHTML =
+  `<h6><img style="width:10%" src="/eleam-icon.png"></h6>
+  <img src="#">
+  <h2>${nombre}</h2>
+  <h6>${direccion}</h6>
+  <h6>${telefono}</h6>
+  <p>Residencia de ancianos</p>
+  
+  `
+
+  // Muestra la caja flotante
+ document.getElementById('floating-box').style.display = 'block';
 });
+
+function closeFloatingBox() {
+  // Oculta la caja flotante
+  document.getElementById('floating-box').style.display = 'none';
+}
+ 
 
 // Añade un pop-up al mapa CAPACIDADES DIFERENTES
 map.on('click', 'senadis', function (e) {
-    var coordinates = e.features[0].geometry.coordinates.slice();
-    var properties = e.features[0].properties;
+    var nombre = e.features[0].properties.nombre; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var direccion = e.features[0].properties.dirección; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+    var telefono = e.features[0].properties.teléfono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
 
-    // Crea el contenido del pop-up con información del punto
-    var popupContent = `
-        <div class="map-popup">
-            <img src="https://lh5.googleusercontent.com/p/AF1QipMdH223nZmMwHatnTCkeL_B2d63ceZnLtkAObzG=w533-h240-k-no">
-            <h4>${properties.nombreraz}</h4>
-            <p style="color:grey"><i>Centro para personas con capacidades diferentes</i></p>
-            <h6>${properties.direccion}</h6>
-            <h6>Contacto ${properties.correo}</h6>
-            <h6><div class="icon-container"><i class="fas fa-phone"></i></div> ${properties.telefono}</h6>
-            <div id="directionsPanel"></div>
-        </div>
-    `;
 
-    // Añade el pop-up al mapa
-    new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(popupContent)
-        .addTo(map);
+  // Actualiza el contenido de la caja flotante
+
+  document.getElementById('popup-content').innerHTML =
+  `<h6><img style="width:10%" src="/senadis-icon.png"></h6>
+  <img src="#">
+  <h2>${nombre}</h2>
+  <h6>${direccion}</h6>
+  <h6>${telefono}</h6>
+  <p>Residencia para personas con capacidades diferentes</p> `
+  
+
+ // Muestra la caja flotante
+ document.getElementById('floating-box').style.display = 'block';
 });
 
+function closeFloatingBox() {
+  // Oculta la caja flotante
+  document.getElementById('floating-box').style.display = 'none';
+}
 
-// Cambia el cursor al pasar sobre un punto
-map.on('mouseenter', 'sename', function () {
-    map.getCanvas().style.cursor = 'pointer';
-});
 
-// Cambia el cursor al salir de un punto
-map.on('mouseleave', 'sename', function () {
-    map.getCanvas().style.cursor = '';
-});
+// Función para cambiar el cursor al pasar sobre un punto
+function changeCursorOnMouseEnter(layerName) {
+    map.on('mouseenter', layerName, function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+}
+
+// Función para cambiar el cursor al salir de un punto
+function changeCursorOnMouseLeave(layerName) {
+    map.on('mouseleave', layerName, function () {
+        map.getCanvas().style.cursor = '';
+    });
+}
+
+// Llamas a las funciones para cada capa
+changeCursorOnMouseEnter('sename');
+changeCursorOnMouseLeave('sename');
+
+changeCursorOnMouseEnter('eleam');
+changeCursorOnMouseLeave('eleam');
+
+changeCursorOnMouseEnter('senadis');
+changeCursorOnMouseLeave('senadis');
+
 
 // Array de objetos para las opciones de la lista desplegable de la región
 var regionOptions = [
