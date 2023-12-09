@@ -1,0 +1,98 @@
+body { margin: 0; padding: 0; }
+html, body, #map { height: 65vh }
+
+header {
+    background-color: #fff; /* Color de fondo blanco */
+    padding: 10px; /* Espaciado interno */
+}
+
+/* Estilos para el texto dentro del encabezado */
+header h1 {
+    margin: 0; /* Elimina el margen superior predeterminado del h1 */
+}
+
+/* Estilos para el contenedor principal */
+.container-main {
+    padding: 20px; /* Añade espaciado alrededor del contenido principal */
+}
+
+.map-popup {
+min-width: fit-content;
+width: fit-content;
+scroll-behavior: auto;
+}
+
+img{
+    width: 100%;
+}
+
+
+.icon-container {
+    display: inline-block;
+    background-color: #007bff; /* Color del fondo circular */
+    border-radius: 50%; /* Hace que el contenedor sea circular */
+    padding: 10px; /* Ajusta el espacio alrededor del ícono */
+}
+
+/* Estilos para el ícono dentro del fondo circular */
+.icon-container i {
+    color: #fff; /* Color del ícono */
+}
+
+
+
+/* Estilos para el footer */
+footer {
+    background-color: rgba(248, 249, 250, 0.8); /* Fondo con transparencia */
+    padding: 20px; /* Espaciado interno */
+    text-align: center; /* Alineación del texto al centro */
+}
+
+/* Estilos para las botoneras de iconos */
+.icon-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.icon-buttons a {
+    color: #007bff; /* Color de enlace */
+    text-decoration: none;
+}
+
+.icon-buttons i {
+    font-size: 24px; /* Tamaño del ícono */
+}
+
+#floating-box {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+  
+  #close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+  }
+
+  
+  #floating-box {
+    border-radius: 2%;
+    display: none; /* Oculta la caja flotante inicialmente */
+    position: absolute;
+    top: 20vh;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    opacity: 80%;
+    padding: 10px;
+    z-index: 1;
+    grid-auto-flow: column;
+  }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mapa de Cuidados</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css' />
+    <script src='https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css">
+
+</head>
+<body>
+
+   <!-- Encabezado con la lista desplegable -->
+   <header class="card bg-light p-3 text-center">
+    <div class="container" >
+        <div class="row justify-content-end">
+            <div class="col-md-4">
+                <h6 class="display-6">Mapa del cuidado</h6>
+            </div>
+            <div class="col-md-4">
+                <!-- Lista desplegable para seleccionar la región -->
+                <label for="regionDropdown" class="form-label">Selecciona una región:</label>
+                <select id="regionDropdown" class="form-select">
+                    <!-- Opciones de la lista desplegable para la región -->
+                </select>
+            </div>
+            <div class="col-md-4">
+                <!-- Lista desplegable para seleccionar la comuna -->
+                <label for="comunaDropdown" class="form-label">Selecciona una comuna:</label>
+                <select id="comunaDropdown" class="form-select">
+                    <!-- Opciones de la lista desplegable para la comuna -->
+                </select>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div id="map"></div>
+
+  <div id="floating-box">
+    <span id="close-btn" onclick="closeFloatingBox()">X</span>
+    <h3 id="popup-imagen"></h3>
+    <h3 id="popup-title"></h3>
+    <p id="popup-content"></p>
+  </div>
+
+<footer>
+    <div class="icon-buttons">
+        <!-- Botonera 1 -->
+        <div class="col-md-4">
+            <a href="#" id="toggleSename">
+                <img style="width: 5vh;" src="/sename-icon.png">
+                <h5 style="color: black;">Niñez</h5>
+            </a>
+        </div>
+
+        <!-- Botonera 2 -->
+        <div class="col-md-4">
+            <a href="#" id="toggleEleam">
+                <img style="width: 5vh;" src="/eleam-icon.png">
+                <h5 style="color:black;">Adultez</h5>
+            </a>
+        </div>
+
+        <!-- Botonera 3 -->
+        <div class="col-md-4">
+            <a href="#" id="toggleSenadis">
+                <img style="width: 5vh;" src="/senadis-icon.png">
+                <h5 style="color:black">Capacidades diferentes</h5>
+            </a>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>  ES DE PAGO -->
+<script src="/scripts.js"></script>
+</body>
+</html>
