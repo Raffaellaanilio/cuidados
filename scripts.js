@@ -6,6 +6,26 @@ const map = new maplibregl.Map({
     zoom: 4
 });
 
+map.addControl(new maplibregl.NavigationControl());
+
+function locateUser() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      var userLocation = [position.coords.longitude, position.coords.latitude];
+      
+      // Mueve el mapa a la ubicación del usuario
+      map.flyTo({
+        center: userLocation,
+        zoom: 15
+      });
+    }, function (error) {
+      console.error('Error al obtener la ubicación del usuario:', error.message);
+    });
+  } else {
+    alert('Tu navegador no admite la geolocalización.');
+  }
+}
+
 
  map.on('load', function () {
     map.addSource('regionesSource', {

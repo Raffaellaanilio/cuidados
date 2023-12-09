@@ -3,7 +3,7 @@ html, body, #map { height: 65vh }
 
 header {
     background-color: #fff; /* Color de fondo blanco */
-    padding: 10px; /* Espaciado interno */
+    padding: 0px; /* Espaciado interno */
 }
 
 /* Estilos para el texto dentro del encabezado */
@@ -13,7 +13,7 @@ header h1 {
 
 /* Estilos para el contenedor principal */
 .container-main {
-    padding: 20px; /* Añade espaciado alrededor del contenido principal */
+    padding: 50px; /* Añade espaciado alrededor del contenido principal */
 }
 
 .map-popup {
@@ -43,8 +43,8 @@ img{
 
 /* Estilos para el footer */
 footer {
-    background-color: rgba(248, 249, 250, 0.8); /* Fondo con transparencia */
-    padding: 20px; /* Espaciado interno */
+    background-color: white; /* Fondo con transparencia */
+    padding: 5px; /* Espaciado interno */
     text-align: center; /* Alineación del texto al centro */
 }
 
@@ -63,17 +63,6 @@ footer {
 .icon-buttons i {
     font-size: 24px; /* Tamaño del ícono */
 }
-
-#floating-box {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 1;
-  }
   
   #close-btn {
     position: absolute;
@@ -87,8 +76,9 @@ footer {
     border-radius: 2%;
     display: none; /* Oculta la caja flotante inicialmente */
     position: absolute;
-    top: 20vh;
-    right: 10px;
+    top: 1vh;
+    right: 170vh;
+    width: 50vh;
     background-color: white;
     border: 1px solid #ccc;
     opacity: 80%;

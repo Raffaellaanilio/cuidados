@@ -15,9 +15,9 @@
 
    <!-- Encabezado con la lista desplegable -->
    <header class="card bg-light p-3 text-center">
-    <div class="container" >
+    <div class="container">
         <div class="row justify-content-end">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h6 class="display-6">Mapa del cuidado</h6>
             </div>
             <div class="col-md-4">
@@ -34,20 +34,30 @@
                     <!-- Opciones de la lista desplegable para la comuna -->
                 </select>
             </div>
+            <div style="padding: 2px; margin-top: 2px;" class="card col-md-1" id="locate-button" onclick="locateUser()">
+                <i class="fa-solid fa-location-arrow"></i>
+                <h6>Ir a tu ubicación</h6>
+            </div>
         </div>
+  
+
     </div>
 </header>
 
-<div id="map"></div>
+<div id="map">
+    <div id="floating-box">
+        <span id="close-btn" onclick="closeFloatingBox()">X</span>
+        <h3 id="popup-imagen"></h3>
+        <h3 id="popup-title"></h3>
+        <p id="popup-content"></p>
+      </div>
 
-  <div id="floating-box">
-    <span id="close-btn" onclick="closeFloatingBox()">X</span>
-    <h3 id="popup-imagen"></h3>
-    <h3 id="popup-title"></h3>
-    <p id="popup-content"></p>
-  </div>
+</div>
 
-<footer>
+
+  
+
+<footer class="card">
     <div class="icon-buttons">
         <!-- Botonera 1 -->
         <div class="col-md-4">
