@@ -26,16 +26,19 @@
             <div class="col-md-3">
                 <!-- Lista desplegable para seleccionar la región -->
                 <label for="regionDropdown" class="form-label">Selecciona una región:</label>
-                <select id="regionDropdown" class="form-select">
+                <select id="regionDropdown" class="form-select form-select-sm">
                     <!-- Opciones de la lista desplegable para la región -->
                 </select>
             </div>
             <div class="col-md-3">
                 <!-- Lista desplegable para seleccionar la comuna -->
                 <label for="comunaDropdown" class="form-label">Selecciona una comuna:</label>
-                <select id="comunaDropdown" class="form-select">
+                <input class="form-select form-select-sm" type="text" id="searchComunaInput" placeholder="Filtrar comunas...">
+                <select id="comunaDropdown" class="form-select form-select-sm">
                     <!-- Opciones de la lista desplegable para la comuna -->
                 </select>
+                 <!-- Agrega la caja de búsqueda para filtrar la lista de comunas -->
+        
             </div>
             <div style="padding: 2px; margin-top: 2px;" class="card col-md-1" id="locate-button" onclick="locateUser()">
                 <i class="fa-solid fa-location-arrow"></i>
@@ -50,14 +53,13 @@
         <span id="close-btn" onclick="closeFloatingBox()">X</span>
         <div id="popup-content"></div>
       </div>
-
 </div>
 
 
 <footer class="card">
     <div class="icon-buttons">
         <!-- Botonera 1 -->
-        <div class="col-md-4">
+        <div class="categorias col-md-4">
             <a href="#" id="toggleSename">
                 <img style="width: 5vh;" src="/sename-icon.png">
                 <h5 style="color: black;">Niñez</h5>
@@ -65,7 +67,7 @@
         </div>
 
         <!-- Botonera 2 -->
-        <div class="col-md-4">
+        <div class="categorias col-md-4">
             <a href="#" id="toggleEleam">
                 <img style="width: 5vh;" src="/eleam-icon.png">
                 <h5 style="color:black;">Adultez</h5>
@@ -73,7 +75,7 @@
         </div>
 
         <!-- Botonera 3 -->
-        <div class="col-md-4">
+        <div class="categorias col-md-4">
             <a href="#" id="toggleSenadis">
                 <img style="width: 5vh;" src="/senadis-icon.png">
                 <h5 style="color:black">Capacidades diferentes</h5>

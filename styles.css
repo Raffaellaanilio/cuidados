@@ -52,7 +52,7 @@ footer {
 .icon-buttons {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
+    margin: 1vh;
 }
 
 .icon-buttons a {
@@ -86,3 +86,13 @@ footer {
     z-index: 1;
     grid-auto-flow: column;
   }
+
+  .categorias:hover {
+    background-color: gainsboro;
+    border-radius: 5%;
+  }
+  
+
+  #searchInput {
+    margin-bottom: 10px;
+}
