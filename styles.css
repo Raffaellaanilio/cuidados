@@ -23,7 +23,7 @@ scroll-behavior: auto;
 }
 
 img{
-    width: 100%;
+    width: 30%;
 }
 
 
@@ -77,14 +77,16 @@ footer {
     display: none; /* Oculta la caja flotante inicialmente */
     position: absolute;
     top: 1vh;
-    right: 170vh;
-    width: 50vh;
+    right: 160vh;
+    width: 60vh;
     background-color: white;
     border: 1px solid #ccc;
     opacity: 80%;
     padding: 10px;
     z-index: 1;
     grid-auto-flow: column;
+    max-height: 70vh; /* Ajusta la altura máxima según tus necesidades */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
   }
 
   .categorias:hover {

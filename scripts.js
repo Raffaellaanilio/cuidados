@@ -162,6 +162,7 @@ $('#toggleSenadis').click(function () {
 // Añade un pop-up al mapa SENAME
 map.on('click', 'sename', function (e) {
     // var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
@@ -170,7 +171,7 @@ map.on('click', 'sename', function (e) {
 
     document.getElementById('popup-content').innerHTML =
         `<h6><img style="width:10%" src="/sename-icon.png"></h6>
- <img src="#">
+ <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
  <h3>${nombre}</h3>
  <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
  <h6>${direccion}</h6>
@@ -190,6 +191,7 @@ function closeFloatingBox() {
 
 // Añade un pop-up al mapa ELEAM
 map.on('click', 'eleam', function (e) {
+    var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var nombre = e.features[0].properties.nom_eleam; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var direccion = e.features[0].properties.direccion; // Reemplaza 'descripcion' con el nombre del campo en tus datos
     var telefono = e.features[0].properties.fono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
@@ -197,15 +199,13 @@ map.on('click', 'eleam', function (e) {
 
     // Actualiza el contenido de la caja flotante
 
-    document.getElementById('popup-content').innerHTML =
-        `<h6><img style="width:10%" src="/eleam-icon.png"></h6>
-  <img src="#">
+    document.getElementById('popup-content').innerHTML =`
+    <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
-  <p color="grey"><i>Residencia para personas con capacidades diferentes</i></p> 
+  <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
   <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
-  <p>Residencia de ancianos</p>
-  
+ 
   `
 
     // Muestra la caja flotante
@@ -220,6 +220,7 @@ function closeFloatingBox() {
 
 // Añade un pop-up al mapa CAPACIDADES DIFERENTES
 map.on('click', 'senadis', function (e) {
+    var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var nombre = e.features[0].properties.nombre; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var direccion = e.features[0].properties.dirección; // Reemplaza 'descripcion' con el nombre del campo en tus datos
     var telefono = e.features[0].properties.teléfono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
@@ -227,9 +228,9 @@ map.on('click', 'senadis', function (e) {
 
     // Actualiza el contenido de la caja flotante
 
-    document.getElementById('popup-content').innerHTML =
-        `<h6><img style="width:10%" src="/senadis-icon.png"></h6>
-  <img src="#">
+    document.getElementById('popup-content').innerHTML =`
+  <h6><img style="width:10%" src="/senadis-icon.png"></h6>
+  <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
@@ -769,6 +770,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 
 
 
