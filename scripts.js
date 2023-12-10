@@ -169,11 +169,10 @@ map.on('click', 'sename', function (e) {
  document.getElementById('popup-content').innerHTML =
  `<h6><img style="width:10%" src="/sename-icon.png"></h6>
  <img src="#">
- <h2>${nombre}</h2>
+ <h3>${nombre}</h3>
+ <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
  <h6>${direccion}</h6>
- <h6>${telefono}</h6>
- <p>Residencia de ancianos</p>
- 
+ <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
  `
  // Muestra la caja flotante
  document.getElementById('floating-box').style.display = 'block';
@@ -199,9 +198,10 @@ map.on('click', 'eleam', function (e) {
   document.getElementById('popup-content').innerHTML =
   `<h6><img style="width:10%" src="/eleam-icon.png"></h6>
   <img src="#">
-  <h2>${nombre}</h2>
+  <h3>${nombre}</h3>
+  <p color="grey"><i>Residencia para personas con capacidades diferentes</i></p> 
   <h6>${direccion}</h6>
-  <h6>${telefono}</h6>
+  <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
   <p>Residencia de ancianos</p>
   
   `
@@ -228,10 +228,11 @@ map.on('click', 'senadis', function (e) {
   document.getElementById('popup-content').innerHTML =
   `<h6><img style="width:10%" src="/senadis-icon.png"></h6>
   <img src="#">
-  <h2>${nombre}</h2>
+  <h3>${nombre}</h3>
+  <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
-  <h6>${telefono}</h6>
-  <p>Residencia para personas con capacidades diferentes</p> `
+  <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>   ${telefono}</h6>
+`
   
 
  // Muestra la caja flotante
@@ -271,12 +272,12 @@ changeCursorOnMouseLeave('senadis');
 
 // Array de objetos para las opciones de la lista desplegable de la región
 var regionOptions = [
-    { value: '01', label: 'Tarapacá', center: [-69.9533, -19.3419], zoom: 9 },
+    { value: '01', label: 'Tarapacá', center: [-69.9533, -19.3419], zoom: 8 },
     { value: '02', label: 'Antofagasta', center: [-68.1193, -23.6509], zoom: 8 },
     { value: '03', label: 'Atacama', center: [-70.4024, -26.6415], zoom: 8 },
     { value: '04', label: 'Coquimbo', center: [-71.3375, -29.9711], zoom: 8 },
     { value: '05', label: 'Valparaíso', center: [-71.6275, -33.0472], zoom: 8 },
-    { value: '06', label: 'O\'Higgins', center: [-70.9228, -34.5744], zoom: 9 },
+    { value: '06', label: 'OHiggins', center: [-70.9228, -34.5744], zoom: 9 },
     { value: '07', label: 'Maule', center: [-71.6924, -35.4259], zoom: 8 },
     { value: '08', label: 'Ñuble', center: [-72.4762, -36.6398], zoom: 9 },
     { value: '09', label: 'Biobío', center: [-71.6453, -37.1806], zoom: 8 },
@@ -428,6 +429,27 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     });
 }
  */
+
+
+//Filtro comunas
+function updateComunas() {
+    var selectedRegion = document.getElementById('region').value;
+    var comunasSelect = document.getElementById('comuna');
+
+    // Oculta todas las comunas
+    for (var i = 0; i < comunasSelect.options.length; i++) {
+        comunasSelect.options[i].style.display = 'none';
+    }
+
+    // Muestra solo las comunas de la región seleccionada
+    for (var i = 0; i < comunasSelect.options.length; i++) {
+        var option = comunasSelect.options[i];
+        if (option.getAttribute('data-region') === selectedRegion) {
+            option.style.display = 'block';
+        }
+    }
+}
+
 
 map.on('error', function (e) {
     console.error('Error:', e.error);
