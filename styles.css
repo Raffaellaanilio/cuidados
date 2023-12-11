@@ -1,5 +1,11 @@
 body { margin: 0; padding: 0; }
-html, body, #map { height: 71vh }
+html, body { height: 71vh }
+
+
+#map{
+    position: relative;  
+    height: 71vh;
+}
 
 header {
     background-color: #fff; /* Color de fondo blanco */
@@ -65,10 +71,9 @@ footer {
 }
   
   #close-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
     cursor: pointer;
+    float: right;
+    font-weight: bold;
   }
 
   
@@ -82,11 +87,17 @@ footer {
     background-color: white;
     border: 1px solid #ccc;
     opacity: 80%;
-    padding: 10px;
     z-index: 1;
     grid-auto-flow: column;
     max-height: 70vh; /* Ajusta la altura máxima según tus necesidades */
     overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
+
+    top: 10px; /* Ajusta según sea necesario */
+    left: 10px; /* Ajusta según sea necesario */
+    max-width: 300px; /* Ajusta según sea necesario */
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
   .categorias:hover {
@@ -98,3 +109,10 @@ footer {
   #searchInput {
     margin-bottom: 10px;
 }
+
+@media only screen and (max-width: 600px) {
+    #floating-box {
+      position: static;
+      max-width: 100%; /* Opcional: Ajusta según sea necesario */
+    }
+  }

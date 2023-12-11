@@ -8,6 +8,9 @@ const map = new maplibregl.Map({
     zoom: 2
 });
 
+
+
+
 map.addControl(new maplibregl.NavigationControl());
 
 function locateUser() {
@@ -50,7 +53,59 @@ map.on('load', function () {
 });
 
 
-// Maneja el clic en el botón de alternar capa SENAME
+// Función para manejar la activación/desactivación de capas
+function toggleLayer(layerId, sourceUrl, iconUrl) {
+    var layer = map.getLayer(layerId);
+
+    if (layer) {
+        // Si está activa, la desactiva
+        map.removeLayer(layerId);
+        map.removeSource(layerId + 'Source');
+    } else {
+        // Si está desactivada, la activa
+        map.addSource(layerId + 'Source', {
+            type: 'geojson',
+            data: sourceUrl
+        });
+
+        map.loadImage(iconUrl, function (error, image) {
+            if (error) throw error;
+
+            map.addImage(layerId + '-icon', image);
+
+            map.addLayer({
+                id: layerId,
+                type: 'symbol',
+                source: layerId + 'Source',
+                layout: {
+                    'icon-image': layerId + '-icon',
+                    'icon-size': 1,
+                    'icon-allow-overlap': true
+                }
+            });
+        })
+    }
+}
+
+// Asigna la función a los eventos clic de los botones
+$('#toggleSename').on('click touchstart', function () {
+    toggleLayer('sename', 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/sename-icon.png');
+});
+
+$('#toggleEleam').on('click touchstart', function () {
+    toggleLayer('eleam', 'https://idembn.bienes.cl/geoserver/eleam_/ows?service=WFS&version=1.0.0&request=GetFeature&typename=ELEAM&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/eleam-icon.png');
+});
+
+$('#toggleSenadis').on('click touchstart', function () {
+    toggleLayer('senadis', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/senadis-icon.png');
+});
+
+
+
+
+
+
+/* // Maneja el clic en el botón de alternar capa SENAME
 $('#toggleSename').click(function () {
     // Obtiene la capa actual del mapa
     var layer = map.getLayer('sename');
@@ -86,76 +141,7 @@ $('#toggleSename').click(function () {
     }
 });
 
-
-// Maneja el clic en el botón de alternar capa ELEAM
-$('#toggleEleam').click(function () {
-    // Obtiene la capa actual del mapa
-    var layer = map.getLayer('eleam');
-
-    // Verifica si la capa está activa
-    if (layer) {
-        // Si está activa, la desactiva
-        map.removeLayer('eleam');
-        map.removeSource('eleamSource');
-    } else {
-        // Si está desactivada, la activa
-        map.addSource('eleamSource', {
-            type: 'geojson',
-            data: 'https://idembn.bienes.cl/geoserver/eleam_/ows?service=WFS&version=1.0.0&request=GetFeature&typename=ELEAM&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
-        });
-        map.loadImage('/eleam-icon.png', function (error, image) {
-            if (error) throw error;
-
-            map.addImage('eleam-icon', image);
-
-            map.addLayer({
-                id: 'eleam',
-                type: 'symbol',
-                source: 'eleamSource',
-                layout: {
-                    'icon-image': 'eleam-icon',  // Nombre del ícono que cargaste
-                    'icon-size': 1,  // Tamaño del ícono
-                    'icon-allow-overlap': true
-                }
-            });
-        })
-    }
-});
-
-// Maneja el clic en el botón de alternar capa CAPACIDADES DIFERENTES
-$('#toggleSenadis').click(function () {
-    // Obtiene la capa actual del mapa
-    var layer = map.getLayer('senadis');
-
-    // Verifica si la capa está activa
-    if (layer) {
-        // Si está activa, la desactiva
-        map.removeLayer('senadis');
-        map.removeSource('senadisSource');
-    } else {
-        // Si está desactivada, la activa
-        map.addSource('senadisSource', {
-            type: 'geojson',
-            data: 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
-        });
-        map.loadImage('/senadis-icon.png', function (error, image) {
-            if (error) throw error;
-
-            map.addImage('senadis-icon', image);
-
-            map.addLayer({
-                id: 'senadis',
-                type: 'symbol',
-                source: 'senadisSource',
-                layout: {
-                    'icon-image': 'senadis-icon',  // Nombre del ícono que cargaste
-                    'icon-size': 1,  // Tamaño del ícono
-                    'icon-allow-overlap': true
-                }
-            });
-        })
-    }
-});
+*/
 
 
 
@@ -200,6 +186,7 @@ map.on('click', 'eleam', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =`
+    <h6><img style="width:10%" src="/eleam-icon.png"></h6>
     <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
@@ -229,7 +216,7 @@ map.on('click', 'senadis', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =`
-  <h6><img style="width:10%" src="/senadis-icon.png"></h6>
+    <h6><img style="width:10%" src="/senadis-icon.png"></h6>
   <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
