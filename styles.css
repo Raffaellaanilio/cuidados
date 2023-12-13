@@ -1,21 +1,44 @@
-body { margin: 0; padding: 0; }
-html, body { height: 71vh }
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+
+}
+
+html{
+    height: 100%;
+}
 
 
 #map{
+    top: 0;
     position: relative;  
-    height: 71vh;
+    height: 70%;
 }
 
 header {
-    background-color: #fff; /* Color de fondo blanco */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #ffffff; /* Color de fondo del encabezado */
+    height: 10vh;
+    z-index: 2000; /* Asegura que el encabezado esté en la parte superior de otros elementos */
     padding: 0px; /* Espaciado interno */
 }
 
-/* Estilos para el texto dentro del encabezado */
-header h1 {
-    margin: 0; /* Elimina el margen superior predeterminado del h1 */
+/* Estilos para el footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: white; /* Fondo con transparencia */
+    text-align: center; /* Alineación del texto al centro */
+    z-index: 2000; /* Asegura que el pie de página esté en la parte superior de otros elementos */
+    padding: 5px; /* Espaciado interno */
 }
+
 
 /* Estilos para el contenedor principal */
 .container-main {
@@ -30,6 +53,7 @@ scroll-behavior: auto;
 
 img{
     width: 30%;
+    margin: 0px;
 }
 
 
@@ -45,14 +69,6 @@ img{
     color: #fff; /* Color del ícono */
 }
 
-
-
-/* Estilos para el footer */
-footer {
-    background-color: white; /* Fondo con transparencia */
-    padding: 5px; /* Espaciado interno */
-    text-align: center; /* Alineación del texto al centro */
-}
 
 /* Estilos para las botoneras de iconos */
 .icon-buttons {
@@ -91,7 +107,6 @@ footer {
     grid-auto-flow: column;
     max-height: 70vh; /* Ajusta la altura máxima según tus necesidades */
     overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
-
     top: 10px; /* Ajusta según sea necesario */
     left: 10px; /* Ajusta según sea necesario */
     max-width: 300px; /* Ajusta según sea necesario */
@@ -111,8 +126,14 @@ footer {
 }
 
 @media only screen and (max-width: 600px) {
+    
     #floating-box {
-      position: static;
-      max-width: 100%; /* Opcional: Ajusta según sea necesario */
+      max-width: 25vh; /* Opcional: Ajusta según sea necesario */
     }
+
+
+    #map{
+        height: 45vh;
+    }
+
   }

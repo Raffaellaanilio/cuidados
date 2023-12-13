@@ -14,35 +14,63 @@
 <body>
 
    <!-- Encabezado con la lista desplegable -->
-   <header class="card bg-light p-1 text-center">
+   <header class="card bg-light p-2 text-center">
     <div class="container">
-        <div class="row justify-content-end">
-            <div style="padding: 2px; margin-top: 2px;" class="col-md-1">
+        <div class="row justify-content-end align-items-center">
+            <div class="col-6 col-md-1">
                 <img style="width: 10vh;" src="/logoGobierno.png">
             </div>
-            <div style="padding: 1%;" class="col-md-4">
-                <h2>Mapa del cuidado</h2>
+            <div class="col-6 col-md-4">
+                <h4>Mapa del cuidado</h4>
             </div>
-            <div class="col-md-3">
-                <!-- Lista desplegable para seleccionar la región -->
-                <label for="regionDropdown" style="font-size: 2vh" class="form-label">Selecciona una región:</label>
+
+            <!-- Menú de hamburguesa para versión móvil -->
+            <div class="card col-6 col-md-3 d-md-none">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span><i style="padding: 1vh" class="fa-solid fa-list"></i></span>
+                </button>
+            </div>
+
+            <!-- Filtros para versión desktop -->
+            <div class="col-6 col-md-3 d-none d-md-block">
+                <label for="regionDropdown" class="form-label">Selecciona una región:</label>
                 <select id="regionDropdown" class="form-select form-select-sm">
                     <!-- Opciones de la lista desplegable para la región -->
                 </select>
             </div>
-            <div class="col-md-3">
-                <!-- Lista desplegable para seleccionar la comuna -->
-                <label for="comunaDropdown" style="font-size: 2vh" class="form-label">Selecciona una comuna:</label>
+            <div class="col-6 col-md-3 d-none d-md-block">
+                <label for="comunaDropdown" class="form-label">Selecciona una comuna:</label>
                 <input class="form-select form-select-sm" type="text" id="searchComunaInput" placeholder="Filtrar comunas...">
                 <select id="comunaDropdown" class="form-select form-select-sm">
                     <!-- Opciones de la lista desplegable para la comuna -->
                 </select>
-                 <!-- Agrega la caja de búsqueda para filtrar la lista de comunas -->
-        
             </div>
-            <div style="padding: 2px; margin-top: 2px;" class="card col-md-1" id="locate-button" onclick="locateUser()">
-                <i class="fa-solid fa-location-arrow"></i>
-                <h6>Ir a tu ubicación</h6>
+            
+            <!-- Botón de ubicación -->
+            <div class="card col-6 col-md-1" id="locate-button" onclick="locateUser()">
+                <i style="padding: 1vh" class="fa-solid fa-location-arrow"></i>
+                <h6 class="d-none d-md-block">Ir a tu ubicación</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú colapsable para versión móvil -->
+    <div class="collapse" id="navbarCollapse">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <label for="regionDropdown" class="form-label">Selecciona una región:</label>
+                    <select id="regionDropdown" class="form-select form-select-sm">
+                        <!-- Opciones de la lista desplegable para la región -->
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="comunaDropdown" class="form-label">Selecciona una comuna:</label>
+                    <input class="form-select form-select-sm" type="text" id="searchComunaInput" placeholder="Filtrar comunas...">
+                    <select id="comunaDropdown" class="form-select form-select-sm">
+                        <!-- Opciones de la lista desplegable para la comuna -->
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -57,9 +85,9 @@
 
 
 <footer class="card">
-    <div class="icon-buttons">
+    <div class="icon-buttons row">
         <!-- Botonera 1 -->
-        <div class="categorias col-md-4">
+        <div class="categorias col-4">
             <a href="#" id="toggleSename">
                 <img style="width: 5vh;" src="/sename-icon.png">
                 <h6 style="color: black;">Niñez</h6>
@@ -67,7 +95,7 @@
         </div>
 
         <!-- Botonera 2 -->
-        <div class="categorias col-md-4">
+        <div class="categorias col-4">
             <a href="#" id="toggleEleam">
                 <img style="width: 5vh;" src="/eleam-icon.png">
                 <h6 style="color:black;">Adultez</h6>
@@ -75,7 +103,7 @@
         </div>
 
         <!-- Botonera 3 -->
-        <div class="categorias col-md-4">
+        <div class="categorias col-4">
             <a href="#" id="toggleSenadis">
                 <img style="width: 5vh;" src="/senadis-icon.png">
                 <h6 style="color:black">Capacidades <br> diferentes</h6>
@@ -83,6 +111,7 @@
         </div>
     </div>
 </footer>
+
 
 
 
