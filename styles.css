@@ -3,7 +3,6 @@ body{
     padding: 0;
     height: 100%;
     overflow: hidden;
-
 }
 
 html{
@@ -29,9 +28,9 @@ header {
 
 /* Estilos para el footer */
 footer {
-    position: fixed;
-    bottom: 0;
-    height: 10vh;
+    position: relative;
+top: auto;
+    height: 15vh;
     width: 100%;
     background-color: white; /* Fondo con transparencia */
     text-align: center; /* Alineación del texto al centro */
@@ -40,11 +39,6 @@ footer {
 }
 
 
-/* Estilos para el contenedor principal */
-.container-main {
-    padding: 50px; /* Añade espaciado alrededor del contenido principal */
-}
-
 .map-popup {
 min-width: fit-content;
 width: fit-content;
@@ -52,8 +46,7 @@ scroll-behavior: auto;
 }
 
 img{
-    width: 30%;
-    margin: 0px;
+    margin: 0.5vh;
 }
 
 
@@ -125,6 +118,10 @@ img{
     margin-bottom: 10px;
 }
 
+#logo{
+    width: 8vh;
+}
+
 @media only screen and (max-width: 600px) {
     
     #floating-box {
@@ -133,7 +130,11 @@ img{
 
 
     #map{
-        height: 68vh;
+        height: 70vh;
+    }
+
+    #logo{
+        width: 5vh;
     }
 
   }
