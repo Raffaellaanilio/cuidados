@@ -61,12 +61,12 @@ function showSpinner() {
   }
 
 
-
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, sourceUrl, iconUrl) {
 
 
     var layer = map.getLayer(layerId);
+
 
     if (layer) {
         // Si está activa, la desactiva
@@ -74,9 +74,10 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         map.removeSource(layerId + 'Source');
     } else {
         // Si está desactivada, la activa
-             // Muestra el spinner antes de cargar la capa
+
+                 // Muestra el spinner antes de cargar la capa
   showSpinner();
-  
+            
         map.addSource(layerId + 'Source', {
             type: 'geojson',
             data: sourceUrl
@@ -99,7 +100,9 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
             });
 
                // Oculta el spinner después de cargar la capa
-      hideSpinner();
+               setTimeout(function () {
+                hideSpinner();
+            }, 1000);
         });
     }
 }
@@ -185,7 +188,7 @@ map.on('click', 'sename', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =
-        `<h6><img class="foto" style="width:10%" src="/sename-icon.png"></h6>
+        `<h6><img style="width:10%" src="/sename-icon.png"></h6>
  <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
  <h3>${nombre}</h3>
  <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
@@ -215,7 +218,7 @@ map.on('click', 'eleam', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =`
-    <h6><img class="foto" src="/eleam-icon.png"></h6>
+    <h6><img src="/eleam-icon.png"></h6>
     <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
@@ -245,7 +248,7 @@ map.on('click', 'senadis', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =`
-    <h6><img class="foto" src="/senadis-icon.png"></h6>
+    <h6><img src="/senadis-icon.png"></h6>
   <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
