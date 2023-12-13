@@ -52,6 +52,16 @@ map.on('load', function () {
     });
 });
 
+   // Función para mostrar el spinner
+   function showSpinner() {
+    document.querySelector('.spinner-container').style.display = 'flex';
+}
+
+     // Función para ocultar el spinner
+     function hideSpinner() {
+        document.querySelector('.spinner-container').style.display = 'none';
+    }
+
 
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, sourceUrl, iconUrl) {
@@ -63,6 +73,10 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         map.removeSource(layerId + 'Source');
     } else {
         // Si está desactivada, la activa
+
+        showSpinner()
+        console.log('show spinner');
+
         map.addSource(layerId + 'Source', {
             type: 'geojson',
             data: sourceUrl
@@ -82,18 +96,26 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
                     'icon-size': 1,
                     'icon-allow-overlap': true
                 }
+
             });
+            hideSpinner()
+            console.log('hide spinner');
         })
     }
 }
+
+
+
 
 // Asigna la función a los eventos clic de los botones
 $('#toggleSename').on('click touchstart', function () {
     toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', '/sename-icon.png');
 });
 
+
 $('#toggleEleam').on('click touchstart', function () {
     toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/eleam-icon.png');
+
 });
 
 $('#toggleSenadis').on('click touchstart', function () {
@@ -163,8 +185,8 @@ map.on('click', 'sename', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =
-        `<h6><img style="width:10%" src="/sename-icon.png"></h6>
- <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
+        `<h6><img class="foto" style="width:10%" src="/sename-icon.png"></h6>
+ <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
  <h3>${nombre}</h3>
  <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
  <h6>${direccion}</h6>
@@ -193,8 +215,8 @@ map.on('click', 'eleam', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =`
-    <h6><img style="width:10%" src="/eleam-icon.png"></h6>
-    <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
+    <h6><img class="foto" src="/eleam-icon.png"></h6>
+    <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
@@ -223,8 +245,8 @@ map.on('click', 'senadis', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =`
-    <h6><img style="width:10%" src="/senadis-icon.png"></h6>
-  <img src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
+    <h6><img class="foto" src="/senadis-icon.png"></h6>
+  <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
