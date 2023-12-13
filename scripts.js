@@ -9,8 +9,6 @@ const map = new maplibregl.Map({
 });
 
 
-
-
 map.addControl(new maplibregl.NavigationControl());
 
 function locateUser() {
@@ -52,19 +50,22 @@ map.on('load', function () {
     });
 });
 
-   // Función para mostrar el spinner
-   function showSpinner() {
-    document.querySelector('.spinner-container').style.display = 'flex';
-}
+// Función para mostrar el spinner
+function showSpinner() {
+    document.getElementById('spinner').style.display = 'block';
+  }
+  
+  // Función para ocultar el spinner
+  function hideSpinner() {
+    document.getElementById('spinner').style.display = 'none';
+  }
 
-     // Función para ocultar el spinner
-     function hideSpinner() {
-        document.querySelector('.spinner-container').style.display = 'none';
-    }
 
 
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, sourceUrl, iconUrl) {
+
+
     var layer = map.getLayer(layerId);
 
     if (layer) {
@@ -73,10 +74,9 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         map.removeSource(layerId + 'Source');
     } else {
         // Si está desactivada, la activa
-
-        showSpinner()
-        console.log('show spinner');
-
+             // Muestra el spinner antes de cargar la capa
+  showSpinner();
+  
         map.addSource(layerId + 'Source', {
             type: 'geojson',
             data: sourceUrl
@@ -96,11 +96,11 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
                     'icon-size': 1,
                     'icon-allow-overlap': true
                 }
-
             });
-            hideSpinner()
-            console.log('hide spinner');
-        })
+
+               // Oculta el spinner después de cargar la capa
+      hideSpinner();
+        });
     }
 }
 
@@ -108,17 +108,17 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
 
 // Asigna la función a los eventos clic de los botones
-$('#toggleSename').on('click touchstart', function () {
+$('#toggleSename').on('click', function () {
     toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', '/sename-icon.png');
 });
 
 
-$('#toggleEleam').on('click touchstart', function () {
+$('#toggleEleam').on('click', function () {
     toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/eleam-icon.png');
 
 });
 
-$('#toggleSenadis').on('click touchstart', function () {
+$('#toggleSenadis').on('click', function () {
     toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis&bbox=-78.8312062%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/senadis-icon.png');
 });
 

@@ -109,7 +109,7 @@ img{
   }
 
     
- .spinner-container {
+  .spinner-container {
     border-radius: 2%;
     position: absolute;
     top: 1vh;
@@ -120,16 +120,17 @@ img{
     opacity: 80%;
     z-index: 3000;
     grid-auto-flow: column;
-    max-height: 70vh; /* Ajusta la altura máxima según tus necesidades */
-    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
-    top: 10px; /* Ajusta según sea necesario */
-    left: 10px; /* Ajusta según sea necesario */
-    max-width: 300px; /* Ajusta según sea necesario */
+    max-height: 70vh;
+    overflow-y: auto;
+    top: 10px; 
+    left: 10px;
+    max-width: 300px; 
     padding: 10px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
+ 
   .categorias:hover {
     background-color: gainsboro;
     border-radius: 5%;
