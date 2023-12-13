@@ -35,7 +35,7 @@ function locateUser() {
 map.on('load', function () {
     map.addSource('regionesSource', {
         type: 'geojson',
-        data: 'https://idembn.bienes.cl/geoserver/ChileLineal/ows?service=WFS&version=1.0.0&request=GetFeature&typename=ChileLineal&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
+        data: 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3AChileLineal&bbox=-109.45489201699996%2C-56.53767064099998%2C-66.41565257399998%2C-17.49839933599998&width=768&height=696&srs=EPSG%3A4326&styles=&format=geojson'
     });
 
     map.addLayer({
@@ -89,16 +89,23 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
 // Asigna la función a los eventos clic de los botones
 $('#toggleSename').on('click touchstart', function () {
-    toggleLayer('sename', 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/sename-icon.png');
+    toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', '/sename-icon.png');
 });
 
 $('#toggleEleam').on('click touchstart', function () {
-    toggleLayer('eleam', 'https://idembn.bienes.cl/geoserver/eleam_/ows?service=WFS&version=1.0.0&request=GetFeature&typename=ELEAM&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/eleam-icon.png');
+    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/eleam-icon.png');
 });
 
 $('#toggleSenadis').on('click touchstart', function () {
-    toggleLayer('senadis', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/senadis-icon.png');
+    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis&bbox=-78.8312062%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/senadis-icon.png');
 });
+
+
+/* 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
+
+'https://idembn.bienes.cl/geoserver/eleam_/ows?service=WFS&version=1.0.0&request=GetFeature&typename=ELEAM&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
+
+'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326' */
 
 
 
