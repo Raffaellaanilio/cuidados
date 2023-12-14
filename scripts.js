@@ -672,7 +672,7 @@ var comunaOptions = [
 
 // Llena las opciones de la lista desplegable de la región
 regionOptions.forEach(function (option) {
-    $('#regionDropdown').append($('<option>', {
+    $('.regionDropdown').append($('<option>', {
         value: option.value,
         text: option.label
     }));
@@ -680,7 +680,7 @@ regionOptions.forEach(function (option) {
 
 // Llena las opciones de la lista desplegable de la comuna
 comunaOptions.forEach(function (option) {
-    $('#comunaDropdown').append($('<option>', {
+    $('.comunaDropdown').append($('<option>', {
         value: option.value,
         text: option.label
     }));
@@ -689,7 +689,7 @@ comunaOptions.forEach(function (option) {
 
 
 // Actualiza el filtro del mapa y la extensión al cambiar la selección en la lista desplegable de la región
-$('#regionDropdown').change(function () {
+$('.regionDropdown').change(function () {
     var selectedRegion = $(this).val();
     var selectedOption = regionOptions.find(option => option.value === selectedRegion);
 
@@ -700,8 +700,28 @@ $('#regionDropdown').change(function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const searchComunaInput = document.querySelector('.searchComunaInput');
+    const comunaDropdown = document.querySelector('.comunaDropdown');
+    const comunaOptions = Array.from(comunaDropdown.options);
+
+    searchComunaInput.addEventListener('input', function () {
+        const searchTerm = searchComunaInput.value.toLowerCase();
+
+        comunaOptions.forEach(function (option) {
+            const text = option.textContent.toLowerCase();
+
+            if (text.includes(searchTerm)) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    });
+});
+
 // Actualiza el filtro del mapa y la extensión al cambiar la selección en la lista desplegable de la comuna
-$('#comunaDropdown').change(function () {
+$('.comunaDropdown').change(function () {
     var selectedComuna = $(this).val();
     var selectedOption = comunaOptions.find(option => option.value === selectedComuna);
 
@@ -714,8 +734,24 @@ $('#comunaDropdown').change(function () {
 
 
 
+/* //Filtro comunas
+function updateComunas() {
+    var selectedRegion = document.getElementById('region').value;
+    var comunasSelect = document.getElementById('comuna');
 
+    // Oculta todas las comunas
+    for (var i = 0; i < comunasSelect.options.length; i++) {
+        comunasSelect.options[i].style.display = 'none';
+    }
 
+    // Muestra solo las comunas de la región seleccionada
+    for (var i = 0; i < comunasSelect.options.length; i++) {
+        var option = comunasSelect.options[i];
+        if (option.getAttribute('data-region') === selectedRegion) {
+            option.style.display = 'block';
+        }
+    }
+} */
 
 
 /* // Inicializa el mapa y solicita direcciones
@@ -748,50 +784,6 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
    });
 }
 */
-
-
-//Filtro comunas
-function updateComunas() {
-    var selectedRegion = document.getElementById('region').value;
-    var comunasSelect = document.getElementById('comuna');
-
-    // Oculta todas las comunas
-    for (var i = 0; i < comunasSelect.options.length; i++) {
-        comunasSelect.options[i].style.display = 'none';
-    }
-
-    // Muestra solo las comunas de la región seleccionada
-    for (var i = 0; i < comunasSelect.options.length; i++) {
-        var option = comunasSelect.options[i];
-        if (option.getAttribute('data-region') === selectedRegion) {
-            option.style.display = 'block';
-        }
-    }
-}
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const searchComunaInput = document.getElementById('searchComunaInput');
-    const comunaDropdown = document.getElementById('comunaDropdown');
-    const comunaOptions = Array.from(comunaDropdown.options);
-
-    searchComunaInput.addEventListener('input', function () {
-        const searchTerm = searchComunaInput.value.toLowerCase();
-
-        comunaOptions.forEach(function (option) {
-            const text = option.textContent.toLowerCase();
-
-            if (text.includes(searchTerm)) {
-                option.style.display = 'block';
-            } else {
-                option.style.display = 'none';
-            }
-        });
-    });
-});
-
-
-
 
 map.on('error', function (e) {
     console.error('Error:', e.error);

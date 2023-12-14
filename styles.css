@@ -1,43 +1,31 @@
-body{
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
+body, html{
+    display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
 }
-
-html{
-    height: 100%;
-}
-
 
 #map{
-    top: 0;
-    position: relative;  
-    height: 75vh;
+    flex: 1;
+    position: relative;
 }
 
 header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #ffffff; /* Color de fondo del encabezado */
     height: 10vh;
-    z-index: 2000; /* Asegura que el encabezado esté en la parte superior de otros elementos */
-    padding: 0px; /* Espaciado interno */
+    background-color: #ccc;
 }
 
 /* Estilos para el footer */
 footer {
-    position: relative;
-top: auto;
-    height: 15vh;
+    height: 20vh;
+    background-color: #ccc;
     width: 100%;
     background-color: white; /* Fondo con transparencia */
     text-align: center; /* Alineación del texto al centro */
     z-index: 2000; /* Asegura que el pie de página esté en la parte superior de otros elementos */
-    padding: 5px; /* Espaciado interno */
+    padding: 0px; /* Espaciado interno */
 }
-
 
 .map-popup {
 min-width: fit-content;
@@ -48,7 +36,6 @@ scroll-behavior: auto;
 img{
     margin: 0.5vh;
 }
-
 
 .icon-container {
     display: inline-block;
@@ -67,7 +54,7 @@ img{
 .icon-buttons {
     display: flex;
     justify-content: space-around;
-    margin: 1vh;
+    margin: 0vh;
 }
 
 .icon-buttons a {
@@ -126,7 +113,6 @@ img{
     padding: 10px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    vertical-align: middle;
   }
 
  
@@ -152,11 +138,6 @@ img{
     
     #floating-box {
       max-width: 25vh; /* Opcional: Ajusta según sea necesario */
-    }
-
-
-    #map{
-        height: 70vh;
     }
 
     #logo{
