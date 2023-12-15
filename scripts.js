@@ -112,17 +112,17 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
 // Asigna la función a los eventos clic de los botones
 $('#toggleSename').on('click', function () {
-    toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', '/sename-icon.png');
+    toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', './sename-icon.png');
 });
 
 
 $('#toggleEleam').on('click', function () {
-    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/eleam-icon.png');
+    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', './eleam-icon.png');
 
 });
 
 $('#toggleSenadis').on('click', function () {
-    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis&bbox=-78.8312062%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/senadis-icon.png');
+    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis&bbox=-78.8312062%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', './senadis-icon.png');
 });
 
 
@@ -188,8 +188,8 @@ map.on('click', 'sename', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =
-        `<h6><img style="width:10%" src="/sename-icon.png"></h6>
- <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
+        `<h6><img style="width:10%" src="./sename-icon.png"></h6>
+ <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
  <h3>${nombre}</h3>
  <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
  <h6>${direccion}</h6>
@@ -219,7 +219,7 @@ map.on('click', 'eleam', function (e) {
 
     document.getElementById('popup-content').innerHTML =`
     <h6><img src="/eleam-icon.png"></h6>
-    <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
+    <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
@@ -249,7 +249,7 @@ map.on('click', 'senadis', function (e) {
 
     document.getElementById('popup-content').innerHTML =`
     <h6><img src="/senadis-icon.png"></h6>
-  <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
+  <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
