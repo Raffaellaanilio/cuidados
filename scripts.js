@@ -64,9 +64,7 @@ function showSpinner() {
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, sourceUrl, iconUrl) {
 
-
     var layer = map.getLayer(layerId);
-
 
     if (layer) {
         // Si está activa, la desactiva
@@ -108,23 +106,95 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 }
 
 
-
-
 // Asigna la función a los eventos clic de los botones
-$('#toggleSename').on('click', function () {
-    toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', '/sename-icon.png');
+
+//1
+$('#toggleCondominios').on('click', function () {
+    toggleLayer('condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
 });
 
 
-$('#toggleEleam').on('click', function () {
-    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/eleam-icon.png');
+$('#toggleCEDIAM').on('click', function () {
+    toggleLayer('cediam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
 
 });
+
+$('#toggleELEAM').on('click', function () {
+    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__03_Eleam&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+}); 
+
+$('#toggleReferenciales').on('click', function () {
+    toggleLayer('referenciales', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__04_Referenciales&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+});
+
+$('#toggleCentros').on('click', function () {
+    toggleLayer('centros', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+});
+
+//2
 
 $('#toggleSenadis').on('click', function () {
-    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis&bbox=-78.8312062%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', '/senadis-icon.png');
+    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENADIS.png');
 });
 
+$('#toggleAdultosResidencias').on('click', function () {
+    toggleLayer('adultosResidencias', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENADIS.png');
+});
+
+$('#toggleDOI').on('click', function () {
+    toggleLayer('DOI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ADOI&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENADIS.png');
+});
+
+//3
+
+$('#toggleCuidadoras').on('click', function () {
+    toggleLayer('cuidadoras', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_prog4a7_20240109020355&maxFeatures=50&outputFormat=application%2Fjson', '/programasCuidados.png');
+});
+
+$('#toggleRedLocalApoyo').on('click', function () {
+    toggleLayer('redlocalapoyo', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_cat031_20240108061528&maxFeatures=50&outputFormat=application%2Fjson', '/programasCuidados.png');
+});
+
+$('#togglePrograma4a7').on('click', function () {
+    toggleLayer('programa4a7', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&maxFeatures=50&outputFormat=application%2Fjson', '/programasCuidados.png');
+});
+
+$('#toggleRedLocal').on('click', function () {
+    toggleLayer('redlocal', '', '/programasCuidados.png');
+});
+
+//4
+$('#toggleFIADI').on('click', function () {
+    toggleLayer('fiadi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AFIADI&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasNNA.png');
+});
+
+$('#toggleHEPI').on('click', function () {
+    toggleLayer('hepi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AHepi&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasNNA.png');
+});
+
+$('#toggleNEP').on('click', function () {
+    toggleLayer('nep', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasNNA.png');
+});
+
+
+
+function toggleLayers(folderId) {
+    var layers = document.getElementById(folderId + 'Layers');
+    layers.style.display = layers.style.display === 'block' ? 'none' : 'block';
+}
+
+function togglePanel() {
+    var panel = document.getElementById('panel');
+    var icon = document.querySelector('toggle-button');
+
+    if (panel.style.display === 'none' || panel.style.display === '') {
+        panel.style.display = 'block';
+        icon.src = 'flecha-izquierda.png'; // Cambia a una flecha hacia arriba
+    } else {
+        panel.style.display = 'none';
+        icon.src = 'flecha-derecha.png'; // Cambia a una flecha hacia abajo
+    }
+}
 
 /* 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
 
@@ -133,8 +203,76 @@ $('#toggleSenadis').on('click', function () {
 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326' */
 
 
+/* //PRUEBA CON WFS (DEVUELVE ERROR DE QUE EL HEADER DE GEOSERVER NO TIENE ACTIVADO Access-Control-Allow-Origin)
+// Función para manejar la activación/desactivación de capas
+function toggleLayer(layerId, wfsUrl, iconUrl) {
+    var layer = map.getLayer(layerId);
 
+    if (layer) {
+        // Si está activa, la desactiva
+        map.removeLayer(layerId);
+        map.removeSource(layerId + 'Source');
+    } else {
+        // Si está desactivada, la activa
 
+        // Muestra el spinner antes de cargar la capa
+        showSpinner();
+
+        // Realiza la solicitud WFS
+        axios.get(wfsUrl)
+            .then(function (response) {
+                var geojsonFeatures = response.data; // Asumiendo que la respuesta es un objeto GeoJSON
+
+                map.addSource(layerId + 'Source', {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: geojsonFeatures.features
+                    }
+                });
+
+                map.loadImage(iconUrl, function (error, image) {
+                    if (error) throw error;
+
+                    map.addImage(layerId + '-icon', image);
+
+                    map.addLayer({
+                        id: layerId,
+                        type: 'symbol',
+                        source: layerId + 'Source',
+                        layout: {
+                            'icon-image': layerId + '-icon',
+                            'icon-size': 1,
+                            'icon-allow-overlap': true
+                        }
+                    });
+
+                    // Oculta el spinner después de cargar la capa
+                    setTimeout(function () {
+                        hideSpinner();
+                    }, 1000);
+                });
+            })
+            .catch(function (error) {
+                console.error('Error al obtener datos WFS', error);
+                // Manejar el error según sea necesario
+                hideSpinner(); // Asegúrate de ocultar el spinner en caso de error
+            });
+    }
+}
+
+// Asigna la función a los eventos clic de los botones
+$('#toggleSename').on('click', function () {
+    toggleLayer('sename', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/sename-icon.png');
+});
+
+$('#toggleEleam').on('click', function () {
+    toggleLayer('eleam', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/eleam-icon.png');
+});
+
+$('#toggleSenadis').on('click', function () {
+    toggleLayer('senadis', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/senadis-icon.png');
+}); */
 
 
 /* // Maneja el clic en el botón de alternar capa SENAME
@@ -175,12 +313,8 @@ $('#toggleSename').click(function () {
 
 */
 
-
-
 // Añade un pop-up al mapa SENAME
 map.on('click', 'sename', function (e) {
-    // var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
@@ -189,12 +323,11 @@ map.on('click', 'sename', function (e) {
 
     document.getElementById('popup-content').innerHTML =
         `<h6><img style="width:10%" src="/sename-icon.png"></h6>
- <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
- <h3>${nombre}</h3>
- <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
- <h6>${direccion}</h6>
- <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
- `
+        <h3>${nombre}</h3>
+        <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
+        <h6>${direccion}</h6>
+        <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
+        `
     // Muestra la caja flotante
     document.getElementById('floating-box').style.display = 'block';
 });
@@ -203,8 +336,6 @@ function closeFloatingBox() {
     // Oculta la caja flotante
     document.getElementById('floating-box').style.display = 'none';
 }
-
-
 
 
 // Añade un pop-up al mapa ELEAM
@@ -216,15 +347,13 @@ map.on('click', 'eleam', function (e) {
 
 
     // Actualiza el contenido de la caja flotante
-
     document.getElementById('popup-content').innerHTML =`
     <h6><img src="/eleam-icon.png"></h6>
     <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
-  <h3>${nombre}</h3>
-  <p color="grey"><i>Residencia para adulto mayor</i></p> 
-  <h6>${direccion}</h6>
-  <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
- 
+    <h3>${nombre}</h3>
+    <p color="grey"><i>Residencia para adulto mayor</i></p> 
+    <h6>${direccion}</h6>
+    <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
   `
 
     // Muestra la caja flotante
@@ -246,7 +375,6 @@ map.on('click', 'senadis', function (e) {
 
 
     // Actualiza el contenido de la caja flotante
-
     document.getElementById('popup-content').innerHTML =`
     <h6><img src="/senadis-icon.png"></h6>
   <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
@@ -255,7 +383,6 @@ map.on('click', 'senadis', function (e) {
   <h6>${direccion}</h6>
   <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>   ${telefono}</h6>
 `
-
 
     // Muestra la caja flotante
     document.getElementById('floating-box').style.display = 'block';
@@ -644,12 +771,12 @@ var comunaOptions = [
     {cut_reg: '14', value: '14102', region: 'Los Ríos', label: 'Corral', center:[ -73.42744451912921,  -39.967098456234893], zoom: 10 },
     {cut_reg: '09', value: '09202', region: 'La Araucanía', label: 'Collipulli', center:[ -72.1215279608777,  -38.002870702602621], zoom: 10 },
     {cut_reg: '09', value: '09201', region: 'La Araucanía', label: 'Angol', center:[ -72.779400574683507,  -37.770480269322078], zoom: 10 },
-    {cut_reg: '08', value: '08308', region: 'Biobío', label: 'Quilaco', center:[ null,  null], zoom: 10 },
-    {cut_reg: '12', value: '12102', region: 'Magallanes y de la Antártica Chilena', label: 'Laguna Blanca', center:[ null,  null], zoom: 10 },
-    {cut_reg: '16', value: '16101', region: 'Ñuble', label: 'Chillán', center:[ null,  null], zoom: 10 },
-    {cut_reg: '02', value: '02102', region: 'Antofagasta', label: 'Mejillones', center:[ null,  null], zoom: 10 },
-    {cut_reg: '10', value: '10108', region: 'Los Lagos', label: 'Maullín', center:[ null,  null], zoom: 10 },
-    {cut_reg: '09', value: '09114', region: 'La Araucanía', label: 'Pitrufquén', center:[ null,  null], zoom: 10 },
+    {cut_reg: '08', value: '08308', region: 'Biobío', label: 'Quilaco', center:[-71.7850,-37.9823], zoom: 10 },
+    {cut_reg: '12', value: '12102', region: 'Magallanes y de la Antártica Chilena', label: 'Laguna Blanca', center:[-71.046,-52.300], zoom: 10 },
+    {cut_reg: '16', value: '16101', region: 'Ñuble', label: 'Chillán', center:[-72.2845, -36.6282], zoom: 10 },
+    {cut_reg: '02', value: '02102', region: 'Antofagasta', label: 'Mejillones', center:[-70.2501, -22.8938], zoom: 10 },
+    {cut_reg: '10', value: '10108', region: 'Los Lagos', label: 'Maullín', center:[-73.5988, -41.6391], zoom: 10 },
+    {cut_reg: '09', value: '09114', region: 'La Araucanía', label: 'Pitrufquén', center:[ -72.6320,  39.0251], zoom: 10 },
     {cut_reg: '07', value: '07302', region: 'Maule', label: 'Hualañé', center:[ null,  null], zoom: 10 },
     {cut_reg: '05', value: '05502', region: 'Valparaíso', label: 'Calera', center:[ null,  null], zoom: 10 },
     {cut_reg: '08', value: '08102', region: 'Biobío', label: 'Coronel', center:[ null,  null], zoom: 10 },
@@ -669,7 +796,6 @@ var comunaOptions = [
     {cut_reg: '05', value: '05104', region: 'Valparaíso', label: 'Juan Fernández', center:[ null,  null], zoom: 10 },
     ];
 
-
 // Llena las opciones de la lista desplegable de la región
 regionOptions.forEach(function (option) {
     $('.regionDropdown').append($('<option>', {
@@ -685,7 +811,6 @@ comunaOptions.forEach(function (option) {
         text: option.label
     }));
 });
-
 
 
 // Actualiza el filtro del mapa y la extensión al cambiar la selección en la lista desplegable de la región
@@ -733,7 +858,6 @@ $('.comunaDropdown').change(function () {
 });
 
 
-
 /* //Filtro comunas
 function updateComunas() {
     var selectedRegion = document.getElementById('region').value;
@@ -753,37 +877,6 @@ function updateComunas() {
     }
 } */
 
-
-/* // Inicializa el mapa y solicita direcciones
-function initMap() {
-   var directionsService = new google.maps.DirectionsService();
-   var directionsRenderer = new google.maps.DirectionsRenderer();
-
-   var map = new google.maps.Map(document.getElementById('directionsPanel'), {
-       zoom: 10,
-       center: { lat: -34.397, lng: 150.644 }  // Centro de ejemplo
-   });
-
-   directionsRenderer.setMap(map);
-
-   calculateAndDisplayRoute(directionsService, directionsRenderer);
-}
-
-// Calcula y muestra la ruta entre dos ubicaciones
-function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-   directionsService.route({
-       origin: 'Origen, Ciudad',  // Reemplaza con tu dirección de origen
-       destination: 'Destino, Ciudad',  // Reemplaza con tu dirección de destino
-       travelMode: 'DRIVING'
-   }, function(response, status) {
-       if (status === 'OK') {
-           directionsRenderer.setDirections(response);
-       } else {
-           window.alert('Error al obtener direcciones: ' + status);
-       }
-   });
-}
-*/
 
 map.on('error', function (e) {
     console.error('Error:', e.error);
