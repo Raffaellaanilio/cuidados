@@ -107,6 +107,7 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
 
 // Asigna la función a los eventos clic de los botones
+<<<<<<< HEAD
 
 //1
 $('#toggleCondominios').on('click', function () {
@@ -116,6 +117,15 @@ $('#toggleCondominios').on('click', function () {
 
 $('#toggleCEDIAM').on('click', function () {
     toggleLayer('cediam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+=======
+$('#toggleSename').on('click', function () {
+    toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', './sename-icon.png');
+});
+
+
+$('#toggleEleam').on('click', function () {
+    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', './eleam-icon.png');
+>>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
 
 });
 
@@ -134,7 +144,11 @@ $('#toggleCentros').on('click', function () {
 //2
 
 $('#toggleSenadis').on('click', function () {
+<<<<<<< HEAD
     toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENADIS.png');
+=======
+    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis&bbox=-78.8312062%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', './senadis-icon.png');
+>>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
 });
 
 $('#toggleAdultosResidencias').on('click', function () {
@@ -322,12 +336,22 @@ map.on('click', 'sename', function (e) {
     // Actualiza el contenido de la caja flotante
 
     document.getElementById('popup-content').innerHTML =
+<<<<<<< HEAD
         `<h6><img style="width:10%" src="/sename-icon.png"></h6>
         <h3>${nombre}</h3>
         <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
         <h6>${direccion}</h6>
         <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
         `
+=======
+        `<h6><img style="width:10%" src="./sename-icon.png"></h6>
+ <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
+ <h3>${nombre}</h3>
+ <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
+ <h6>${direccion}</h6>
+ <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
+ `
+>>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
     // Muestra la caja flotante
     document.getElementById('floating-box').style.display = 'block';
 });
@@ -349,11 +373,20 @@ map.on('click', 'eleam', function (e) {
     // Actualiza el contenido de la caja flotante
     document.getElementById('popup-content').innerHTML =`
     <h6><img src="/eleam-icon.png"></h6>
+<<<<<<< HEAD
     <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
     <h3>${nombre}</h3>
     <p color="grey"><i>Residencia para adulto mayor</i></p> 
     <h6>${direccion}</h6>
     <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
+=======
+    <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
+  <h3>${nombre}</h3>
+  <p color="grey"><i>Residencia para adulto mayor</i></p> 
+  <h6>${direccion}</h6>
+  <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
+ 
+>>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
   `
 
     // Muestra la caja flotante
@@ -377,7 +410,7 @@ map.on('click', 'senadis', function (e) {
     // Actualiza el contenido de la caja flotante
     document.getElementById('popup-content').innerHTML =`
     <h6><img src="/senadis-icon.png"></h6>
-  <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
+  <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
   <h3>${nombre}</h3>
   <p color="grey"><i>Residencia para adulto mayor</i></p> 
   <h6>${direccion}</h6>
