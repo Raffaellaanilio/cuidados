@@ -170,28 +170,29 @@ $('#toggleNEP').on('click', function () {
 
 
 // Añade un pop-up a la capa CONDOMINIOS
-map.on('click', 'condominios', function (e) {
-    var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+    map.on('click', 'condominios', function (e) {
+        var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
+        var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
+        var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+    
+        // Actualiza el contenido de la caja flotante
+    
+        document.getElementById('popup-content').innerHTML =
+            `<h6><img style="width:10%" src="images/ProgramasSENAMA1.png"></h6>
+            <h3>${nombre}</h3>
+            <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
+            <h6>${direccion}</h6>
+            <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
+            `
+        // Muestra la caja flotante
+        document.getElementById('floating-box').style.display = 'block';
+    });
+    
+    function closeFloatingBox() {
+        // Oculta la caja flotante
+        document.getElementById('floating-box').style.display = 'none';
+    }
 
-    // Actualiza el contenido de la caja flotante
-
-    document.getElementById('popup-content').innerHTML =
-        `<h6><img style="width:10%" src="images/ProgramasSENAMA1.png"></h6>
-        <h3>${nombre}</h3>
-        <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
-        <h6>${direccion}</h6>
-        <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
-        `
-    // Muestra la caja flotante
-    document.getElementById('floating-box').style.display = 'block';
-});
-
-function closeFloatingBox() {
-    // Oculta la caja flotante
-    document.getElementById('floating-box').style.display = 'none';
-}
 
 
 
@@ -202,8 +203,17 @@ function closeFloatingBox() {
 }  */
 
 
-// ESTA FUNCION ES PARA 
+// ESTA FUNCION ES PARA HACER TOGGLE EN EL PANEL, Y ADEMÁS TRAER LAS CAPAS DE CADA CATEGORÍA. 
 function toggleFolders(folderId) {
+
+    var panel = document.getElementById('panel');
+
+    if (panel.style.display === 'none' || panel.style.display === '') {
+        panel.style.display = 'block';
+    } else {
+        panel.style.display = 'none';
+    }
+
     // Ocultar todas las capas
     var allLayers = document.querySelectorAll('.category');
     allLayers.forEach(function(layer) {
@@ -215,6 +225,7 @@ function toggleFolders(folderId) {
     currentLayer.style.display = currentLayer.style.display === 'block' ? 'none' : 'block';
 }
 
+//Esta funcion se usa para id=#flecha y para los botones del footer. 
  function togglePanel() {
     var panel = document.getElementById('panel');
 
@@ -224,6 +235,7 @@ function toggleFolders(folderId) {
         panel.style.display = 'none';
     }
 } 
+
 
 /* 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
 
