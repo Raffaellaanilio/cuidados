@@ -6,16 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css' />
     <script src='https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js'></script>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<<<<<<< HEAD
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap" />
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/styles.css">
-=======
-    <link rel="stylesheet" href="./styles.css">
->>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
 
 </head>
 <body>
@@ -24,9 +18,15 @@
    <header class="card bg-light p-2 text-center">
     <div class="container">
         <div class="row justify-content-end align-items-center">
+
+         <!--    <div id="flecha" class="col-6 col-md-1 toggle-button" onclick="togglePanel()">
+                <img id="toggleIcon" src="imagesflecha-izquierda.png" alt="Flecha">
+            </div> -->
+
             <div class="col-6 col-md-1">
-                <img id="logo" src="./logoGobierno.png">
+                <img id="logo" src="images/logoGobierno.png">
             </div>
+
             <div class="col-6 col-md-3">
                 <h4>Mapa del cuidado</h4>
             </div>
@@ -40,23 +40,20 @@
 
             <!-- Filtros para versión desktop -->
             <div class="col-6 col-md-3 d-none d-md-block">
-                <label style="font-size: smaller;" for="regionDropdown" class="form-label">Seleccionar región:</label>
                 <select class="form-select form-select-sm regionDropdown">
                     <!-- Opciones de la lista desplegable para la región -->
                 </select>
             </div>
             <div class="col-6 col-md-3 d-none d-md-block">
-                <label style="font-size: smaller" for="comunaDropdown" class="form-label">Seleccionar comuna:</label>
-                <input class="form-control form-control-sm searchComunaInput" type="text" placeholder="Filtrar comunas...">
+                <!-- <input class="form-control form-control-sm searchComunaInput" type="text" placeholder="Filtrar comunas..."> -->
                 <select class="form-select form-select-sm comunaDropdown">
-                    <!-- Opciones de la lista desplegable para la comuna -->
                 </select>
             </div>
             
             <!-- Botón de ubicación -->
-            <div class="card col-6 col-md-2" id="locate-button" onclick="locateUser()">
+            <div class="card col-6 col-md-1" id="locate-button" onclick="locateUser()">
                 <i style="padding: 1vh" class="fa-solid fa-location-arrow"></i>
-                <h6 class="d-none d-md-block">Tu ubicación</h6>
+                <h6 style="font-size: smaller;" class="d-none d-md-block">Tu ubicación</h6>
             </div>
         </div>
     </div>
@@ -66,14 +63,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <label style="font-size: smaller;" for="regionDropdown" class="form-label">Seleccionar región:</label>
                     <select class="form-select form-select-sm regionDropdown">
                         <!-- Opciones de la lista desplegable para la región -->
                     </select>
                 </div>
                 <div class="col-12">
-                    <label style="font-size: smaller" for="comunaDropdown" class="form-label">Seleccionar comuna:</label>
-                    <input class="form-control form-control-sm searchComunaInput" type="text" placeholder="Filtrar comunas...">
                     <select class="form-select form-select-sm comunaDropdown">
                         <!-- Opciones de la lista desplegable para la comuna -->
                     </select>
@@ -85,6 +79,134 @@
 
 
 <div id="map">
+    <div id="panel" class="card panel">
+        <div class="icon-buttons row">
+            <!-- Carpeta 1 -->
+                <div id="folder1Layers" class="category">
+                    <div class="folder">
+                        Programas para personas mayores (SENAMA)
+                    </div> 
+                    <div id="toggleCondominios" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#"  style="display: flex; align-items: center;">
+                            <img src="images/ProgramasSENAMA1.svg" alt="Capa">
+                            <div style="color: black;">Condominios de viviendas tuteladas</div>
+                        </a>
+                    </div>
+                    <div id="toggleCEDIAM" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasSENAMA1.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">CEDIAM</div>
+                        </a>
+                    </div>
+                    <div id="toggleELEAM" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;" >
+                            <img src="images/ProgramasSENAMA1.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">ELEAM</div>
+                        </a>
+                    </div>
+                    <div id="toggleReferenciales" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasSENAMA1.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Centros Diurnos Referenciales</div>
+                        </a>
+                    </div>
+                    <div id="toggleCentros" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasSENAMA1.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Centros Domiciliarios</div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Contenido dentro de Carpeta 2 -->
+                <div id="folder2Layers" class="category">
+                    <div class="folder">
+                        Programa para personas con discapacidad (SENADIS)
+                    </div> 
+                    <div id="toggleAdultosResidencias" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasSENADIS.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Adultos en residencias</div>
+                        </a>
+                    </div>
+                    <div id="toggleDOI" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasSENADIS.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Desarrollo de organizaciones inclusivas</div>
+                        </a>
+                    </div>
+                </div>
+    
+    
+                <!-- Contenido dentro de Carpeta 3 -->
+                <div id="folder3Layers" class="category">
+                    <div class="folder">
+                       Cuidados y alivio a personas cuidadoras
+                    </div>
+                    <div id="togglePrograma4a7" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/programasCuidados.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Programas del 4 al 7</div>
+                        </a>
+                    </div>
+                    <div id="toggleRedLocal" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/programasCuidados.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Red local de apoyos y cuidados (municipios)</div>
+                        </a>
+                    </div>
+                </div>
+    
+    
+                <!-- Contenido dentro de Carpeta 4 -->
+                <div id="folder4Layers" class="category">
+                    <div class="folder">
+                       Niñas, niños y adolescentes
+                    </div>
+                    <div id="toggleFIADI" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasNNA.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Fondo de intervención y apoyo al desarrollo infantil (Fiadi)</div>
+                        </a>
+                    </div>
+                    <div id="toggleHEPI" class="card layer col-12" style="display: flex; justify-content: space-between;">
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasNNA.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Crecer en comunidad (HEPI)</div>
+                        </a>
+                    </div>
+                    <div id="toggleNEP" class="card layer col-12" style="display: flex; justify-content: space-between;"        >
+                        <a href="#" style="display: flex; align-items: center;">
+                            <img src="images/ProgramasNNA.svg" alt="Capa">
+                          <div class="card-title" style="color: black;">Programa de Apoyo: Taller Nadie es Perfecto</div>
+                        </a>
+                    </div>
+                </div>
+    
+    
+    
+                   <!-- Carpeta 5-->
+      <!--       <div class="categorias col-12">
+                <div class="folder" onclick="toggleFolders('folder5')">
+                    <img class="folder-icon" src="images/folder-icon.png" alt="Carpeta">
+                  Instituciones con atención preferente para personas cuidadoras
+                </div>
+        
+    
+                <div id="folder5Layers" class="category">
+          
+                    <div class="card card layer col-12">
+                        <a href="#" id="toggleSename">
+                            <img style="width: 5vh;" src="images/sename-icon.png" alt="Capa">
+                          <div class="card-title" style="color: black;">Correos de Chile</div>
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+    
+        </div>
+    </div>
+    
     <div id="floating-box">
         <span id="close-btn" onclick="closeFloatingBox()">X</div>
         <div id="popup-content"></div>
@@ -99,192 +221,35 @@
 
 </div>
 
-<div id="flecha" class="toggle-button" onclick="togglePanel()">
-    <img id="toggleIcon" src="flecha-izquierda.png" alt="Flecha">
-</div>
-
-<div id="panel" class="card panel">
-    <div class="icon-buttons row">
-<<<<<<< HEAD
-        <!-- Carpeta 1 -->
-            <div id="folder1Layers" class="category">
-                <div class="folder">
-                    Programas para personas mayores (SENAMA)
-                </div> 
-                <div id="toggleCondominios" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#"  style="display: flex; align-items: center;">
-                        <img src="/ProgramasSENAMA1.svg" alt="Capa">
-                        <div style="color: black;">Condominios de viviendas tuteladas</div>
-                    </a>
-                </div>
-                <div id="toggleCEDIAM" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasSENAMA1.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">CEDIAM</div>
-                    </a>
-                </div>
-                <div id="toggleELEAM" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;" >
-                        <img src="/ProgramasSENAMA1.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">ELEAM</div>
-                    </a>
-                </div>
-                <div id="toggleReferenciales" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasSENAMA1.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Centros Diurnos Referenciales</div>
-                    </a>
-                </div>
-                <div id="toggleCentros" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasSENAMA1.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Centros Domiciliarios</div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Contenido dentro de Carpeta 2 -->
-            <div id="folder2Layers" class="category">
-                <div class="folder">
-                    Programa para personas con discapacidad (SENADIS)
-                </div> 
-                <div id="toggleAdultosResidencias" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasSENADIS.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Adultos en residencias</div>
-                    </a>
-                </div>
-                <div id="toggleDOI" class="card layer col-12" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasSENADIS.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Desarrollo de organizaciones inclusivas</div>
-                    </a>
-                </div>
-            </div>
-
-
-            <!-- Contenido dentro de Carpeta 3 -->
-            <div id="folder3Layers" class="category">
-                <div class="folder" onclick="toggleLayers('folder3')">
-                   Cuidados y alivio a personas cuidadoras
-                </div>
-                <div id="togglePrograma4a7" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/programasCuidados.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Programas del 4 al 7</div>
-                    </a>
-                </div>
-                <div id="toggleRedLocal" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/programasCuidados.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Red local de apoyos y cuidados (municipios)</div>
-                    </a>
-                </div>
-            </div>
-
-
-            <!-- Contenido dentro de Carpeta 4 -->
-            <div id="folder4Layers" class="category">
-                <div class="folder" onclick="toggleLayers('folder4')">
-                   Niñas, niños y adolescentes
-                </div>
-                <div id="toggleFIADI" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasNNA.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Fondo de intervención y apoyo al desarrollo infantil (Fiadi)</div>
-                    </a>
-                </div>
-                <div id="toggleHEPI" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasNNA.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Crecer en comunidad (HEPI)</div>
-                    </a>
-                </div>
-                <div id="toggleNEP" class="card layer col-12" style="display: flex; justify-content: space-between;" onclick="toggleLayers(folderId)">
-                    <a href="#" style="display: flex; align-items: center;">
-                        <img src="/ProgramasNNA.svg" alt="Capa">
-                      <div class="card-title" style="color: black;">Programa de Apoyo: Taller Nadie es Perfecto</div>
-                    </a>
-                </div>
-            </div>
-
-
-
-               <!-- Carpeta 5-->
-  <!--       <div class="categorias col-12">
-            <div class="folder" onclick="toggleLayers('folder5')">
-                <img class="folder-icon" src="/folder-icon.png" alt="Carpeta">
-              Instituciones con atención preferente para personas cuidadoras
-            </div>
-    
-
-            <div id="folder5Layers" class="category">
-      
-                <div class="card card layer col-12">
-                    <a href="#" id="toggleSename">
-                        <img style="width: 5vh;" src="/sename-icon.png" alt="Capa">
-                      <div class="card-title" style="color: black;">Correos de Chile</div>
-                    </a>
-                </div>
-            </div>
-        </div> -->
-
-    </div>
-</div>
-
 
 
 <!-- BOTONERA INFERIOR -->
 <footer class="footer">
     <div class="icon-footer row">
-        <div class="categoriasFooter col-3" onclick="togglePanel()">
-            <div href="#" onclick="toggleLayers('folder1');">
-                <img style="width: 5vh;" src="/ProgramasSENAMA1.svg">
+        <div class="categoriasFooter col-3" onclick="togglePanel('folder1')">
+            <div href="#" onclick="toggleFolders('folder1')">
+                <img style="width: 5vh;" src="images/ProgramasSENAMA1.svg">
                 <h6 style="color: black;">Programas para personas mayores (SENAMA)</h6>
             </div>
         </div>
 
         <div class="categoriasFooter col-3" onclick="togglePanel()">
-            <div href="#" onclick="toggleLayers('folder2')" >
-                <img style="width: 5vh;" src="/ProgramasSENADIS.svg">
+            <div href="#" onclick="toggleFolders('folder2')" >
+                <img style="width: 5vh;" src="images/ProgramasSENADIS.svg">
                 <h6 style="color:black;">Programa para personas con discapacidad (SENADIS)</h6>
             </div>
         </div>
 
         <div class="categoriasFooter col-3" onclick="togglePanel()">
-            <div href="#" onclick="toggleLayers('folder3')">
-                <img style="width: 5vh;" src="/programasCuidados.svg">
+            <div href="#" onclick="toggleFolders('folder3')">
+                <img style="width: 5vh;" src="images/programasCuidados.svg">
                 <h6 style="color:black">Programas de cuidados y alivio a personas cuidadoras</h6>
             </div>
-=======
-        <!-- Botonera 1 -->
-        <div class="categorias col-4">
-            <a href="#" id="toggleSename">
-                <img style="width: 5vh;" src="./sename-icon.png">
-                <h6 style="color: black;">Niñez</h6>
-            </a>
-        </div>
-
-        <!-- Botonera 2 -->
-        <div class="categorias col-4">
-            <a href="#" id="toggleEleam">
-                <img style="width: 5vh;" src="./eleam-icon.png">
-                <h6 style="color:black;">Adultez</h6>
-            </a>
-        </div>
-
-        <!-- Botonera 3 -->
-        <div class="categorias col-4">
-            <a href="#" id="toggleSenadis">
-                <img style="width: 5vh;" src="./senadis-icon.png">
-                <h6 style="color:black">Capacidades diferentes</h6>
-            </a>
->>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
         </div>
 
         <div class="categoriasFooter col-3" onclick="togglePanel()">
-            <div href="#" onclick="toggleLayers('folder4')">
-                <img style="width: 5vh;" src="/ProgramasNNA.svg">
+            <div href="#" onclick="toggleFolders('folder4')">
+                <img style="width: 5vh;" src="images/ProgramasNNA.svg">
                 <h6 style="color:black">Programa para Niñas, Niños y Adolescentes</h6>
             </div>
         </div>
@@ -297,7 +262,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>  ES DE PAGO -->
-<script src="./scripts.js"></script>
+<!-- <script src="imageshttps://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>  ES DE PAGO -->
+<script src="/scripts.js"></script>
 </body>
 </html>

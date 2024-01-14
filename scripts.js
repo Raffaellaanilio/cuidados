@@ -63,29 +63,22 @@ function showSpinner() {
 
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, sourceUrl, iconUrl) {
-
     var layer = map.getLayer(layerId);
-
     if (layer) {
         // Si está activa, la desactiva
         map.removeLayer(layerId);
         map.removeSource(layerId + 'Source');
     } else {
         // Si está desactivada, la activa
-
-                 // Muestra el spinner antes de cargar la capa
+        // Muestra el spinner antes de cargar la capa
   showSpinner();
-            
         map.addSource(layerId + 'Source', {
             type: 'geojson',
             data: sourceUrl
         });
-
         map.loadImage(iconUrl, function (error, image) {
             if (error) throw error;
-
             map.addImage(layerId + '-icon', image);
-
             map.addLayer({
                 id: layerId,
                 type: 'symbol',
@@ -96,7 +89,6 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
                     'icon-allow-overlap': true
                 }
             });
-
                // Oculta el spinner después de cargar la capa
                setTimeout(function () {
                 hideSpinner();
@@ -107,108 +99,131 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
 
 // Asigna la función a los eventos clic de los botones
-<<<<<<< HEAD
 
-//1
+//1 CARPETA
 $('#toggleCondominios').on('click', function () {
-    toggleLayer('condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+    toggleLayer('condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Aa__02_Condominio&&outputFormat=application%2Fjson&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
 });
-
 
 $('#toggleCEDIAM').on('click', function () {
-    toggleLayer('cediam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
-=======
-$('#toggleSename').on('click', function () {
-    toggleLayer('sename', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asename&bbox=-109.44605741857096%2C-54.93520979973968%2C-67.60585370046795%2C-18.19762460044556&width=768&height=674&srs=EPSG%3A4326&styles=&format=geojson', './sename-icon.png');
-});
-
-
-$('#toggleEleam').on('click', function () {
-    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis_todos1&bbox=-78.83201539999999%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', './eleam-icon.png');
->>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
+    toggleLayer('cediam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 
 });
 
 $('#toggleELEAM').on('click', function () {
-    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__03_Eleam&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__03_Eleam&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 }); 
 
 $('#toggleReferenciales').on('click', function () {
-    toggleLayer('referenciales', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__04_Referenciales&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+    toggleLayer('referenciales', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__04_Referenciales&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
 $('#toggleCentros').on('click', function () {
-    toggleLayer('centros', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENAMA1.png');
+    toggleLayer('centros', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
-//2
+//2 CARPETA
 
 $('#toggleSenadis').on('click', function () {
-<<<<<<< HEAD
-    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENADIS.png');
-=======
-    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Asenadis&bbox=-78.8312062%2C-53.296414999999996%2C-47.97530489999999%2C-16.1103466&width=637&height=768&srs=EPSG%3A4326&styles=&format=geojson', './senadis-icon.png');
->>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
+    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 $('#toggleAdultosResidencias').on('click', function () {
-    toggleLayer('adultosResidencias', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENADIS.png');
+    toggleLayer('adultosResidencias', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 $('#toggleDOI').on('click', function () {
-    toggleLayer('DOI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ADOI&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasSENADIS.png');
+    toggleLayer('DOI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ADOI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
-//3
+//3 CARPETA
 
 $('#toggleCuidadoras').on('click', function () {
-    toggleLayer('cuidadoras', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_prog4a7_20240109020355&maxFeatures=50&outputFormat=application%2Fjson', '/programasCuidados.png');
+    toggleLayer('cuidadoras', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_prog4a7_20240109020355&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
 $('#toggleRedLocalApoyo').on('click', function () {
-    toggleLayer('redlocalapoyo', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_cat031_20240108061528&maxFeatures=50&outputFormat=application%2Fjson', '/programasCuidados.png');
+    toggleLayer('redlocalapoyo', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_cat031_20240108061528&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
 $('#togglePrograma4a7').on('click', function () {
-    toggleLayer('programa4a7', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&maxFeatures=50&outputFormat=application%2Fjson', '/programasCuidados.png');
+    toggleLayer('programa4a7', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
 $('#toggleRedLocal').on('click', function () {
     toggleLayer('redlocal', '', '/programasCuidados.png');
 });
 
-//4
+//4 CARPETA
+
 $('#toggleFIADI').on('click', function () {
-    toggleLayer('fiadi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AFIADI&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasNNA.png');
+    toggleLayer('fiadi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AFIADI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
 });
 
 $('#toggleHEPI').on('click', function () {
-    toggleLayer('hepi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AHepi&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasNNA.png');
+    toggleLayer('hepi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AHepi&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
 });
 
 $('#toggleNEP').on('click', function () {
-    toggleLayer('nep', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', '/ProgramasNNA.png');
+    toggleLayer('nep', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
 });
 
 
+// Añade un pop-up a la capa CONDOMINIOS
+map.on('click', 'condominios', function (e) {
+    var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
+    var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
 
-function toggleLayers(folderId) {
-    var layers = document.getElementById(folderId + 'Layers');
-    layers.style.display = layers.style.display === 'block' ? 'none' : 'block';
+    // Actualiza el contenido de la caja flotante
+
+    document.getElementById('popup-content').innerHTML =
+        `<h6><img style="width:10%" src="images/ProgramasSENAMA1.png"></h6>
+        <h3>${nombre}</h3>
+        <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
+        <h6>${direccion}</h6>
+        <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
+        `
+    // Muestra la caja flotante
+    document.getElementById('floating-box').style.display = 'block';
+});
+
+function closeFloatingBox() {
+    // Oculta la caja flotante
+    document.getElementById('floating-box').style.display = 'none';
 }
 
-function togglePanel() {
+
+
+
+/*  function toggleFolders(folderId) {
+    var layers = document.getElementById(folderId + 'Layers');
+    layers.style.display = layers.style.display === 'block' ? 'none' : 'block';
+}  */
+
+
+// ESTA FUNCION ES PARA 
+function toggleFolders(folderId) {
+    // Ocultar todas las capas
+    var allLayers = document.querySelectorAll('.category');
+    allLayers.forEach(function(layer) {
+        layer.style.display = 'none';
+    });
+
+    // Mostrar la capa de la categoría actual
+    var currentLayer = document.getElementById(folderId + 'Layers');
+    currentLayer.style.display = currentLayer.style.display === 'block' ? 'none' : 'block';
+}
+
+ function togglePanel() {
     var panel = document.getElementById('panel');
-    var icon = document.querySelector('toggle-button');
 
     if (panel.style.display === 'none' || panel.style.display === '') {
         panel.style.display = 'block';
-        icon.src = 'flecha-izquierda.png'; // Cambia a una flecha hacia arriba
     } else {
         panel.style.display = 'none';
-        icon.src = 'flecha-derecha.png'; // Cambia a una flecha hacia abajo
     }
-}
+} 
 
 /* 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
 
@@ -305,6 +320,8 @@ $('#toggleSename').click(function () {
             type: 'geojson',
             data: 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
         });
+            );
+
 
         map.loadImage('/sename-icon.png', function (error, image) {
             if (error) throw error;
@@ -327,104 +344,6 @@ $('#toggleSename').click(function () {
 
 */
 
-// Añade un pop-up al mapa SENAME
-map.on('click', 'sename', function (e) {
-    var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
-
-    // Actualiza el contenido de la caja flotante
-
-    document.getElementById('popup-content').innerHTML =
-<<<<<<< HEAD
-        `<h6><img style="width:10%" src="/sename-icon.png"></h6>
-        <h3>${nombre}</h3>
-        <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
-        <h6>${direccion}</h6>
-        <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
-        `
-=======
-        `<h6><img style="width:10%" src="./sename-icon.png"></h6>
- <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
- <h3>${nombre}</h3>
- <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
- <h6>${direccion}</h6>
- <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
- `
->>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
-    // Muestra la caja flotante
-    document.getElementById('floating-box').style.display = 'block';
-});
-
-function closeFloatingBox() {
-    // Oculta la caja flotante
-    document.getElementById('floating-box').style.display = 'none';
-}
-
-
-// Añade un pop-up al mapa ELEAM
-map.on('click', 'eleam', function (e) {
-    var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var nombre = e.features[0].properties.nom_eleam; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var direccion = e.features[0].properties.direccion; // Reemplaza 'descripcion' con el nombre del campo en tus datos
-    var telefono = e.features[0].properties.fono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
-
-
-    // Actualiza el contenido de la caja flotante
-    document.getElementById('popup-content').innerHTML =`
-    <h6><img src="/eleam-icon.png"></h6>
-<<<<<<< HEAD
-    <img class="foto" src="${imagen}"  onerror="this.src='/no-image.jpg'; this.onerror=null">
-    <h3>${nombre}</h3>
-    <p color="grey"><i>Residencia para adulto mayor</i></p> 
-    <h6>${direccion}</h6>
-    <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
-=======
-    <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
-  <h3>${nombre}</h3>
-  <p color="grey"><i>Residencia para adulto mayor</i></p> 
-  <h6>${direccion}</h6>
-  <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6>
- 
->>>>>>> ec2797664e8cb2ecd41cf1c7b7e05d99f0e283ae
-  `
-
-    // Muestra la caja flotante
-    document.getElementById('floating-box').style.display = 'block';
-});
-
-function closeFloatingBox() {
-    // Oculta la caja flotante
-    document.getElementById('floating-box').style.display = 'none';
-}
-
-
-// Añade un pop-up al mapa CAPACIDADES DIFERENTES
-map.on('click', 'senadis', function (e) {
-    var imagen = e.features[0].properties.imagen; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var nombre = e.features[0].properties.nombre; // Reemplaza 'nombre' con el nombre del campo en tus datos
-    var direccion = e.features[0].properties.dirección; // Reemplaza 'descripcion' con el nombre del campo en tus datos
-    var telefono = e.features[0].properties.teléfono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
-
-
-    // Actualiza el contenido de la caja flotante
-    document.getElementById('popup-content').innerHTML =`
-    <h6><img src="/senadis-icon.png"></h6>
-  <img class="foto" src="${imagen}"  onerror="this.src='./no-image.jpg'; this.onerror=null">
-  <h3>${nombre}</h3>
-  <p color="grey"><i>Residencia para adulto mayor</i></p> 
-  <h6>${direccion}</h6>
-  <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>   ${telefono}</h6>
-`
-
-    // Muestra la caja flotante
-    document.getElementById('floating-box').style.display = 'block';
-});
-
-function closeFloatingBox() {
-    // Oculta la caja flotante
-    document.getElementById('floating-box').style.display = 'none';
-}
 
 
 // Función para cambiar el cursor al pasar sobre un punto
@@ -454,11 +373,13 @@ changeCursorOnMouseLeave('senadis');
 
 // Array de objetos para las opciones de la lista desplegable de la región
 var regionOptions = [
+    { value: '15', label: 'Arica', center: [-69.9533, -19.3419], zoom: 8 },
     { value: '01', label: 'Tarapacá', center: [-69.9533, -19.3419], zoom: 8 },
     { value: '02', label: 'Antofagasta', center: [-68.1193, -23.6509], zoom: 8 },
     { value: '03', label: 'Atacama', center: [-70.4024, -26.6415], zoom: 8 },
     { value: '04', label: 'Coquimbo', center: [-71.3375, -29.9711], zoom: 8 },
     { value: '05', label: 'Valparaíso', center: [-71.6275, -33.0472], zoom: 8 },
+    { value: '13', label: 'Metropolitana', center: [-70.6483, -33.4691], zoom: 9 },
     { value: '06', label: 'OHiggins', center: [-70.9228, -34.5744], zoom: 9 },
     { value: '07', label: 'Maule', center: [-71.6924, -35.4259], zoom: 8 },
     { value: '08', label: 'Ñuble', center: [-72.4762, -36.6398], zoom: 9 },
@@ -466,9 +387,8 @@ var regionOptions = [
     { value: '10', label: 'Araucanía', center: [-72.7107, -38.9489], zoom: 8 },
     { value: '11', label: 'Los Ríos', center: [-72.4638, -39.8132], zoom: 9 },
     { value: '12', label: 'Los Lagos', center: [-73.2412, -41.6372], zoom: 8 },
-    { value: '13', label: 'Metropolitana', center: [-70.6483, -33.4691], zoom: 9 },
     { value: '14', label: 'Aysén', center: [-72.8258, -45.9864], zoom: 8 },
-    { value: '15', label: 'Magallanes', center: [-70.9394, -53.0818], zoom: 7 }
+    { value: '16', label: 'Magallanes', center: [-70.9394, -53.0818], zoom: 7 }
     // Agrega más opciones según tus regiones
 ];
 
@@ -829,7 +749,14 @@ var comunaOptions = [
     {cut_reg: '05', value: '05104', region: 'Valparaíso', label: 'Juan Fernández', center:[ null,  null], zoom: 10 },
     ];
 
-// Llena las opciones de la lista desplegable de la región
+
+ // Agrega la opción predeterminada "Seleccionar región"
+$('.regionDropdown').append($('<option>', {
+    value: '',
+    text: 'Seleccionar región'
+}));
+
+// Llena la lista desplegable de regiones
 regionOptions.forEach(function (option) {
     $('.regionDropdown').append($('<option>', {
         value: option.value,
@@ -837,15 +764,44 @@ regionOptions.forEach(function (option) {
     }));
 });
 
-// Llena las opciones de la lista desplegable de la comuna
-comunaOptions.forEach(function (option) {
-    $('.comunaDropdown').append($('<option>', {
-        value: option.value,
-        text: option.label
-    }));
+// Agrega la opción predeterminada "Seleccionar comuna"
+$('.comunaDropdown').append($('<option>', {
+    value: '',
+    text: 'Seleccionar comuna'
+}));
+
+// Actualiza el filtro de comunas al cambiar la región
+$('.regionDropdown').change(function () {
+    // Obtiene la región seleccionada
+    var selectedRegion = $(this).val();
+
+    // Llena la lista desplegable de comunas
+    fillCommunesDropdown(selectedRegion);
 });
 
+// Llena las opciones de la lista desplegable de la comuna
+function fillCommunesDropdown(selectedRegion) {
+    // Filtra las comunas
+    var filteredCommunes = comunaOptions.filter(comuna => comuna.cut_reg === selectedRegion);
 
+    // Elimina todas las opciones existentes de la lista desplegable
+    $('.comunaDropdown').empty();
+
+    // Agrega la opción predeterminada "Seleccionar comuna"
+    $('.comunaDropdown').append($('<option>', {
+        value: '',
+        text: 'Seleccionar comuna'
+    }));
+
+    // Agrega las nuevas opciones a la lista desplegable
+    filteredCommunes.forEach(function (comuna) {
+        $('.comunaDropdown').append($('<option>', {
+            value: comuna.value,
+            text: comuna.label
+        }));
+    });
+}
+  
 // Actualiza el filtro del mapa y la extensión al cambiar la selección en la lista desplegable de la región
 $('.regionDropdown').change(function () {
     var selectedRegion = $(this).val();
@@ -858,6 +814,21 @@ $('.regionDropdown').change(function () {
     });
 });
 
+// Actualiza el filtro del mapa y la extensión al cambiar la selección en la lista desplegable de la comuna
+$('.comunaDropdown').change(function () {
+    var selectedComuna = $(this).val();
+    var selectedOption = comunaOptions.find(option => option.value === selectedComuna);
+
+    // Centra el mapa en la comuna seleccionada
+    map.flyTo({
+        center: selectedOption.center,
+        zoom: selectedOption.zoom
+    });
+});
+
+
+/*  
+ //Filtro por texto
 document.addEventListener('DOMContentLoaded', function () {
     const searchComunaInput = document.querySelector('.searchComunaInput');
     const comunaDropdown = document.querySelector('.comunaDropdown');
@@ -876,19 +847,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-});
-
-// Actualiza el filtro del mapa y la extensión al cambiar la selección en la lista desplegable de la comuna
-$('.comunaDropdown').change(function () {
-    var selectedComuna = $(this).val();
-    var selectedOption = comunaOptions.find(option => option.value === selectedComuna);
-
-    // Centra el mapa en la comuna seleccionada
-    map.flyTo({
-        center: selectedOption.center,
-        zoom: selectedOption.zoom
-    });
-});
+}); 
+ */
 
 
 /* //Filtro comunas

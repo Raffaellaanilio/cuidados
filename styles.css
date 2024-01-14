@@ -20,7 +20,7 @@ header {
 
 /* Estilos para el footer */
 .footer {
-    height: 10vh;
+    height: 100%;
     width: 100%;
     background-color: white; /* Fondo con transparencia */
     text-align: center; /* Alineación del texto al centro */
@@ -33,23 +33,22 @@ header {
 .panel {
     display: none;
     width: 20%; /* Ocupa el 25% del ancho de la página */
-    min-width: 200px; /* Establece un ancho mínimo para evitar que sea demasiado estrecho */
     background-color: white; /* Color de fondo del panel */
     padding: 5px; /* Añade un relleno para mayor espacio interno */
     box-sizing: border-box; /* Incluye el relleno y el borde en el tamaño total del elemento */
-    position: fixed; /* Permite que el panel sea fijo en la pantalla */
-    top: 12vh; /* Pega el panel en la parte superior de la página */
-    left: 0; /* Pega el panel en la parte izquierda de la página */
-    height: 80%; /* Ocupa el 100% de la altura de la página */
+    position: relative; /* Permite que el panel sea fijo en la pantalla */
+    height: 100%; /* Ocupa el 100% de la altura de la página */
     overflow-y: auto; /* Añade desplazamiento vertical si el contenido es demasiado largo */
+    overflow-x: hidden;
     z-index: 5000;
     border-radius: 1%;
     border: 0;
+    opacity: 80%;
 }
 
 .card.layer.col-12{
     background-color: #f0f0f0; /* Color de fondo del panel */
-    margin-top: 2vh;
+    margin-top: 3vh;
     background-color: white;
 }
 
@@ -166,7 +165,7 @@ scroll-behavior: auto;
     border-radius: 30%;
     position: fixed;
     right: 170vh;
-    width: 5vh;
+    width: fit-content;
     background-color: whitesmoke;
     border: 1px solid #ccc;
     z-index: 6000;
@@ -192,7 +191,7 @@ scroll-behavior: auto;
     background-color: white;
     border: 1px solid #ccc;
     opacity: 80%;
-    z-index: 1;
+    z-index: 10000;
     grid-auto-flow: column;
     max-height: 70vh; /* Ajusta la altura máxima según tus necesidades */
     overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
@@ -214,7 +213,7 @@ scroll-behavior: auto;
     background-color: white;
     border: 1px solid #ccc;
     opacity: 80%;
-    z-index: 3000;
+    z-index: 2000000;
     grid-auto-flow: column;
     overflow-y: auto;
     left: 10px;
@@ -265,11 +264,12 @@ scroll-behavior: auto;
     }
 
     .panel {
-        top: 13vh; /* Pega el panel en la parte superior de la página */
+        width: 50%;
+        height: 100%;
     }
 
     #flecha{
-        margin: 1vh;
+        margin: 0vh;
     }
 
   }
