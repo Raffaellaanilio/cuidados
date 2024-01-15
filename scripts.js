@@ -35,6 +35,7 @@ map.on('load', function () {
         type: 'geojson',
         data: 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3AChileLineal&bbox=-109.45489201699996%2C-56.53767064099998%2C-66.41565257399998%2C-17.49839933599998&width=768&height=696&srs=EPSG%3A4326&styles=&format=geojson'
     });
+    console.log("addSource OK")
 
     map.addLayer({
         id: 'regiones',
@@ -48,6 +49,8 @@ map.on('load', function () {
             'line-blur': 1        // Difuminado de la línea (0 a 1)
         }
     });
+    console.log("addLayer OK")
+
 });
 
 // Función para mostrar el spinner
@@ -95,18 +98,21 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
             }, 1000);
         });
     }
+    console.log("AGREGA BIEN LA CAPA AL MAPA")
 }
 
 
 // RECOGE PARAMETROS ID, SOURCE Y ENLACE DE ICONO. 
-
 //1 CARPETA
 $('#toggleCondominios').on('click', function () {
-    toggleLayer('condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&&outputFormat=application%2Fjson&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
+    toggleLayer('condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Aa__02_Condominio&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
+    console.log("toggleLayer OK")
+
 });
 
- $('#toggleCEDIAM').on('click', function () {
-    toggleLayer('cediam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+
+/*  $('#toggleCEDIAM').on('click', function () {
+    toggleLayer('cediam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
 
 });
 
@@ -166,13 +172,15 @@ $('#toggleHEPI').on('click', function () {
 
 $('#toggleNEP').on('click', function () {
     toggleLayer('nep', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
-});
+}); */
 
 // Añade un pop-up a la capa CONDOMINIOS cuando se le hace clic. 
 map.on('click', 'condominios', function (e) {
     var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
     var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+
+    console.log("POPUP OK") //ESTO NO SE ESTÁ EJECUTANDO 
 
     // Actualiza el contenido de la caja flotante
 
@@ -184,13 +192,33 @@ map.on('click', 'condominios', function (e) {
         <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
         `
     // Muestra la caja flotante
-    document.getElementById('floating-box').style.display = 'block';
+    document.getElementById('floating-box').style.display = 'none';
 });
 
 function closeFloatingBox() {
     // Oculta la caja flotante
-    document.getElementById('floating-box').style.display = 'none';
+    document.getElementById('floating-box').style.display = 'block';
 }
+
+
+// Función para cambiar el cursor al pasar sobre un punto
+function changeCursorOnMouseEnter(layerName) {
+    map.on('mouseenter', layerName, function () {
+        map.setCursor('pointer');
+        console.log("mouseenter OK") //NO FUNCIONA
+    });
+}
+
+// Función para cambiar el cursor al salir de un punto
+function changeCursorOnMouseLeave(layerName) {
+    map.on('mouseleave', layerName, function () {
+        map.setCursor('');
+    });
+}
+
+// Llamas a las funciones para cada capa
+changeCursorOnMouseEnter('condominios');
+changeCursorOnMouseLeave('condominios');
 
 //FALTA AGREGAR LOS POPUPS PARA LAS OTRAS CAPAS. NO LO VOY A AUTOMATIZAR PQ CADA CAPA TIENE DISTINTOS NOMBRES DE CAMPO. 
 
@@ -200,9 +228,7 @@ function closeFloatingBox() {
 function toggleFolders(folderId) {
 
     var panel = document.getElementById('panel');
-    var popups = document.querySelector('.popup');
-
-
+    
     if (panel.style.display === 'none' || panel.style.display === '') {
         panel.style.display = 'block';
     } else {
@@ -210,7 +236,7 @@ function toggleFolders(folderId) {
     }
 
     // Ocultar todas las capas
-    var allLayers = document.querySelectorAll('.category');
+    var allLayers = document.querySelectorAll('.category'); // ME TINCA QUE AQUÍ PASA ALGO RARO
     allLayers.forEach(function(layer) {
         layer.style.display = 'none';
     });
@@ -219,10 +245,7 @@ function toggleFolders(folderId) {
     var currentLayer = document.getElementById(folderId + 'Layers');
     currentLayer.style.display = currentLayer.style.display === 'block' ? 'none' : 'block';
 
-    // No oculta los popups
-for (var i = 0; i < popups.length; i++) {
-    popups[i].style.display = 'block';
-  }
+    console.log("toggleFolders OK")
 }
 
 //Esta funcion se usa para id=#flecha. 
@@ -234,21 +257,12 @@ for (var i = 0; i < popups.length; i++) {
     } else {
         panel.style.display = 'none';
     }
+    console.log("togglePanel OK")
 } 
 
 
 
-
-
-
-
-/*  function toggleFolders(folderId) {
-    var layers = document.getElementById(folderId + 'Layers');
-    layers.style.display = layers.style.display === 'block' ? 'none' : 'block';
-}  */
-
-
-
+//NO FUNCIONAN POR ALLOW CORS
 
 /* 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
 
@@ -315,91 +329,16 @@ function toggleLayer(layerId, wfsUrl, iconUrl) {
     }
 }
 
-// Asigna la función a los eventos clic de los botones
-$('#toggleSename').on('click', function () {
-    toggleLayer('sename', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/sename-icon.png');
-});
-
-$('#toggleEleam').on('click', function () {
-    toggleLayer('eleam', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/eleam-icon.png');
-});
-
-$('#toggleSenadis').on('click', function () {
-    toggleLayer('senadis', 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', '/senadis-icon.png');
-}); */
-
-
-/* // Maneja el clic en el botón de alternar capa SENAME
-$('#toggleSename').click(function () {
-    // Obtiene la capa actual del mapa
-    var layer = map.getLayer('sename');
-
-    // Verifica si la capa está activa
-    if (layer) {
-        // Si está activa, la desactiva
-        map.removeLayer('sename');
-        map.removeSource('senameSource');
-    } else {
-        // Si está desactivada, la activa
-        map.addSource('senameSource', {
-            type: 'geojson',
-            data: 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
-        });
-            );
-
-
-        map.loadImage('/sename-icon.png', function (error, image) {
-            if (error) throw error;
-
-            map.addImage('sename-icon', image);
-
-            map.addLayer({
-                id: 'sename',
-                type: 'symbol',
-                source: 'senameSource',
-                layout: {
-                    'icon-image': 'sename-icon',  // Nombre del ícono que cargaste
-                    'icon-size': 1,  // Tamaño del ícono
-                    'icon-allow-overlap': true
-                }
-            });
-        })
-    }
-});
 
 */
 
 
 
-// Función para cambiar el cursor al pasar sobre un punto
-function changeCursorOnMouseEnter(layerName) {
-    map.on('mouseenter', layerName, function () {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-}
 
-// Función para cambiar el cursor al salir de un punto
-function changeCursorOnMouseLeave(layerName) {
-    map.on('mouseleave', layerName, function () {
-        map.getCanvas().style.cursor = '';
-    });
-}
-
-// Llamas a las funciones para cada capa
-changeCursorOnMouseEnter('condominios');
-changeCursorOnMouseLeave('condominios');
-
-changeCursorOnMouseEnter('eleam');
-changeCursorOnMouseLeave('eleam');
-
-changeCursorOnMouseEnter('senadis');
-changeCursorOnMouseLeave('senadis');
-
-
-// Array de objetos para las opciones de la lista desplegable de la región
+// Array de objetos para las opciones de la lista desplegable de la región ////ARREGLAR CODIGOS ******
 var regionOptions = [
-    { value: '15', label: 'Arica', center: [-69.9533, -19.3419], zoom: 8 },
-    { value: '01', label: 'Tarapacá', center: [-69.9533, -19.3419], zoom: 8 },
+    { value: '15', label: 'Arica y Parinacota', center: [-69.9533, -19.2834], zoom: 8 },
+    { value: '01', label: 'Tarapacá', center: [-69.6934, -19.4811], zoom: 8 },
     { value: '02', label: 'Antofagasta', center: [-68.1193, -23.6509], zoom: 8 },
     { value: '03', label: 'Atacama', center: [-70.4024, -26.6415], zoom: 8 },
     { value: '04', label: 'Coquimbo', center: [-71.3375, -29.9711], zoom: 8 },
@@ -417,7 +356,7 @@ var regionOptions = [
     // Agrega más opciones según tus regiones
 ];
 
-// Array de objetos para las opciones de la lista desplegable de la región
+// Array de objetos para las opciones de la lista desplegable de la región ///////////////*** AGREGAR COMNUNAS ARICA */
 var comunaOptions = [
     {cut_reg: '06', value: '06117', region: 'Libertador General Bernardo Ohiggins', label: 'San Vicente', center:[ -71.115331125859001,  -34.460149342504899], zoom: 10 },
     {cut_reg: '06', value: '06116', region: 'Libertador General Bernardo Ohiggins', label: 'Requínoa', center:[ -70.665382524015271,  -34.331725888899527], zoom: 10 },
