@@ -183,7 +183,7 @@ scroll-behavior: auto;
 
   #floating-box {
     border-radius: 2%;
-    display: none; /* Oculta la caja flotante inicialmente */
+    display: block; /* Oculta la caja flotante inicialmente */
     position: absolute;
     top: 1vh;
     right: 8vh;
