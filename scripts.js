@@ -63,9 +63,16 @@ function hideSpinner() {
     document.getElementById('spinner').style.display = 'none';
 }
 
+function closeFloatingBox() {
+    // Oculta la caja flotante
+    document.getElementById('floating-box').style.display = 'none';
+}
+
 
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, sourceUrl, iconUrl) {
+
+
     console.log(layerId, sourceUrl, iconUrl)
     var layer = map.getLayer(layerId);
     if (layer) {
@@ -80,6 +87,10 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         // Si está desactivada, la activa
         // Muestra el spinner antes de cargar la capa
         showSpinner();
+
+    
+        //AddSource
+
         map.addSource(layerId + 'Source', {
             type: 'geojson',
             data: sourceUrl
@@ -103,11 +114,23 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
             }, 1000);
         });
 
+  /*   //checkBox
+    var checkboxId = document.getElementById('checkBox' + layerId);
 
-        map.on('click', 'condominios', function (e) {
-            var nombre = e.features[0].properties.proyecto; // Reemplaza 'nombre' con el nombre del campo en tus datos
-            var direccion = e.features[0].properties.direccion; // Reemplaza 'nombre' con el nombre del campo en tus datos
-            var telefono = e.features[0].properties.telefono; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+    if (checkboxId.style.display === 'none' || checkboxId.style.display === '') {
+        checkboxId.style.display = 'block';
+    } 
+    else {
+        checkboxId.style.display = 'none';
+    } */
+
+        map.on('click', layerId, function (e) {
+  
+            var nombre = e.features[0].properties.SERVICIO; // Reemplaza 'nombre' con el nombre del campo en tus datos
+            var nombre = e.features[0].properties.NOMBRE_DEL; // Reemplaza 'nombre' con el nombre del campo en tus datos
+            var direccion = e.features[0].properties.DIRECCION; // Reemplaza 'nombre' con el nombre del campo en tus datos
+            var telefono = e.features[0].properties.NUMERO; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+            var tipo = e.features[0].properties.TIPO_DE_DI; // Reemplaza 'descripcion' con el nombre del campo en tus datos
 
             console.log("POPUP OK") //ESTO NO SE ESTÁ EJECUTANDO 
 
@@ -115,10 +138,11 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
             document.getElementById('floating-box').innerHTML =
                 `
-                <h3>${nombre}</h3>
-                <p color="grey"><i>Residencia para niños y adolescentes</i></p> 
-                <h6>${direccion}</h6>
-                <h6><div class="icon-container"><i class="fas fa-phone phone-icon"></i></div>  ${telefono}</h6> 
+                <div id="close-btn" onclick="closeFloatingBox()">X</div>    
+
+                <h4><b>${nombre}</b></h4>
+                <p color="grey"><i>${tipo}</i></p> 
+                <h6>Dirección: ${direccion}</h6>
                 `
             // Muestra la caja flotante
             document.getElementById('floating-box').style.display = 'block';
@@ -129,6 +153,9 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         map.on('mouseleave', layerId, function () {
             map.getCanvas().style.cursor = '';
         });
+
+
+
     }
     console.log("AGREGA BIEN LA CAPA AL MAPA")
 }
@@ -136,38 +163,41 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
 // RECOGE PARAMETROS ID, SOURCE Y ENLACE DE ICONO. 
 //1 CARPETA
+
+
+
+
+
 $('#toggleCondominios').on('click', function () {
-    toggleLayer('condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Aa__02_Condominio&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
-    console.log("toggleLayer OK")
+    toggleLayer('Condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 
 });
 
-
-/*  $('#toggleCEDIAM').on('click', function () {
-    toggleLayer('cediam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
+$('#toggleCEDIAM').on('click', function () {
+    toggleLayer('CEDIAM', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
 
 });
 
 $('#toggleELEAM').on('click', function () {
-    toggleLayer('eleam', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__03_Eleam&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
-}); 
-
-$('#toggleReferenciales').on('click', function () {
-    toggleLayer('referenciales', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__04_Referenciales&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+    toggleLayer('ELEAM', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__03_Eleam&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
-$('#toggleCentros').on('click', function () {
-    toggleLayer('centros', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+$('#toggleReferenciales').on('click', function () {
+    toggleLayer('Referenciales', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__04_Referenciales&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+});
+
+$('#toggleCentrosDomiciliarios').on('click', function () {
+    toggleLayer('toggleCentrosDomiciliarios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
 //2 CARPETA
 
 $('#toggleSenadis').on('click', function () {
-    toggleLayer('senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
+    toggleLayer('Senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 $('#toggleAdultosResidencias').on('click', function () {
-    toggleLayer('adultosResidencias', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
+    toggleLayer('adultosAdultosResidenciass', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 $('#toggleDOI').on('click', function () {
@@ -177,48 +207,34 @@ $('#toggleDOI').on('click', function () {
 //3 CARPETA
 
 $('#toggleCuidadoras').on('click', function () {
-    toggleLayer('cuidadoras', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_prog4a7_20240109020355&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
+    toggleLayer('Cuidadoras', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_prog4a7_20240109020355&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
 $('#toggleRedLocalApoyo').on('click', function () {
-    toggleLayer('redlocalapoyo', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_cat031_20240108061528&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
+    toggleLayer('RedLocalApoyo', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_cat031_20240108061528&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
 $('#togglePrograma4a7').on('click', function () {
-    toggleLayer('programa4a7', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
+    toggleLayer('Programa4a7', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
 $('#toggleRedLocal').on('click', function () {
-    toggleLayer('redlocal', '', '/programasCuidados.png');
+    toggleLayer('RedLocal', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARedLocal2&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
 //4 CARPETA
 
 $('#toggleFIADI').on('click', function () {
-    toggleLayer('fiadi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AFIADI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
+    toggleLayer('FIADI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AFIADI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
 });
 
 $('#toggleHEPI').on('click', function () {
-    toggleLayer('hepi', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AHepi&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
+    toggleLayer('HEPI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AHepi&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
 });
 
 $('#toggleNEP').on('click', function () {
-    toggleLayer('nep', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
-}); */
-
-// Añade un pop-up a la capa CONDOMINIOS cuando se le hace clic. 
-
-
-function closeFloatingBox() {
-    // Oculta la caja flotante
-    document.getElementById('floating-box').style.display = 'block';
-}
-
-
-
-
-//FALTA AGREGAR LOS POPUPS PARA LAS OTRAS CAPAS. NO LO VOY A AUTOMATIZAR PQ CADA CAPA TIENE DISTINTOS NOMBRES DE CAMPO. 
-
+    toggleLayer('NEP', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
+});
 
 
 // ESTA FUNCION ES PARA HACER TOGGLE EN EL PANEL, Y ADEMÁS TRAER LAS CAPAS DE CADA CATEGORÍA. ESTA DEBE SER LA QUE OCASIONA PROBLEMA CON EL POP-UP
