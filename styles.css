@@ -36,7 +36,7 @@ header {
     background-color: white; /* Color de fondo del panel */
     padding: 5px; /* Añade un relleno para mayor espacio interno */
     box-sizing: border-box; /* Incluye el relleno y el borde en el tamaño total del elemento */
-    position: relative; /* Permite que el panel sea fijo en la pantalla */
+    position: fixed; /* Permite que el panel sea fijo en la pantalla */
     height: 100%; /* Ocupa el 100% de la altura de la página */
     overflow-y: auto; /* Añade desplazamiento vertical si el contenido es demasiado largo */
     overflow-x: hidden;
