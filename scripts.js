@@ -71,7 +71,16 @@ function closeFloatingBox() {
 
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, sourceUrl, iconUrl) {
-
+    
+     //checkBox
+     var checkboxId = document.getElementById('checkBox' + layerId);
+      
+     if (checkboxId.style.display === 'none' || checkboxId.style.display === '') {
+         checkboxId.style.display = 'block';
+     } 
+     else {
+         checkboxId.style.display = 'none';
+     } 
 
     console.log(layerId, sourceUrl, iconUrl)
     var layer = map.getLayer(layerId);
@@ -88,7 +97,7 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         // Muestra el spinner antes de cargar la capa
         showSpinner();
 
-    
+
         //AddSource
 
         map.addSource(layerId + 'Source', {
@@ -114,23 +123,56 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
             }, 1000);
         });
 
-  /*   //checkBox
-    var checkboxId = document.getElementById('checkBox' + layerId);
+    
 
-    if (checkboxId.style.display === 'none' || checkboxId.style.display === '') {
-        checkboxId.style.display = 'block';
-    } 
-    else {
-        checkboxId.style.display = 'none';
-    } */
+        // Función para obtener el mapeo de propiedades según la layerId
+        function getPropertyMapping(layerId) {
+            // Implementa lógica para asignar propiedades según layerId
+            switch (layerId) {
+                case 'Condominios':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'CEDIAM':
+                    return { nombre: 'SERVICIO', direccion: 'DIRECCION', comuna: 'comuna', telefono: 'NUM_TELEF', tipo: 'TIPO_SERVI' };
+                case 'ELEAM':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'Referenciales':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'CentrosDomiciliarios':
+                    return { nombre: 'Organismo', direccion: 'direccion', comuna: 'Comuna', tipo: 'subcategoría' };
+                case 'AdultosResidencias':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'DOI':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'Cuidadoras':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'RedLocalApoyo':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'Programa4a7':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'RedLocal':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'FIADI':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'HEPI':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                case 'NEP':
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                // Agrega más casos según sea necesario
+                default:
+                    return { nombre: 'ND', direccion: 'ND', telefono: 'ND', tipo: 'ND' };
+            }
+        }
 
         map.on('click', layerId, function (e) {
-  
-            var nombre = e.features[0].properties.SERVICIO; // Reemplaza 'nombre' con el nombre del campo en tus datos
-            var nombre = e.features[0].properties.NOMBRE_DEL; // Reemplaza 'nombre' con el nombre del campo en tus datos
-            var direccion = e.features[0].properties.DIRECCION; // Reemplaza 'nombre' con el nombre del campo en tus datos
-            var telefono = e.features[0].properties.NUMERO; // Reemplaza 'descripcion' con el nombre del campo en tus datos
-            var tipo = e.features[0].properties.TIPO_DE_DI; // Reemplaza 'descripcion' con el nombre del campo en tus datos
+
+            // Define un mapeo de propiedades según la layerId
+            var propertyMapping = getPropertyMapping(layerId);
+
+            var nombre = propertyMapping.nombre && e.features[0].properties[propertyMapping.nombre];
+            var direccion = propertyMapping.direccion && e.features[0].properties[propertyMapping.direccion];
+            var comuna = propertyMapping.comuna && e.features[0].properties[propertyMapping.comuna];
+            var telefono = propertyMapping.telefono && e.features[0].properties[propertyMapping.telefono];
+            var tipo = propertyMapping.tipo && e.features[0].properties[propertyMapping.tipo];
 
             console.log("POPUP OK") //ESTO NO SE ESTÁ EJECUTANDO 
 
@@ -138,12 +180,12 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 
             document.getElementById('floating-box').innerHTML =
                 `
-                <div id="close-btn" onclick="closeFloatingBox()">X</div>    
-
-                <h4><b>${nombre}</b></h4>
-                <p color="grey"><i>${tipo}</i></p> 
-                <h6>Dirección: ${direccion}</h6>
-                `
+            <div id="close-btn" onclick="closeFloatingBox()">X</div>    
+    
+            <h5><b>${nombre || ''}</b></h5>
+            <p color="grey"><i>${tipo || ''}</i></p> 
+            <h6><b>Dirección</b>: ${direccion || ''}, ${comuna || ''}</h6>
+            `
             // Muestra la caja flotante
             document.getElementById('floating-box').style.display = 'block';
         });
@@ -187,7 +229,7 @@ $('#toggleReferenciales').on('click', function () {
 });
 
 $('#toggleCentrosDomiciliarios').on('click', function () {
-    toggleLayer('toggleCentrosDomiciliarios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+    toggleLayer('CentrosDomiciliarios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
 //2 CARPETA
@@ -197,7 +239,7 @@ $('#toggleSenadis').on('click', function () {
 });
 
 $('#toggleAdultosResidencias').on('click', function () {
-    toggleLayer('adultosAdultosResidenciass', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
+    toggleLayer('AdultosResidencias', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 $('#toggleDOI').on('click', function () {

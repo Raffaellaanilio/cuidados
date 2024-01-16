@@ -254,9 +254,9 @@ scroll-behavior: auto;
     
     #floating-box {
       max-width: 95%; /* Opcional: Ajusta según sea necesario */
-      height: 30vh;
+      max-height: 30vh;
+      height: fit-content;
       right: 1vh;
-    top: 55 vh;
     scroll-behavior: auto;
     opacity: 95%;
     }
