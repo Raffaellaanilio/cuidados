@@ -8,8 +8,13 @@ const map = new maplibregl.Map({
     zoom: 2
 });
 
-
 map.addControl(new maplibregl.NavigationControl());
+
+// Remover la brújula del control de navegación
+var compassElement = document.querySelector('.maplibregl-ctrl-compass');
+if (compassElement) {
+    compassElement.parentNode.removeChild(compassElement);
+}
 
 function locateUser() {
     if (navigator.geolocation) {
@@ -28,7 +33,6 @@ function locateUser() {
         alert('Tu navegador no admite la geolocalización.');
     }
 }
-
 
 map.on('load', function () {
     map.addSource('regionesSource', {
@@ -202,7 +206,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
             ${nombre ? `<h5><b>${nombre || ''}</b></h5>` : ''}
             ${servicio ? `<p color="grey"><i>${servicio || ''}</i></p>` : ''}
             <h6><b>Dirección</b>: ${direccion ? `${direccion}, ` : ''}${comuna ? `${comuna}, ` : ''}${region ? `${region}.` : ''}
-            ${correo ? `<h6><b>Teléfono</b>: ${telefono || ''}}</h6>` : ''}
+            ${telefono ? `<h6><b>Teléfono</b>: ${telefono || ''}}</h6>` : ''}
             ${correo ? `<h6><b>Correo</b>: ${correo || ''}</h6>` : ''}
 
             `
@@ -392,22 +396,22 @@ function toggleLayer(layerId, wfsUrl, iconUrl) {
 
 // Array de objetos para las opciones de la lista desplegable de la región ////ARREGLAR CODIGOS ******
 var regionOptions = [
-    { value: '15', label: 'Arica y Parinacota', center: [-69.9533, -19.2834], zoom: 8 },
-    { value: '01', label: 'Tarapacá', center: [-69.6934, -19.4811], zoom: 8 },
-    { value: '02', label: 'Antofagasta', center: [-68.1193, -23.6509], zoom: 8 },
-    { value: '03', label: 'Atacama', center: [-70.4024, -26.6415], zoom: 8 },
-    { value: '04', label: 'Coquimbo', center: [-71.3375, -29.9711], zoom: 8 },
-    { value: '05', label: 'Valparaíso', center: [-71.6275, -33.0472], zoom: 8 },
-    { value: '13', label: 'Metropolitana', center: [-70.6483, -33.4691], zoom: 9 },
-    { value: '06', label: 'OHiggins', center: [-70.9228, -34.5744], zoom: 9 },
-    { value: '07', label: 'Maule', center: [-71.6924, -35.4259], zoom: 8 },
-    { value: '08', label: 'Ñuble', center: [-72.4762, -36.6398], zoom: 9 },
-    { value: '09', label: 'Biobío', center: [-71.6453, -37.1806], zoom: 8 },
-    { value: '10', label: 'Araucanía', center: [-72.7107, -38.9489], zoom: 8 },
-    { value: '11', label: 'Los Ríos', center: [-72.4638, -39.8132], zoom: 9 },
-    { value: '12', label: 'Los Lagos', center: [-73.2412, -41.6372], zoom: 8 },
-    { value: '14', label: 'Aysén', center: [-72.8258, -45.9864], zoom: 8 },
-    { value: '16', label: 'Magallanes', center: [-70.9394, -53.0818], zoom: 7 }
+    { value: '15', label: 'Arica y Parinacota', center: [-70.3026, -18.4783], zoom: 7 },
+    { value: '01', label: 'Tarapacá', center: [-69.3269, -19.9239], zoom: 7 },
+    { value: '02', label: 'Antofagasta', center: [-68.9554, -23.4226], zoom: 7 },
+    { value: '03', label: 'Atacama', center: [-70.9834, -27.4975], zoom: 7 },
+    { value: '04', label: 'Coquimbo', center: [-71.3375, -29.9711], zoom: 7 },
+    { value: '05', label: 'Valparaíso', center: [-71.6251, -32.7781], zoom: 7 },
+    { value: '13', label: 'Metropolitana', center: [-70.6058, -33.4378], zoom: 7 },
+    { value: '06', label: 'OHiggins', center: [-70.7152, -34.6354], zoom: 7 },
+    { value: '07', label: 'Maule', center: [-71.5744, -35.6654], zoom: 7 },
+    { value: '16', label: 'Ñuble', center: [-71.5374, -36.4966], zoom: 7 },
+    { value: '08', label: 'Biobío', center: [-72.2426, -37.4468], zoom: 7 },
+    { value: '09', label: 'La Araucanía', center: [-71.9996, -38.9489], zoom: 7 },
+    { value: '10', label: 'Los Lagos', center: [-72.3147, -41.7492], zoom: 7 },
+    { value: '14', label: 'Los Ríos', center: [-72.1652, -39.6465], zoom: 7 },
+    { value: '11', label: 'Aysén', center: [-73.2475, -45.9751], zoom: 7 },
+    { value: '12', label: 'Magallanes', center: [-73.0802, -52.8191], zoom: 7 },
 ];
 
 // Array de objetos para las opciones de la lista desplegable de la región ///////////////*** AGREGAR COMNUNAS ARICA */
@@ -572,7 +576,6 @@ var comunaOptions = [
     { cut_reg: '08', value: '08302', region: 'Biobío', label: 'Antuco', center: [-71.419044816988375, -37.271786125430715], zoom: 10 },
     { cut_reg: '08', value: '08301', region: 'Biobío', label: 'Los Angeles', center: [-72.293099384282158, -37.410966598073315], zoom: 10 },
     { cut_reg: '12', value: '12103', region: 'Magallanes y de la Antártica Chilena', label: 'Río Verde', center: [-72.941338113673424, -52.877225090020957], zoom: 10 },
-    { cut_reg: '12', value: '12101', region: 'Magallanes y de la Antártica Chilena', label: 'Punta Arenas', center: [-71.147355460532566, -52.741922819437029], zoom: 10 },
     { cut_reg: '12', value: '12101', region: 'Magallanes y de la Antártica Chilena', label: 'Punta Arenas', center: [-72.895251130152985, -53.750603798153534], zoom: 10 },
     { cut_reg: '05', value: '05706', region: 'Valparaíso', label: 'Santa María', center: [-70.607125911679702, -32.692340428895626], zoom: 10 },
     { cut_reg: '05', value: '05705', region: 'Valparaíso', label: 'Putaendo', center: [-70.53377326114142, -32.496362628979362], zoom: 10 },
@@ -747,24 +750,25 @@ var comunaOptions = [
     { cut_reg: '16', value: '16101', region: 'Ñuble', label: 'Chillán', center: [-72.2845, -36.6282], zoom: 10 },
     { cut_reg: '02', value: '02102', region: 'Antofagasta', label: 'Mejillones', center: [-70.2501, -22.8938], zoom: 10 },
     { cut_reg: '10', value: '10108', region: 'Los Lagos', label: 'Maullín', center: [-73.5988, -41.6391], zoom: 10 },
-    { cut_reg: '09', value: '09114', region: 'La Araucanía', label: 'Pitrufquén', center: [-72.6320, 39.0251], zoom: 10 },
-    { cut_reg: '07', value: '07302', region: 'Maule', label: 'Hualañé', center: [null, null], zoom: 10 },
-    { cut_reg: '05', value: '05502', region: 'Valparaíso', label: 'Calera', center: [null, null], zoom: 10 },
-    { cut_reg: '08', value: '08102', region: 'Biobío', label: 'Coronel', center: [null, null], zoom: 10 },
-    { cut_reg: '07', value: '07303', region: 'Maule', label: 'Licantén', center: [null, null], zoom: 10 },
-    { cut_reg: '11', value: '11203', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Guaitecas', center: [null, null], zoom: 10 },
-    { cut_reg: '12', value: '12301', region: 'Magallanes y de la Antártica Chilena', label: 'Porvenir', center: [null, null], zoom: 10 },
-    { cut_reg: '05', value: '05201', region: 'Valparaíso', label: 'Isla de Pascua', center: [null, null], zoom: 10 },
-    { cut_reg: '10', value: '10102', region: 'Los Lagos', label: 'Calbuco', center: [null, null], zoom: 10 },
-    { cut_reg: '10', value: '10101', region: 'Los Lagos', label: 'Puerto Montt', center: [null, null], zoom: 10 },
-    { cut_reg: '12', value: '12401', region: 'Magallanes y de la Antártica Chilena', label: 'Natales', center: [null, null], zoom: 10 },
-    { cut_reg: '10', value: '10209', region: 'Los Lagos', label: 'Quemchi', center: [null, null], zoom: 10 },
-    { cut_reg: '08', value: '08201', region: 'Biobío', label: 'Lebu', center: [null, null], zoom: 10 },
-    { cut_reg: '12', value: '12104', region: 'Magallanes y de la Antártica Chilena', label: 'San Gregorio', center: [null, null], zoom: 10 },
-    { cut_reg: '13', value: '13401', region: 'Metropolitana de Santiago', label: 'San Bernardo', center: [null, null], zoom: 10 },
-    { cut_reg: '05', value: '05102', region: 'Valparaíso', label: 'Casablanca', center: [null, null], zoom: 10 },
-    { cut_reg: '10', value: '10210', region: 'Los Lagos', label: 'Quinchao', center: [null, null], zoom: 10 },
-    { cut_reg: '05', value: '05104', region: 'Valparaíso', label: 'Juan Fernández', center: [null, null], zoom: 10 },
+    { cut_reg: '09', value: '09114', region: 'La Araucanía', label: 'Pitrufquén', center: [-72.6320, -39.0251], zoom: 10 },
+    { cut_reg: '07', value: '07302', region: 'Maule', label: 'Hualañé', center: [-72.9737, -34.9713], zoom: 10 },
+    { cut_reg: '05', value: '05502', region: 'Valparaíso', label: 'Calera', center: [-71.2057, -32.7884], zoom: 10 },
+    { cut_reg: '08', value: '08102', region: 'Biobío', label: 'Coronel', center: [-73.1579, -37.0166], zoom: 10 },
+    { cut_reg: '07', value: '07303', region: 'Maule', label: 'Licantén', center: [-71.7431, -34.9674], zoom: 10 },
+    { cut_reg: '11', value: '11203', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Guaitecas', center: [-73.3632, -43.9312], zoom: 10 },
+    { cut_reg: '12', value: '12301', region: 'Magallanes y de la Antártica Chilena', label: 'Porvenir', center: [-70.4014, -53.3007], zoom: 10 },
+    { cut_reg: '05', value: '05201', region: 'Valparaíso', label: 'Isla de Pascua', center: [-109.4213, -27.1127], zoom: 10 },
+    { cut_reg: '10', value: '10102', region: 'Los Lagos', label: 'Calbuco', center: [-73.1316, -41.7683], zoom: 10 },
+    { cut_reg: '10', value: '10101', region: 'Los Lagos', label: 'Puerto Montt', center: [-72.9402, -41.4718], zoom: 10 },
+    { cut_reg: '12', value: '12401', region: 'Magallanes y de la Antártica Chilena', label: 'Natales', center: [-72.5043, -51.7287], zoom: 10 },
+    { cut_reg: '10', value: '10209', region: 'Los Lagos', label: 'Quemchi', center: [-73.5172, -42.1374], zoom: 10 },
+    { cut_reg: '08', value: '08201', region: 'Biobío', label: 'Lebu', center: [-73.6463, -37.6056], zoom: 10 },
+    { cut_reg: '12', value: '12104', region: 'Magallanes y de la Antártica Chilena', label: 'San Gregorio', center: [-69.7929, -51.6242], zoom: 10 },
+    { cut_reg: '13', value: '13401', region: 'Metropolitana de Santiago', label: 'San Bernardo', center: [-70.7187, -33.5922], zoom: 10 },
+    { cut_reg: '05', value: '05102', region: 'Valparaíso', label: 'Casablanca', center: [-71.4172, -33.3251], zoom: 10 },
+    { cut_reg: '10', value: '10210', region: 'Los Lagos', label: 'Quinchao', center: [-73.4492, -42.3708], zoom: 10 },
+    { cut_reg: '05', value: '05104', region: 'Valparaíso', label: 'Juan Fernández', center: [-78.8368, -33.6366], zoom: 10 },
+   
 ];
 
 // Agrega la opción predeterminada "Seleccionar región"
