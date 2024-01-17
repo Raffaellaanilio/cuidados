@@ -1,13 +1,14 @@
-body, html{
+body,
+html {
     display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Roboto', sans-serif;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
 }
 
-#map{
+#map {
     flex: 1;
     position: relative;
 }
@@ -18,27 +19,24 @@ header {
     z-index: 5000;
 }
 
-/* Estilos para el footer */
 .footer {
     height: 100%;
     width: 100%;
-    background-color: white; /* Fondo con transparencia */
-    text-align: center; /* Alineación del texto al centro */
-    z-index: 9000; /* Asegura que el pie de página esté en la parte superior de otros elementos */
-    padding: 0px; /* Espaciado interno */
+    background-color: white;
+    text-align: center;
+    z-index: 9000;
+    padding: 0px;
 }
 
-
-/* LO SIGUIENTE ES PARA USAR PANEL A LA IZQUIERDA EN VEZ DE FOOTER */
 .panel {
     display: none;
-    width: 20%; /* Ocupa el 25% del ancho de la página */
-    background-color: white; /* Color de fondo del panel */
-    padding: 5px; /* Añade un relleno para mayor espacio interno */
-    box-sizing: border-box; /* Incluye el relleno y el borde en el tamaño total del elemento */
-    position: fixed; /* Permite que el panel sea fijo en la pantalla */
-    height: 100%; /* Ocupa el 100% de la altura de la página */
-    overflow-y: auto; /* Añade desplazamiento vertical si el contenido es demasiado largo */
+    width: 20%;
+    background-color: white;
+    padding: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
     overflow-x: hidden;
     z-index: 5000;
     border-radius: 1%;
@@ -46,18 +44,24 @@ header {
     opacity: 80%;
 }
 
-.card.layer.col-12{
-    background-color: #f0f0f0; /* Color de fondo del panel */
+.checkbox {
+    margin-right: 1vh;
+    margin-top: 0.5vh;
+    color: #0A132D;
+}
+
+.card.layer.col-12 {
+    background-color: #f0f0f0;
     margin-top: 3vh;
     background-color: white;
 }
 
-.card.layer.col-12 img{
+.card.layer.col-12 img {
     width: 4vh;
     margin-right: 1vh;
 }
 
-.card.layer.col-12:hover{
+.card.layer.col-12:hover {
     background-color: whitesmoke;
 }
 
@@ -66,7 +70,7 @@ header {
     flex-direction: column;
 }
 
-.layer{
+.layer {
     border: 0;
 }
 
@@ -76,9 +80,9 @@ header {
 }
 
 .categorias a {
-    display: flex; /* Utiliza el modelo de caja flexible para los elementos enlazados */
-    align-items: center; /* Alinea elementos verticalmente en el centro */
-    text-decoration: none; /* Elimina el subrayado predeterminado de los enlaces */
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .categorias img {
@@ -96,19 +100,19 @@ header {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: #0A132D; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    padding: 10px 20px; /* Espaciado interno */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el elemento */
-    border-radius: 5px; /* Bordes redondeados */
-    font-size: 18px; /* Tamaño del texto */
-    font-weight: bold; /* Texto en negrita */
-    transition: background-color 0.3s ease; /* Transición suave en el cambio de color de fondo */
+    background-color: #0A132D;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 .folder-icon {
     width: 2vh;
-    margin:0.5vh;
+    margin: 0.5vh;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -121,47 +125,45 @@ header {
 }
 
 .map-popup {
-min-width: fit-content;
-width: fit-content;
-scroll-behavior: auto;
+    min-width: fit-content;
+    width: fit-content;
+    scroll-behavior: auto;
 }
 
 .icon-container {
     display: inline-block;
-    background-color: #007bff; /* Color del fondo circular */
-    border-radius: 50%; /* Hace que el contenedor sea circular */
-    padding: 10px; /* Ajusta el espacio alrededor del ícono */
+    background-color: #007bff;
+    border-radius: 50%;
+    padding: 10px;
 }
 
-/* Estilos para el ícono dentro del fondo circular */
 .icon-container i {
-    color: #fff; /* Color del ícono */
+    color: #fff;
 }
 
-
- .icon-footer {
+.icon-footer {
     display: flex;
     justify-content: space-around;
     margin: 0vh;
     display: flex;
-} 
+}
 
 .icon-buttons a {
-    color: #007bff; /* Color de enlace */
+    color: #007bff;
     text-decoration: none;
 }
 
 .icon-buttons i {
-    font-size: 24px; /* Tamaño del ícono */
+    font-size: 24px;
 }
-  
-  #close-btn {
+
+#close-btn {
     cursor: pointer;
     float: right;
     font-weight: bold;
-  }
+}
 
-  #flecha {
+#flecha {
     border-radius: 30%;
     position: fixed;
     right: 170vh;
@@ -170,20 +172,19 @@ scroll-behavior: auto;
     border: 1px solid #ccc;
     z-index: 6000;
     grid-auto-flow: column;
-    max-height: 70vh; /* Ajusta la altura máxima según tus necesidades */
-    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
-    top: 10px; /* Ajusta según sea necesario */
-    left: 10px; /* Ajusta según sea necesario */
-    max-width: 300px; /* Ajusta según sea necesario */
+    max-height: 70vh;
+    overflow-y: auto;
+    top: 10px;
+    left: 10px;
+    max-width: 300px;
     padding: 10px;
     margin: 2vh;
     border: 1;
-  }
+}
 
-
-  #floating-box {
+#floating-box {
     border-radius: 2%;
-    display: none; /* Oculta la caja flotante inicialmente */
+    display: none;
     position: absolute;
     top: 1vh;
     right: 8vh;
@@ -193,17 +194,16 @@ scroll-behavior: auto;
     opacity: 80%;
     z-index: 10000;
     grid-auto-flow: column;
-    max-height: 70vh; /* Ajusta la altura máxima según tus necesidades */
-    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
-    top: 10px; /* Ajusta según sea necesario */
-    max-width: 300px; /* Ajusta según sea necesario */
+    max-height: 70vh;
+    overflow-y: auto;
+    top: 10px;
+    max-width: 300px;
     padding: 10px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+}
 
-    
-  .spinner-container {
+.spinner-container {
     display: none;
     border-radius: 5%;
     position: absolute;
@@ -221,9 +221,9 @@ scroll-behavior: auto;
     padding: 10px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .toggle-button {
+.toggle-button {
     cursor: pointer;
 }
 
@@ -231,37 +231,40 @@ scroll-behavior: auto;
     width: 20px;
 }
 
-
-  .categorias:hover {
+.categorias:hover {
     background-color: rgb(219, 219, 232);
     border-radius: 1%;
-  }
-  
+}
 
-  #searchInput {
+#searchInput {
     margin-bottom: 10px;
 }
 
-#logo{
+#logo {
     width: 8vh;
 }
 
-.foto{
-    width:50%;
+.foto {
+    width: 50%;
 }
 
+.categoriasFooter:hover{
+    background-color: #ededed;
+}
+
+
 @media only screen and (max-width: 600px) {
-    
+
     #floating-box {
-      max-width: 95%; /* Opcional: Ajusta según sea necesario */
-      max-height: 30vh;
-      height: fit-content;
-      right: 1vh;
-    scroll-behavior: auto;
-    opacity: 95%;
+        max-width: 95%;
+        max-height: 30vh;
+        height: fit-content;
+        right: 1vh;
+        scroll-behavior: auto;
+        opacity: 95%;
     }
 
-    #logo{
+    #logo {
         width: 5vh;
     }
 
@@ -270,8 +273,12 @@ scroll-behavior: auto;
         height: 100%;
     }
 
-    #flecha{
+    #flecha {
         margin: 0vh;
     }
 
-  }
+    .footer-text{
+        font-size: xx-small;
+    }
+
+}

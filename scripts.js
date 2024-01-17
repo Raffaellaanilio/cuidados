@@ -70,17 +70,17 @@ function closeFloatingBox() {
 
 
 // Función para manejar la activación/desactivación de capas
-function toggleLayer(layerId, sourceUrl, iconUrl) {
-    
-     //checkBox
-     var checkboxId = document.getElementById('checkBox' + layerId);
-      
-     if (checkboxId.style.display === 'none' || checkboxId.style.display === '') {
-         checkboxId.style.display = 'block';
-     } 
-     else {
-         checkboxId.style.display = 'none';
-     } 
+function toggleLayer(type, layerId, sourceUrl, iconUrl) {
+
+    //checkBox
+    var checkboxId = document.getElementById('checkBox' + layerId);
+
+    if (checkboxId.style.display === 'none' || checkboxId.style.display === '') {
+        checkboxId.style.display = 'block';
+    }
+    else {
+        checkboxId.style.display = 'none';
+    }
 
     console.log(layerId, sourceUrl, iconUrl)
     var layer = map.getLayer(layerId);
@@ -97,69 +97,85 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         // Muestra el spinner antes de cargar la capa
         showSpinner();
 
-
         //AddSource
 
         map.addSource(layerId + 'Source', {
             type: 'geojson',
             data: sourceUrl
         });
-        map.loadImage(iconUrl, function (error, image) {
-            if (error) throw error;
-            map.addImage(layerId + '-icon', image);
+
+        if (type === 'symbol') {
+            map.loadImage(iconUrl, function (error, image) {
+                if (error) throw error;
+                map.addImage(layerId + '-icon', image);
+                map.addLayer({
+                    id: layerId,
+                    type: 'symbol',
+                    source: layerId + 'Source',
+                    layout: {
+                        'icon-image': layerId + '-icon',
+                        'icon-size': 1,
+                        'icon-allow-overlap': true
+                    }
+                });
+                // Oculta el spinner después de cargar la capa
+                setTimeout(function () {
+                    hideSpinner();
+                }, 1000);
+            });
+
+        } else if (type === 'fill') {
+            // Si la capa es de tipo polígono
             map.addLayer({
                 id: layerId,
-                type: 'symbol',
+                type: 'fill',
                 source: layerId + 'Source',
-                layout: {
-                    'icon-image': layerId + '-icon',
-                    'icon-size': 1,
-                    'icon-allow-overlap': true
+                paint: {
+                    'fill-color': '#820a82',
+                    'fill-opacity': 0.8
                 }
             });
             // Oculta el spinner después de cargar la capa
             setTimeout(function () {
                 hideSpinner();
-            }, 1000);
-        });
-
-    
+            }, 20000);
+        };
 
         // Función para obtener el mapeo de propiedades según la layerId
         function getPropertyMapping(layerId) {
             // Implementa lógica para asignar propiedades según layerId
             switch (layerId) {
                 case 'Condominios':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', servicio: 'TIPO_DE_DI' };
                 case 'CEDIAM':
-                    return { nombre: 'SERVICIO', direccion: 'DIRECCION', comuna: 'comuna', telefono: 'NUM_TELEF', tipo: 'TIPO_SERVI' };
+                    return { nombre: 'SERVICIO', direccion: 'DIRECCION', comuna: 'COMUNA', servicio: 'TIPO_DE_DI' };
                 case 'ELEAM':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', servicio: 'TIPO_DE_DI' };
                 case 'Referenciales':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', servicio: 'TIPO_DE_DI' };
                 case 'CentrosDomiciliarios':
-                    return { nombre: 'Organismo', direccion: 'direccion', comuna: 'Comuna', tipo: 'subcategoría' };
+                    return { nombre: 'Organismo', direccion: 'direccion', comuna: 'Comuna', servicio: 'Subcatego' };
                 case 'AdultosResidencias':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', telefono: 'NUMERO', servicio: 'TIPO_DE_DI' };
                 case 'DOI':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
-                case 'Cuidadoras':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
-                case 'RedLocalApoyo':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', servicio: 'TIPO_DE_DI' };
                 case 'Programa4a7':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
-                case 'RedLocal':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DIS', direccion: 'direccion', telefono: 'Telefono', servicio: 'TIPO_DISPO', correo: 'CORREO_ELE' };
+                case 'RedLocalMunicipios':
+                    return { nombre: 'Servicio', direccion: 'Direccion', comuna: 'COMUNA', region: 'REGION' };
+                /*   case 'RedLocalApoyo':
+                      return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', servicio: 'TIPO_DE_DI' }; */
                 case 'FIADI':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'Servicio', direccion: 'Dir_Com', correo: 'Contacto' };
                 case 'HEPI':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'Servicio', direccion: 'Field8' };
                 case 'NEP':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', tipo: 'TIPO_DE_DI' };
+                    return { nombre: 'Servicio', direccion: 'Dir_Comple' };
+                case 'CorreosDeChile':
+                    return { nombre: 'NOMBRE', direccion: 'DIRECCION_' };
                 // Agrega más casos según sea necesario
                 default:
-                    return { nombre: 'ND', direccion: 'ND', telefono: 'ND', tipo: 'ND' };
+                    return { nombre: 'ND', direccion: 'ND', telefono: 'ND', servicio: 'ND' };
             }
         }
 
@@ -171,20 +187,24 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
             var nombre = propertyMapping.nombre && e.features[0].properties[propertyMapping.nombre];
             var direccion = propertyMapping.direccion && e.features[0].properties[propertyMapping.direccion];
             var comuna = propertyMapping.comuna && e.features[0].properties[propertyMapping.comuna];
+            var region = propertyMapping.region && e.features[0].properties[propertyMapping.region];
             var telefono = propertyMapping.telefono && e.features[0].properties[propertyMapping.telefono];
-            var tipo = propertyMapping.tipo && e.features[0].properties[propertyMapping.tipo];
+            var correo = propertyMapping.correo && e.features[0].properties[propertyMapping.correo];
+            var servicio = propertyMapping.tipo && e.features[0].properties[propertyMapping.tipo];
 
-            console.log("POPUP OK") //ESTO NO SE ESTÁ EJECUTANDO 
+            console.log("POPUP OK")
 
             // Actualiza el contenido de la caja flotante
-
             document.getElementById('floating-box').innerHTML =
                 `
             <div id="close-btn" onclick="closeFloatingBox()">X</div>    
     
-            <h5><b>${nombre || ''}</b></h5>
-            <p color="grey"><i>${tipo || ''}</i></p> 
-            <h6><b>Dirección</b>: ${direccion || ''}, ${comuna || ''}</h6>
+            ${nombre ? `<h5><b>${nombre || ''}</b></h5>` : ''}
+            ${servicio ? `<p color="grey"><i>${servicio || ''}</i></p>` : ''}
+            <h6><b>Dirección</b>: ${direccion ? `${direccion}, ` : ''}${comuna ? `${comuna}, ` : ''}${region ? `${region}.` : ''}
+            ${correo ? `<h6><b>Teléfono</b>: ${telefono || ''}}</h6>` : ''}
+            ${correo ? `<h6><b>Correo</b>: ${correo || ''}</h6>` : ''}
+
             `
             // Muestra la caja flotante
             document.getElementById('floating-box').style.display = 'block';
@@ -195,9 +215,6 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
         map.on('mouseleave', layerId, function () {
             map.getCanvas().style.cursor = '';
         });
-
-
-
     }
     console.log("AGREGA BIEN LA CAPA AL MAPA")
 }
@@ -206,76 +223,66 @@ function toggleLayer(layerId, sourceUrl, iconUrl) {
 // RECOGE PARAMETROS ID, SOURCE Y ENLACE DE ICONO. 
 //1 CARPETA
 
-
-
-
-
 $('#toggleCondominios').on('click', function () {
-    toggleLayer('Condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+    toggleLayer('symbol', 'Condominios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 
 });
 
 $('#toggleCEDIAM').on('click', function () {
-    toggleLayer('CEDIAM', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
+    toggleLayer('symbol', 'CEDIAM', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&maxFeatures=50&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326', 'images/ProgramasSENAMA1.png');
 
 });
 
 $('#toggleELEAM').on('click', function () {
-    toggleLayer('ELEAM', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__03_Eleam&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+    toggleLayer('symbol', 'ELEAM', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__03_Eleam&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
 $('#toggleReferenciales').on('click', function () {
-    toggleLayer('Referenciales', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__04_Referenciales&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+    toggleLayer('symbol', 'Referenciales', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__04_Referenciales&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
 $('#toggleCentrosDomiciliarios').on('click', function () {
-    toggleLayer('CentrosDomiciliarios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
+    toggleLayer('symbol', 'CentrosDomiciliarios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__05_Centros&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENAMA1.png');
 });
 
 //2 CARPETA
-
 $('#toggleSenadis').on('click', function () {
-    toggleLayer('Senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
+    toggleLayer('symbol', 'Senadis', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 $('#toggleAdultosResidencias').on('click', function () {
-    toggleLayer('AdultosResidencias', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
+    toggleLayer('symbol', 'AdultosResidencias', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 $('#toggleDOI').on('click', function () {
-    toggleLayer('DOI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ADOI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
+    toggleLayer('symbol', 'DOI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ADOI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasSENADIS.png');
 });
 
 //3 CARPETA
-
-$('#toggleCuidadoras').on('click', function () {
-    toggleLayer('Cuidadoras', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_prog4a7_20240109020355&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
-});
-
-$('#toggleRedLocalApoyo').on('click', function () {
-    toggleLayer('RedLocalApoyo', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_cat031_20240108061528&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
-});
-
 $('#togglePrograma4a7').on('click', function () {
-    toggleLayer('Programa4a7', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
+    toggleLayer('symbol', 'Programa4a7', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
 });
 
-$('#toggleRedLocal').on('click', function () {
-    toggleLayer('RedLocal', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARedLocal2&maxFeatures=50&outputFormat=application%2Fjson', 'images/programasCuidados.png');
+$('#toggleRedLocalMunicipios').on('click', function () {
+    toggleLayer('fill', 'RedLocalMunicipios', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARedLocal2&maxFeatures=50&outputFormat=application%2Fjson', 'images/RedLocalApoyosyCuidados.png');
 });
 
 //4 CARPETA
-
 $('#toggleFIADI').on('click', function () {
-    toggleLayer('FIADI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AFIADI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
+    toggleLayer('symbol', 'FIADI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AFIADI&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
 });
 
 $('#toggleHEPI').on('click', function () {
-    toggleLayer('HEPI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AHepi&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
+    toggleLayer('symbol', 'HEPI', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AHepi&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
 });
 
 $('#toggleNEP').on('click', function () {
-    toggleLayer('NEP', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
+    toggleLayer('symbol', 'NEP', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&maxFeatures=50&outputFormat=application%2Fjson', 'images/ProgramasNNA.png');
+});
+
+//5 CARPETA
+$('#toggleCorreosDeChile').on('click', function () {
+    toggleLayer('symbol', 'CorreosDeChile', 'https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_05_correos_20240108104609&maxFeatures=50&outputFormat=application%2Fjson', 'images/correosChile.png');
 });
 
 
@@ -316,9 +323,7 @@ function togglePanel() {
 }
 
 
-
 //NO FUNCIONAN POR ALLOW CORS
-
 /* 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
 
 'https://idembn.bienes.cl/geoserver/eleam_/ows?service=WFS&version=1.0.0&request=GetFeature&typename=ELEAM&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
@@ -383,12 +388,7 @@ function toggleLayer(layerId, wfsUrl, iconUrl) {
             });
     }
 }
-
-
 */
-
-
-
 
 // Array de objetos para las opciones de la lista desplegable de la región ////ARREGLAR CODIGOS ******
 var regionOptions = [
@@ -408,7 +408,6 @@ var regionOptions = [
     { value: '12', label: 'Los Lagos', center: [-73.2412, -41.6372], zoom: 8 },
     { value: '14', label: 'Aysén', center: [-72.8258, -45.9864], zoom: 8 },
     { value: '16', label: 'Magallanes', center: [-70.9394, -53.0818], zoom: 7 }
-    // Agrega más opciones según tus regiones
 ];
 
 // Array de objetos para las opciones de la lista desplegable de la región ///////////////*** AGREGAR COMNUNAS ARICA */
@@ -767,7 +766,6 @@ var comunaOptions = [
     { cut_reg: '10', value: '10210', region: 'Los Lagos', label: 'Quinchao', center: [null, null], zoom: 10 },
     { cut_reg: '05', value: '05104', region: 'Valparaíso', label: 'Juan Fernández', center: [null, null], zoom: 10 },
 ];
-
 
 // Agrega la opción predeterminada "Seleccionar región"
 $('.regionDropdown').append($('<option>', {
