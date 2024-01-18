@@ -34,29 +34,6 @@ function locateUser() {
     }
 }
 
-map.on('load', function () {
-    map.addSource('regionesSource', {
-        type: 'geojson',
-        data: 'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3AChileLineal&bbox=-109.45489201699996%2C-56.53767064099998%2C-66.41565257399998%2C-17.49839933599998&width=768&height=696&srs=EPSG%3A4326&styles=&format=geojson'
-    });
-    console.log("addSource OK")
-
-    map.addLayer({
-        id: 'regiones',
-        type: 'line',
-        source: 'regionesSource',
-        paint: {
-            'line-color': 'grey',  // Color de la línea
-            'line-opacity': 0.8,   // Opacidad de la línea (0 a 1)
-            'line-width': 2,       // Ancho de la línea en píxeles
-            'line-dasharray': [2, 2],  // Establece un patrón de línea discontinua [longitud del segmento, espacio entre segmentos]
-            'line-blur': 1        // Difuminado de la línea (0 a 1)
-        }
-    });
-    console.log("addLayer OK")
-
-});
-
 // Función para mostrar el spinner
 function showSpinner() {
     document.getElementById('spinner').style.display = 'block';
@@ -86,7 +63,6 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
         checkboxId.style.display = 'none';
     }
 
-    console.log(layerId, sourceUrl, iconUrl)
     var layer = map.getLayer(layerId);
     if (layer) {
         // Si está activa, la desactiva
@@ -206,7 +182,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
             ${nombre ? `<h5><b>${nombre || ''}</b></h5>` : ''}
             ${servicio ? `<p color="grey"><i>${servicio || ''}</i></p>` : ''}
             <h6><b>Dirección</b>: ${direccion ? `${direccion}, ` : ''}${comuna ? `${comuna}, ` : ''}${region ? `${region}.` : ''}
-            ${telefono ? `<h6><b>Teléfono</b>: ${telefono || ''}}</h6>` : ''}
+            ${telefono ? `<h6><b>Teléfono</b>: ${telefono || ''}</h6>` : ''}
             ${correo ? `<h6><b>Correo</b>: ${correo || ''}</h6>` : ''}
 
             `
@@ -220,7 +196,6 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
             map.getCanvas().style.cursor = '';
         });
     }
-    console.log("AGREGA BIEN LA CAPA AL MAPA")
 }
 
 
@@ -396,25 +371,26 @@ function toggleLayer(layerId, wfsUrl, iconUrl) {
 
 // Array de objetos para las opciones de la lista desplegable de la región ////ARREGLAR CODIGOS ******
 var regionOptions = [
-    { value: '15', label: 'Arica y Parinacota', center: [-70.3026, -18.4783], zoom: 7 },
+    { value: '15', label: 'Arica y Parinacota', center: [-70.3026, -18.4783], zoom: 8 },
     { value: '01', label: 'Tarapacá', center: [-69.3269, -19.9239], zoom: 7 },
     { value: '02', label: 'Antofagasta', center: [-68.9554, -23.4226], zoom: 7 },
     { value: '03', label: 'Atacama', center: [-70.9834, -27.4975], zoom: 7 },
     { value: '04', label: 'Coquimbo', center: [-71.3375, -29.9711], zoom: 7 },
-    { value: '05', label: 'Valparaíso', center: [-71.6251, -32.7781], zoom: 7 },
-    { value: '13', label: 'Metropolitana', center: [-70.6058, -33.4378], zoom: 7 },
-    { value: '06', label: 'OHiggins', center: [-70.7152, -34.6354], zoom: 7 },
-    { value: '07', label: 'Maule', center: [-71.5744, -35.6654], zoom: 7 },
-    { value: '16', label: 'Ñuble', center: [-71.5374, -36.4966], zoom: 7 },
-    { value: '08', label: 'Biobío', center: [-72.2426, -37.4468], zoom: 7 },
-    { value: '09', label: 'La Araucanía', center: [-71.9996, -38.9489], zoom: 7 },
-    { value: '10', label: 'Los Lagos', center: [-72.3147, -41.7492], zoom: 7 },
-    { value: '14', label: 'Los Ríos', center: [-72.1652, -39.6465], zoom: 7 },
-    { value: '11', label: 'Aysén', center: [-73.2475, -45.9751], zoom: 7 },
-    { value: '12', label: 'Magallanes', center: [-73.0802, -52.8191], zoom: 7 },
+    { value: '05', label: 'Valparaíso', center: [-71.6251, -32.7781], zoom: 8 },
+    { value: '13', label: 'Metropolitana', center: [-70.6058, -33.4378], zoom: 8 },
+    { value: '06', label: 'OHiggins', center: [-70.7152, -34.6354], zoom: 8 },
+    { value: '07', label: 'Maule', center: [-71.5744, -35.6654], zoom: 8 },
+    { value: '16', label: 'Ñuble', center: [-71.5374, -36.4966], zoom: 8 },
+    { value: '08', label: 'Biobío', center: [-72.2426, -37.4468], zoom: 8 },
+    { value: '09', label: 'La Araucanía', center: [-71.9996, -38.9489], zoom: 8 },
+    { value: '14', label: 'Los Ríos', center: [-72.1652, -39.6465], zoom: 8 },
+    { value: '10', label: 'Los Lagos', center: [-72.3147, -41.7492], zoom: 8 },
+    { value: '11', label: 'Aysén', center: [-73.2475, -45.9751], zoom: 6 },
+    { value: '12', label: 'Magallanes', center: [-73.0802, -52.8191], zoom: 6 },
 ];
 
-// Array de objetos para las opciones de la lista desplegable de la región ///////////////*** AGREGAR COMNUNAS ARICA */
+
+// Array de objetos para las opciones de la lista desplegable de la región
 var comunaOptions = [
     { cut_reg: '06', value: '06117', region: 'Libertador General Bernardo Ohiggins', label: 'San Vicente', center: [-71.115331125859001, -34.460149342504899], zoom: 10 },
     { cut_reg: '06', value: '06116', region: 'Libertador General Bernardo Ohiggins', label: 'Requínoa', center: [-70.665382524015271, -34.331725888899527], zoom: 10 },
@@ -470,12 +446,9 @@ var comunaOptions = [
     { cut_reg: '02', value: '02201', region: 'Antofagasta', label: 'Calama', center: [-68.308330443002035, -22.554956374907263], zoom: 10 },
     { cut_reg: '11', value: '11303', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Tortel', center: [-74.710154932020131, -47.976760569078301], zoom: 10 },
     { cut_reg: '14', value: '14204', region: 'Los Ríos', label: 'Río Bueno', center: [-72.509405243899593, -40.469052594401305], zoom: 10 },
-    { cut_reg: '13', value: '13132', region: 'Metropolitana de Santiago', label: 'Vitacura', center: [-70.57279643684349, -33.380246428957015], zoom: 10 },
     { cut_reg: '11', value: '11302', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Ohiggins', center: [-72.680314373023151, -48.299873534070237], zoom: 10 },
     { cut_reg: '14', value: '14203', region: 'Los Ríos', label: 'Lago Ranco', center: [-72.30552027069271, -40.372532806313643], zoom: 10 },
-    { cut_reg: '13', value: '13131', region: 'Metropolitana de Santiago', label: 'San Ramón', center: [-70.642997442194201, -33.538027811525147], zoom: 10 },
     { cut_reg: '14', value: '14202', region: 'Los Ríos', label: 'Futrono', center: [-72.163095603588118, -40.080988200189637], zoom: 10 },
-    { cut_reg: '13', value: '13130', region: 'Metropolitana de Santiago', label: 'San Miguel', center: [-70.650587372033868, -33.501365217079062], zoom: 10 },
     { cut_reg: '11', value: '11301', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Cochrane', center: [-72.616998605840763, -47.335435320532554], zoom: 10 },
     { cut_reg: '14', value: '14201', region: 'Los Ríos', label: 'La Unión', center: [-73.238661479830498, -40.155801183984245], zoom: 10 },
     { cut_reg: '16', value: '16305', region: 'Ñuble', label: 'San Nicolás', center: [-72.254867160388912, -36.477647708885186], zoom: 10 },
@@ -490,9 +463,6 @@ var comunaOptions = [
     { cut_reg: '12', value: '12302', region: 'Magallanes y de la Antártica Chilena', label: 'Primavera', center: [-69.417646930442586, -52.630657407606371], zoom: 10 },
     { cut_reg: '07', value: '07402', region: 'Maule', label: 'Colbún', center: [-71.013159488101081, -36.055509317782239], zoom: 10 },
     { cut_reg: '07', value: '07401', region: 'Maule', label: 'Linares', center: [-71.314665727677138, -35.958303805239574], zoom: 10 },
-    { cut_reg: '13', value: '13122', region: 'Metropolitana de Santiago', label: 'Peñalolén', center: [-70.498511361343304, -33.494168974706149], zoom: 10 },
-    { cut_reg: '13', value: '13121', region: 'Metropolitana de Santiago', label: 'Pedro Aguirre Cerda', center: [-70.676808713972832, -33.49185420114668], zoom: 10 },
-    { cut_reg: '13', value: '13120', region: 'Metropolitana de Santiago', label: 'Ñuñoa', center: [-70.597070515718741, -33.455646116388337], zoom: 10 },
     { cut_reg: '10', value: '10109', region: 'Los Lagos', label: 'Puerto Varas', center: [-72.598085522000062, -41.265596375158829], zoom: 10 },
     { cut_reg: '16', value: '16202', region: 'Ñuble', label: 'Cobquecura', center: [-72.715469091695468, -36.167306393299285], zoom: 10 },
     { cut_reg: '10', value: '10107', region: 'Los Lagos', label: 'Llanquihue', center: [-73.216086784934873, -41.219813698697052], zoom: 10 },
@@ -512,15 +482,6 @@ var comunaOptions = [
     { cut_reg: '07', value: '07405', region: 'Maule', label: 'Retiro', center: [-71.841019338833007, -36.036764702371983], zoom: 10 },
     { cut_reg: '07', value: '07404', region: 'Maule', label: 'Parral', center: [-71.691930642305636, -36.236209652639218], zoom: 10 },
     { cut_reg: '07', value: '07403', region: 'Maule', label: 'Longaví', center: [-71.42184461529132, -36.106538512603841], zoom: 10 },
-    { cut_reg: '13', value: '13129', region: 'Metropolitana de Santiago', label: 'San Joaquín', center: [-70.629375289810611, -33.499873813118306], zoom: 10 },
-    { cut_reg: '13', value: '13128', region: 'Metropolitana de Santiago', label: 'Renca', center: [-70.724484618145951, -33.405985096547802], zoom: 10 },
-    { cut_reg: '13', value: '13127', region: 'Metropolitana de Santiago', label: 'Recoleta', center: [-70.639481302356401, -33.405969709361344], zoom: 10 },
-    { cut_reg: '13', value: '13126', region: 'Metropolitana de Santiago', label: 'Quinta Normal', center: [-70.699617024620892, -33.424015193317643], zoom: 10 },
-    { cut_reg: '13', value: '13125', region: 'Metropolitana de Santiago', label: 'Quilicura', center: [-70.734840681279948, -33.355971100770617], zoom: 10 },
-    { cut_reg: '13', value: '13124', region: 'Metropolitana de Santiago', label: 'Pudahuel', center: [-70.822828714522302, -33.407442121590691], zoom: 10 },
-    { cut_reg: '13', value: '13123', region: 'Metropolitana de Santiago', label: 'Providencia', center: [-70.608078441457465, -33.432454866521219], zoom: 10 },
-    { cut_reg: '13', value: '13111', region: 'Metropolitana de Santiago', label: 'La Granja', center: [-70.622279587884876, -33.531059603683417], zoom: 10 },
-    { cut_reg: '13', value: '13110', region: 'Metropolitana de Santiago', label: 'La Florida', center: [-70.505354643785708, -33.509399272555186], zoom: 10 },
     { cut_reg: '16', value: '16207', region: 'Ñuble', label: 'Treguaco', center: [-72.668151878207681, -36.405574026439609], zoom: 10 },
     { cut_reg: '16', value: '16206', region: 'Ñuble', label: 'Ranquil', center: [-72.597026824560317, -36.663099206376565], zoom: 10 },
     { cut_reg: '16', value: '16205', region: 'Ñuble', label: 'Portezuelo', center: [-72.454869190234518, -36.534649795616254], zoom: 10 },
@@ -537,30 +498,40 @@ var comunaOptions = [
     { cut_reg: '11', value: '11401', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Chile Chico', center: [-72.51276203014055, -46.829184713262983], zoom: 10 },
     { cut_reg: '08', value: '08106', region: 'Biobío', label: 'Lota', center: [-73.124169601072694, -37.120023939527265], zoom: 10 },
     { cut_reg: '08', value: '08105', region: 'Biobío', label: 'Hualqui', center: [-72.824751125165776, -37.024807702416147], zoom: 10 },
-    { cut_reg: '13', value: '13119', region: 'Metropolitana de Santiago', label: 'Maipú', center: [-70.822179325833545, -33.503958261785741], zoom: 10 },
     { cut_reg: '08', value: '08104', region: 'Biobío', label: 'Florida', center: [-72.705685543441632, -36.798705583339355], zoom: 10 },
-    { cut_reg: '13', value: '13118', region: 'Metropolitana de Santiago', label: 'Macul', center: [-70.599576638446763, -33.488668600276547], zoom: 10 },
     { cut_reg: '08', value: '08103', region: 'Biobío', label: 'Chiguayante', center: [-72.988489099161868, -36.897813239531089], zoom: 10 },
-    { cut_reg: '13', value: '13117', region: 'Metropolitana de Santiago', label: 'Lo Prado', center: [-70.724873230188763, -33.443450819314627], zoom: 10 },
     { cut_reg: '08', value: '08101', region: 'Biobío', label: 'Concepción', center: [-72.957147812472002, -36.839436115137048], zoom: 10 },
-    { cut_reg: '13', value: '13116', region: 'Metropolitana de Santiago', label: 'Lo Espejo', center: [-70.689498333325389, -33.519009799079321], zoom: 10 },
-    { cut_reg: '13', value: '13115', region: 'Metropolitana de Santiago', label: 'Lo Barnechea', center: [-70.386575709261649, -33.300766731273811], zoom: 10 },
-    { cut_reg: '13', value: '13114', region: 'Metropolitana de Santiago', label: 'Las Condes', center: [-70.499325124658611, -33.418198271635966], zoom: 10 },
-    { cut_reg: '13', value: '13113', region: 'Metropolitana de Santiago', label: 'La Reina', center: [-70.540019899294094, -33.444969921895371], zoom: 10 },
-    { cut_reg: '13', value: '13112', region: 'Metropolitana de Santiago', label: 'La Pintana', center: [-70.63783380662494, -33.587960711504408], zoom: 10 },
     { cut_reg: '11', value: '11102', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Lago Verde', center: [-71.804710698421928, -44.475137480666106], zoom: 10 },
     { cut_reg: '11', value: '11101', region: 'Aysén del General Carlos Ibáñez del Campo', label: 'Coihaique', center: [-71.961582002375678, -45.524450750057014], zoom: 10 },
     { cut_reg: '15', value: '15201', region: 'Arica y Parinacota', label: 'Putre', center: [-69.293854710425435, -18.304206658688074], zoom: 10 },
-    { cut_reg: '13', value: '13605', region: 'Metropolitana de Santiago', label: 'Peñaflor', center: [-70.90332903299992, -33.613506235512311], zoom: 10 },
-    { cut_reg: '13', value: '13604', region: 'Metropolitana de Santiago', label: 'Padre Hurtado', center: [-70.87341983779848, -33.546136494931716], zoom: 10 },
-    { cut_reg: '13', value: '13603', region: 'Metropolitana de Santiago', label: 'Isla de Maipo', center: [-70.946568133464567, -33.750245861778161], zoom: 10 },
-    { cut_reg: '13', value: '13602', region: 'Metropolitana de Santiago', label: 'El Monte', center: [-71.020650868932918, -33.662172241371898], zoom: 10 },
-    { cut_reg: '13', value: '13601', region: 'Metropolitana de Santiago', label: 'Talagante', center: [-70.902784281933577, -33.684358448858603], zoom: 10 },
     { cut_reg: '01', value: '01107', region: 'Tarapacá', label: 'Alto Hospicio', center: [-70.101147536219742, -20.246225549109845], zoom: 10 },
     { cut_reg: '01', value: '01101', region: 'Tarapacá', label: 'Iquique', center: [-70.148540210353119, -20.831677330665354], zoom: 10 },
     { cut_reg: '08', value: '08109', region: 'Biobío', label: 'Santa Juana', center: [-72.96825610725439, -37.312787303354781], zoom: 10 },
     { cut_reg: '08', value: '08108', region: 'Biobío', label: 'San Pedro de la Paz', center: [-73.12888339306528, -36.884808519987203], zoom: 10 },
     { cut_reg: '08', value: '08107', region: 'Biobío', label: 'Penco', center: [-72.946980968498877, -36.741729343988467], zoom: 10 },
+    { cut_reg: '13', value: '13130', region: 'Metropolitana de Santiago', label: 'San Miguel', center: [-70.650587372033868, -33.501365217079062], zoom: 13 },
+    { cut_reg: '13', value: '13131', region: 'Metropolitana de Santiago', label: 'San Ramón', center: [-70.642997442194201, -33.538027811525147], zoom: 13 },
+    { cut_reg: '13', value: '13132', region: 'Metropolitana de Santiago', label: 'Vitacura', center: [-70.57279643684349, -33.380246428957015], zoom: 13 },
+    { cut_reg: '13', value: '13122', region: 'Metropolitana de Santiago', label: 'Peñalolén', center: [-70.498511361343304, -33.494168974706149], zoom: 13 },
+    { cut_reg: '13', value: '13121', region: 'Metropolitana de Santiago', label: 'Pedro Aguirre Cerda', center: [-70.676808713972832, -33.49185420114668], zoom: 13 },
+    { cut_reg: '13', value: '13120', region: 'Metropolitana de Santiago', label: 'Ñuñoa', center: [-70.597070515718741, -33.455646116388337], zoom: 13 },
+    { cut_reg: '13', value: '13129', region: 'Metropolitana de Santiago', label: 'San Joaquín', center: [-70.629375289810611, -33.499873813118306], zoom: 13 },
+    { cut_reg: '13', value: '13128', region: 'Metropolitana de Santiago', label: 'Renca', center: [-70.724484618145951, -33.405985096547802], zoom: 13 },
+    { cut_reg: '13', value: '13127', region: 'Metropolitana de Santiago', label: 'Recoleta', center: [-70.639481302356401, -33.405969709361344], zoom: 13 },
+    { cut_reg: '13', value: '13126', region: 'Metropolitana de Santiago', label: 'Quinta Normal', center: [-70.699617024620892, -33.424015193317643], zoom: 13 },
+    { cut_reg: '13', value: '13125', region: 'Metropolitana de Santiago', label: 'Quilicura', center: [-70.734840681279948, -33.355971100770617], zoom: 13 },
+    { cut_reg: '13', value: '13124', region: 'Metropolitana de Santiago', label: 'Pudahuel', center: [-70.822828714522302, -33.407442121590691], zoom: 13 },
+    { cut_reg: '13', value: '13123', region: 'Metropolitana de Santiago', label: 'Providencia', center: [-70.608078441457465, -33.432454866521219], zoom: 13 },
+    { cut_reg: '13', value: '13111', region: 'Metropolitana de Santiago', label: 'La Granja', center: [-70.622279587884876, -33.531059603683417], zoom: 13 },
+    { cut_reg: '13', value: '13110', region: 'Metropolitana de Santiago', label: 'La Florida', center: [-70.505354643785708, -33.509399272555186], zoom: 13 },
+    { cut_reg: '13', value: '13119', region: 'Metropolitana de Santiago', label: 'Maipú', center: [-70.822179325833545, -33.503958261785741], zoom: 13 },
+    { cut_reg: '13', value: '13118', region: 'Metropolitana de Santiago', label: 'Macul', center: [-70.599576638446763, -33.488668600276547], zoom: 13 },
+    { cut_reg: '13', value: '13117', region: 'Metropolitana de Santiago', label: 'Lo Prado', center: [-70.724873230188763, -33.443450819314627], zoom: 13 },
+    { cut_reg: '13', value: '13116', region: 'Metropolitana de Santiago', label: 'Lo Espejo', center: [-70.689498333325389, -33.519009799079321], zoom: 13 },
+    { cut_reg: '13', value: '13115', region: 'Metropolitana de Santiago', label: 'Lo Barnechea', center: [-70.386575709261649, -33.300766731273811], zoom: 13 },
+    { cut_reg: '13', value: '13114', region: 'Metropolitana de Santiago', label: 'Las Condes', center: [-70.499325124658611, -33.418198271635966], zoom: 13 },
+    { cut_reg: '13', value: '13113', region: 'Metropolitana de Santiago', label: 'La Reina', center: [-70.540019899294094, -33.444969921895371], zoom: 13 },
+    { cut_reg: '13', value: '13112', region: 'Metropolitana de Santiago', label: 'La Pintana', center: [-70.63783380662494, -33.587960711504408], zoom: 13 },
     { cut_reg: '13', value: '13109', region: 'Metropolitana de Santiago', label: 'La Cisterna', center: [-70.661086682769763, -33.529826491093466], zoom: 10 },
     { cut_reg: '13', value: '13108', region: 'Metropolitana de Santiago', label: 'Independencia', center: [-70.664386659187471, -33.415190031640584], zoom: 10 },
     { cut_reg: '13', value: '13107', region: 'Metropolitana de Santiago', label: 'Huechuraba', center: [-70.632558494165707, -33.359957742657564], zoom: 10 },
@@ -570,6 +541,26 @@ var comunaOptions = [
     { cut_reg: '13', value: '13103', region: 'Metropolitana de Santiago', label: 'Cerro Navia', center: [-70.749862441669691, -33.422648761972155], zoom: 10 },
     { cut_reg: '13', value: '13102', region: 'Metropolitana de Santiago', label: 'Cerrillos', center: [-70.709479094556741, -33.49325992541484], zoom: 10 },
     { cut_reg: '13', value: '13101', region: 'Metropolitana de Santiago', label: 'Santiago', center: [-70.664059140542321, -33.451306529855863], zoom: 10 },
+    { cut_reg: '13', value: '13404', region: 'Metropolitana de Santiago', label: 'Paine', center: [-70.754595539070337, -33.857668182938276], zoom: 13 },
+    { cut_reg: '13', value: '13403', region: 'Metropolitana de Santiago', label: 'Calera de Tango', center: [-70.784115962268871, -33.633509048928104], zoom: 13 },
+    { cut_reg: '13', value: '13402', region: 'Metropolitana de Santiago', label: 'Buin', center: [-70.738978431243865, -33.741176870202921], zoom: 13 },
+    { cut_reg: '13', value: '13502', region: 'Metropolitana de Santiago', label: 'Alhué', center: [-71.062065577118091, -34.044682526621415], zoom: 13 },
+    { cut_reg: '13', value: '13501', region: 'Metropolitana de Santiago', label: 'Melipilla', center: [-71.189884521913129, -33.741382231167094], zoom: 13 },
+    { cut_reg: '13', value: '13505', region: 'Metropolitana de Santiago', label: 'San Pedro', center: [-71.503270723212069, -33.922880547210127], zoom: 13 },
+    { cut_reg: '13', value: '13504', region: 'Metropolitana de Santiago', label: 'María Pinto', center: [-71.201215799037939, -33.499756886213724], zoom: 13 },
+    { cut_reg: '13', value: '13503', region: 'Metropolitana de Santiago', label: 'Curacaví', center: [-71.086297121653715, -33.377277462473359], zoom: 13 },
+    { cut_reg: '13', value: '13605', region: 'Metropolitana de Santiago', label: 'Peñaflor', center: [-70.90332903299992, -33.613506235512311], zoom: 10 },
+    { cut_reg: '13', value: '13604', region: 'Metropolitana de Santiago', label: 'Padre Hurtado', center: [-70.87341983779848, -33.546136494931716], zoom: 13 },
+    { cut_reg: '13', value: '13603', region: 'Metropolitana de Santiago', label: 'Isla de Maipo', center: [-70.946568133464567, -33.750245861778161], zoom: 13 },
+    { cut_reg: '13', value: '13602', region: 'Metropolitana de Santiago', label: 'El Monte', center: [-71.020650868932918, -33.662172241371898], zoom: 13 },
+    { cut_reg: '13', value: '13601', region: 'Metropolitana de Santiago', label: 'Talagante', center: [-70.902784281933577, -33.684358448858603], zoom: 13 },
+    { cut_reg: '13', value: '13202', region: 'Metropolitana de Santiago', label: 'Pirque', center: [-70.512305664942375, -33.702607907047195], zoom: 10 },
+    { cut_reg: '13', value: '13201', region: 'Metropolitana de Santiago', label: 'Puente Alto', center: [-70.553873376194176, -33.596718685977613], zoom: 10 },
+    { cut_reg: '13', value: '13203', region: 'Metropolitana de Santiago', label: 'San José de Maipo', center: [-70.063610894522881, -33.776091113062982], zoom: 10 },
+    { cut_reg: '13', value: '13401', region: 'Metropolitana de Santiago', label: 'San Bernardo', center: [-70.7187, -33.5922], zoom: 13 },
+    { cut_reg: '13', value: '13302', region: 'Metropolitana de Santiago', label: 'Lampa', center: [-70.872580130118834, -33.291518341937937], zoom: 10 },
+    { cut_reg: '13', value: '13303', region: 'Metropolitana de Santiago', label: 'Tiltil', center: [-70.857171445405228, -33.07443730090462], zoom: 10 },
+    { cut_reg: '13', value: '13301', region: 'Metropolitana de Santiago', label: 'Colina', center: [-70.59213693179845, -33.099468987254113], zoom: 10 },
     { cut_reg: '15', value: '15202', region: 'Arica y Parinacota', label: 'General Lagos', center: [-69.524295037375438, -17.986048793843839], zoom: 10 },
     { cut_reg: '08', value: '08304', region: 'Biobío', label: 'Laja', center: [-72.557143910053966, -37.336885852505134], zoom: 10 },
     { cut_reg: '08', value: '08303', region: 'Biobío', label: 'Cabrero', center: [-72.433046825996314, -37.062346967784151], zoom: 10 },
@@ -600,9 +591,6 @@ var comunaOptions = [
     { cut_reg: '09', value: '09121', region: 'La Araucanía', label: 'Cholchol', center: [-72.925478098286064, -38.573505858253327], zoom: 10 },
     { cut_reg: '12', value: '12402', region: 'Magallanes y de la Antártica Chilena', label: 'Torres del Paine', center: [-72.819794419291853, -51.27684697801331], zoom: 10 },
     { cut_reg: '09', value: '09120', region: 'La Araucanía', label: 'Villarrica', center: [-72.225835964974422, -39.303185019938702], zoom: 10 },
-    { cut_reg: '13', value: '13404', region: 'Metropolitana de Santiago', label: 'Paine', center: [-70.754595539070337, -33.857668182938276], zoom: 10 },
-    { cut_reg: '13', value: '13403', region: 'Metropolitana de Santiago', label: 'Calera de Tango', center: [-70.784115962268871, -33.633509048928104], zoom: 10 },
-    { cut_reg: '13', value: '13402', region: 'Metropolitana de Santiago', label: 'Buin', center: [-70.738978431243865, -33.741176870202921], zoom: 10 },
     { cut_reg: '08', value: '08207', region: 'Biobío', label: 'Tirúa', center: [-73.418621587667204, -38.318525797479793], zoom: 10 },
     { cut_reg: '03', value: '03202', region: 'Atacama', label: 'Diego de Almagro', center: [-69.235813077441861, -26.095108277228594], zoom: 10 },
     { cut_reg: '08', value: '08206', region: 'Biobío', label: 'Los Alamos', center: [-73.409752596503594, -37.697889576686009], zoom: 10 },
@@ -623,13 +611,8 @@ var comunaOptions = [
     { cut_reg: '07', value: '07203', region: 'Maule', label: 'Pelluhue', center: [-72.633573168047647, -35.917089566630892], zoom: 10 },
     { cut_reg: '07', value: '07202', region: 'Maule', label: 'Chanco', center: [-72.492055460478397, -35.666414068794246], zoom: 10 },
     { cut_reg: '07', value: '07201', region: 'Maule', label: 'Cauquenes', center: [-72.299136600794995, -35.996133202630844], zoom: 10 },
-    { cut_reg: '13', value: '13505', region: 'Metropolitana de Santiago', label: 'San Pedro', center: [-71.503270723212069, -33.922880547210127], zoom: 10 },
-    { cut_reg: '13', value: '13504', region: 'Metropolitana de Santiago', label: 'María Pinto', center: [-71.201215799037939, -33.499756886213724], zoom: 10 },
-    { cut_reg: '13', value: '13503', region: 'Metropolitana de Santiago', label: 'Curacaví', center: [-71.086297121653715, -33.377277462473359], zoom: 10 },
     { cut_reg: '03', value: '03304', region: 'Atacama', label: 'Huasco', center: [-71.150679360476715, -28.287462969349004], zoom: 10 },
     { cut_reg: '03', value: '03303', region: 'Atacama', label: 'Freirina', center: [-71.310987328297102, -28.840435719850039], zoom: 10 },
-    { cut_reg: '13', value: '13502', region: 'Metropolitana de Santiago', label: 'Alhué', center: [-71.062065577118091, -34.044682526621415], zoom: 10 },
-    { cut_reg: '13', value: '13501', region: 'Metropolitana de Santiago', label: 'Melipilla', center: [-71.189884521913129, -33.741382231167094], zoom: 10 },
     { cut_reg: '03', value: '03302', region: 'Atacama', label: 'Alto del Carmen', center: [-70.122564508327386, -28.974840253559933], zoom: 10 },
     { cut_reg: '03', value: '03301', region: 'Atacama', label: 'Vallenar', center: [-70.625583649898843, -28.660000721974622], zoom: 10 },
     { cut_reg: '04', value: '04102', region: 'Coquimbo', label: 'Coquimbo', center: [-71.431928474142055, -30.19232243828457], zoom: 10 },
@@ -653,10 +636,7 @@ var comunaOptions = [
     { cut_reg: '10', value: '10304', region: 'Los Lagos', label: 'Puyehue', center: [-72.450620056198844, -40.666850569602722], zoom: 10 },
     { cut_reg: '10', value: '10303', region: 'Los Lagos', label: 'Purranque', center: [-73.493791823987323, -40.936349442902667], zoom: 10 },
     { cut_reg: '10', value: '10302', region: 'Los Lagos', label: 'Puerto Octay', center: [-72.616714969787651, -40.867737846341718], zoom: 10 },
-    { cut_reg: '13', value: '13203', region: 'Metropolitana de Santiago', label: 'San José de Maipo', center: [-70.063610894522881, -33.776091113062982], zoom: 10 },
     { cut_reg: '10', value: '10301', region: 'Los Lagos', label: 'Osorno', center: [-73.121926376341591, -40.608704026789169], zoom: 10 },
-    { cut_reg: '13', value: '13202', region: 'Metropolitana de Santiago', label: 'Pirque', center: [-70.512305664942375, -33.702607907047195], zoom: 10 },
-    { cut_reg: '13', value: '13201', region: 'Metropolitana de Santiago', label: 'Puente Alto', center: [-70.553873376194176, -33.596718685977613], zoom: 10 },
     { cut_reg: '05', value: '05606', region: 'Valparaíso', label: 'Santo Domingo', center: [-71.6947993274905, -33.834740030787422], zoom: 10 },
     { cut_reg: '05', value: '05605', region: 'Valparaíso', label: 'El Tabo', center: [-71.569825509704742, -33.483147844024934], zoom: 10 },
     { cut_reg: '05', value: '05604', region: 'Valparaíso', label: 'El Quisco', center: [-71.665729999813848, -33.412050509013184], zoom: 10 },
@@ -702,12 +682,9 @@ var comunaOptions = [
     { cut_reg: '10', value: '10404', region: 'Los Lagos', label: 'Palena', center: [-71.948023963064216, -43.679106696424427], zoom: 10 },
     { cut_reg: '10', value: '10403', region: 'Los Lagos', label: 'Hualaihué', center: [-72.488541618553398, -42.083995850875816], zoom: 10 },
     { cut_reg: '10', value: '10402', region: 'Los Lagos', label: 'Futaleufú', center: [-71.973244590092918, -43.186519488630715], zoom: 10 },
-    { cut_reg: '13', value: '13303', region: 'Metropolitana de Santiago', label: 'Tiltil', center: [-70.857171445405228, -33.07443730090462], zoom: 10 },
     { cut_reg: '07', value: '07110', region: 'Maule', label: 'San Rafael', center: [-71.479509872192494, -35.287745607806627], zoom: 10 },
     { cut_reg: '10', value: '10401', region: 'Los Lagos', label: 'Chaitén', center: [-72.760101446404903, -42.98717472871563], zoom: 10 },
-    { cut_reg: '13', value: '13302', region: 'Metropolitana de Santiago', label: 'Lampa', center: [-70.872580130118834, -33.291518341937937], zoom: 10 },
     { cut_reg: '05', value: '05103', region: 'Valparaíso', label: 'Concón', center: [-71.464263638034666, -32.947259012968459], zoom: 10 },
-    { cut_reg: '13', value: '13301', region: 'Metropolitana de Santiago', label: 'Colina', center: [-70.59213693179845, -33.099468987254113], zoom: 10 },
     { cut_reg: '05', value: '05602', region: 'Valparaíso', label: 'Algarrobo', center: [-71.550387802657383, -33.293073743363045], zoom: 10 },
     { cut_reg: '05', value: '05101', region: 'Valparaíso', label: 'Valparaíso', center: [-71.644744872116078, -33.100905287647542], zoom: 10 },
     { cut_reg: '14', value: '14101', region: 'Los Ríos', label: 'Valdivia', center: [-73.168561958584704, -39.827944930051942], zoom: 10 },
@@ -764,12 +741,19 @@ var comunaOptions = [
     { cut_reg: '10', value: '10209', region: 'Los Lagos', label: 'Quemchi', center: [-73.5172, -42.1374], zoom: 10 },
     { cut_reg: '08', value: '08201', region: 'Biobío', label: 'Lebu', center: [-73.6463, -37.6056], zoom: 10 },
     { cut_reg: '12', value: '12104', region: 'Magallanes y de la Antártica Chilena', label: 'San Gregorio', center: [-69.7929, -51.6242], zoom: 10 },
-    { cut_reg: '13', value: '13401', region: 'Metropolitana de Santiago', label: 'San Bernardo', center: [-70.7187, -33.5922], zoom: 10 },
     { cut_reg: '05', value: '05102', region: 'Valparaíso', label: 'Casablanca', center: [-71.4172, -33.3251], zoom: 10 },
     { cut_reg: '10', value: '10210', region: 'Los Lagos', label: 'Quinchao', center: [-73.4492, -42.3708], zoom: 10 },
     { cut_reg: '05', value: '05104', region: 'Valparaíso', label: 'Juan Fernández', center: [-78.8368, -33.6366], zoom: 10 },
    
 ];
+
+// Ordena el listado por la propiedad "label"
+comunaOptions.sort(function (a, b) {
+    var labelA = a.label.toUpperCase();
+    var labelB = b.label.toUpperCase();
+    return labelA.localeCompare(labelB, 'es');
+});
+
 
 // Agrega la opción predeterminada "Seleccionar región"
 $('.regionDropdown').append($('<option>', {
@@ -781,7 +765,7 @@ $('.regionDropdown').append($('<option>', {
 regionOptions.forEach(function (option) {
     $('.regionDropdown').append($('<option>', {
         value: option.value,
-        text: option.label
+        text: option.label,
     }));
 });
 
@@ -791,13 +775,61 @@ $('.comunaDropdown').append($('<option>', {
     text: 'Seleccionar comuna'
 }));
 
-// Actualiza el filtro de comunas al cambiar la región
 $('.regionDropdown').change(function () {
     // Obtiene la región seleccionada
     var selectedRegion = $(this).val();
-
     // Llena la lista desplegable de comunas
     fillCommunesDropdown(selectedRegion);
+
+    // Nombre de la fuente y la capa para la capa raster
+    var rasterSourceName = 'wms-test-raster-source';
+    var rasterLayerName = 'wms-test-raster-layer';
+
+    // Verifica si la fuente raster ya existe
+    if (!map.getSource(rasterSourceName)) {
+        // Agrega la fuente raster solo si no existe
+        map.addSource(rasterSourceName, {
+            'type': 'raster',
+            'tiles': [
+                'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Acomunas_chile_3857_lineas&bbox={bbox-epsg-3857}&transparent=true&width=256&height=246&srs=EPSG%3A3857&styles=&format=image%2Fpng'
+            ],
+            'tileSize': 256
+        });
+
+        // Agrega la capa raster utilizando la fuente recién creada
+        map.addLayer({
+            'id': rasterLayerName,
+            'type': 'raster',
+            'source': rasterSourceName,
+            'paint': {},
+            'minzoom': 8,  // Nivel de zoom mínimo para la capa raster
+        });
+    }
+
+    // Nombre de la fuente y la capa para la capa de puntos
+    var pointsSourceName = 'points-source';
+    var pointsLayerName = 'points-layer';
+
+    // Verifica si la fuente de puntos ya existe
+    if (!map.getSource(pointsSourceName)) {
+        // Agrega la fuente de puntos solo si no existe
+        map.addSource(pointsSourceName, {
+            'type': 'raster',
+            'tiles': [
+                'https://geoportal.cepal.org/geoserver/geonode/wms?service=WMS&version=1.1.0&request=GetMap&layers=geonode%3Acentroides_comunas&bbox={bbox-epsg-3857}&transparent=true&width=256&height=246&srs=EPSG%3A3857&styles=&format=image%2Fpng'
+            ],
+            'tileSize': 256
+            });
+
+        // Agrega la capa de puntos utilizando la fuente recién creada
+        map.addLayer({
+            'id': pointsLayerName,
+            'type': 'raster',
+            'source': pointsSourceName,
+            'paint': {},
+            'minzoom': 8,  // Nivel de zoom mínimo para la capa de puntos
+        });
+    }
 });
 
 // Llena las opciones de la lista desplegable de la comuna
