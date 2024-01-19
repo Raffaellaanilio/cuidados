@@ -46,7 +46,7 @@ header {
     z-index: 5000;
     border-radius: 1%;
     border: 0;
-    opacity: 80%;
+    opacity: 90%;
 }
 
 .checkbox {
@@ -102,7 +102,6 @@ header {
 
 .folder {
     display: flex;
-    align-items: center;
     justify-content: center;
     cursor: pointer;
     background-color: #0A132D;
