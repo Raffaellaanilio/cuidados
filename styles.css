@@ -2,7 +2,7 @@ body,
 html {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100%;
     margin: 0;
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
@@ -11,16 +11,21 @@ html {
 #map {
     flex: 1;
     position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 4000;
 }
 
 header {
-    height: 10vh;
+    position: relative;
+    top: 0;
     background-color: #CFE1F3;
     z-index: 5000;
 }
 
 .footer {
-    height: 100%;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     background-color: white;
     text-align: center;
@@ -252,6 +257,9 @@ header {
     background-color: #ededed;
 }
 
+.footer-text{
+    color: black;
+}
 
 @media only screen and (max-width: 600px) {
 
@@ -265,7 +273,7 @@ header {
     }
 
     #logo {
-        width: 5vh;
+        width: 4vh;
     }
 
     .panel {

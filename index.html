@@ -11,11 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap" />
     <link rel="stylesheet" href="/styles.css">
-
 </head>
 
 <body>
-    <!-- Encabezado con la lista desplegable -->
     <header class="card bg-light p-2 text-center">
         <div class="container">
             <div class="row justify-content-end align-items-center">
@@ -37,7 +35,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-                        <span><i style="padding: 1vh" class="fa-solid fa-list"></i></span>
+                        <span><img style="width: 3vh;margin: 0.8vh;" src="images/menu.png"></span>
                     </button>
                 </div>
 
@@ -55,8 +53,8 @@
 
                 <!-- Botón de ubicación -->
                 <div class="card col-6 col-md-1" id="locate-button" onclick="locateUser()">
-                    <i style="padding: 1vh" class="fa-solid fa-location-arrow"></i>
-                    <h6 style="font-size: smaller;" class="d-none d-md-block">Tu ubicación</h6>
+                    <span><img style="width: 3.5vh;margin: 0.5vh;" src="images/pin.png"></span>
+                    <h6 style="font-size: small;" class="d-none d-md-block">Tu ubicación</h6>
                 </div>
             </div>
         </div>
@@ -80,9 +78,8 @@
         </div>
     </header>
 
-
-
     <div id="map">
+       
         <div id="panel" class="card panel">
             <div class="icon-buttons row">
                 <!-- Carpeta 1 -->
@@ -90,8 +87,11 @@
                     <div class="folder">
                         Programas para personas mayores (SENAMA)
                     </div>
+                    <div style="color:grey; font-size: x-small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
                     <div id="toggleCondominios" class="card layer col-12"
+                    
                         style="display: flex; justify-content: space-between;">
+                        
                         <a href="#" style="display: flex; align-items: center;">
                             <img src="images/ProgramasSENAMA1.svg" alt="Capa">
                             <div class="checkbox" id="checkBoxCondominios" style="display: none;"><i
@@ -143,6 +143,7 @@
                     <div class="folder">
                         Programa para personas con discapacidad (SENADIS)
                     </div>
+                    <div style="color:grey; font-size: x-small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
                     <div id="toggleAdultosResidencias" class="card layer col-12" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -169,6 +170,7 @@
                     <div class="folder">
                         Cuidados y alivio a personas cuidadoras
                     </div>
+                    <div style="color:grey; font-size: x-small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
                     <div id="togglePrograma4a7" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -195,6 +197,7 @@
                     <div class="folder">
                         Niñas, niños y adolescentes
                     </div>
+                    <div style="color:grey; font-size: x-small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
                     <div id="toggleFIADI" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -231,6 +234,7 @@
                     <div class="folder">
                         Instituciones con atención preferente para personas cuidadoras
                     </div>
+                    <div style="color:grey; font-size: x-small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
                     <div id="toggleCorreosDeChile" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -254,55 +258,50 @@
             </div>
         </div>
         <p class="text-primary"></p>
-    </div>
 
-    </div>
-
-
-    <!-- BOTONERA INFERIOR -->
-    <footer class="footer">
-        <div class="icon-footer row">
-            <div class="categoriasFooter col-2" onclick="toggleFolders('folder1')">
-                <div href="#">
-                    <img style="width: 5vh;margin: 1vh;" src="images/ProgramasSENAMA1.svg">
-                    <h6 class="footer-text" style="color: black;">Personas mayores</h6>
-                </div>
-            </div>
-
-            <div class="categoriasFooter col-2" onclick="toggleFolders('folder2')">
-                <div href="#">
-                    <img style="width: 5vh;margin: 1vh;" src="images/ProgramasSENADIS.svg">
-                    <h6 class="footer-text" style="color:black;">Personas con discapacidad</h6>
-                </div>
-            </div>
-
-            <div class="categoriasFooter col-2" onclick="toggleFolders('folder3')">
-                <div href="#">
-                    <img style="width: 5vh;margin: 1vh;" src="images/programasCuidados.svg">
-                    <h6 class="footer-text" style="color:black">Cuidados y alivio a personas cuidadoras</h6>
-                </div>
-            </div>
-
-            <div class="categoriasFooter col-2" onclick="toggleFolders('folder4')">
-                <div href="#">
-                    <img style="width: 5vh;margin: 1vh;" src="images/ProgramasNNA.svg">
-                    <h6 class="footer-text" style="color:black">Niñas, Niños y Adolescentes</h6>
-                </div>
-            </div>
-
-            <div class="categoriasFooter col-2" onclick="toggleFolders('folder5')">
-                <div href="#">
-                    <img style="width: 5vh;margin-top: 1vh;" src="images/edificio.png">
-                    <h6 class="footer-text" style="color:black">Instituciones con atención preferente para personas
-                        cuidadoras</h6>
-                </div>
+<!-- BOTONERA INFERIOR -->
+<footer class="footer">
+    <div class="icon-footer row">
+        <div class="categoriasFooter col-2" onclick="toggleFolders('folder1')">
+            <div href="#">
+                <img style="width: 5vh;margin: 1vh;" src="images/ProgramasSENAMA1.svg">
+                <h6 class="footer-text">Personas mayores</h6>
             </div>
         </div>
-    </footer>
 
+        <div class="categoriasFooter col-2" onclick="toggleFolders('folder2')">
+            <div href="#">
+                <img style="width: 5vh;margin: 1vh;" src="images/ProgramasSENADIS.svg">
+                <h6 class="footer-text">Personas con discapacidad</h6>
+            </div>
+        </div>
+
+        <div class="categoriasFooter col-2" onclick="toggleFolders('folder3')">
+            <div href="#">
+                <img style="width: 5vh;margin: 1vh;" src="images/programasCuidados.svg">
+                <h6 class="footer-text">Cuidados y alivio a personas cuidadoras</h6>
+            </div>
+        </div>
+
+        <div class="categoriasFooter col-2" onclick="toggleFolders('folder4')">
+            <div href="#">
+                <img style="width: 5vh;margin: 1vh;" src="images/ProgramasNNA.svg">
+                <h6 class="footer-text">Niñas, Niños y Adolescentes</h6>
+            </div>
+        </div>
+
+        <div class="categoriasFooter col-2" onclick="toggleFolders('folder5')">
+            <div href="#">
+                <img style="width: 5vh;margin-top: 1vh;" src="images/edificio.png">
+                <h6 class="footer-text">Instituciones con atención preferente</h6>
+            </div>
+        </div>
+    </div>
+</footer>
+    </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/scripts.js"></script>
 </body>
-
 </html>
