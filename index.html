@@ -17,16 +17,17 @@
         <div class="container">
             <div class="row justify-content-end align-items-center">
 
-                <div id="flecha" class="col-6 col-md-1 toggle-button" onclick="togglePanel()">
+                <div id="flecha" class="col-4 col-md-1 toggle-button" onclick="togglePanel()">
                     <img id="toggleIcon" src="images/flecha-izquierda.png" alt="Flecha">
                 </div>
 
-                <div class="col-6 col-md-1">
-                    <img id="logo" src="images/logoGobierno.png">
+                <div class="col-6 col-md-2">
+                    <img id="logo" src="images/Banner_chilecuida.svg">
+                    <img id="logo" src="images/IDE-Chile-MBN2.png">
                 </div>
-
+     
                 <div class="col-6 col-md-3">
-                    <h4>Mapa del cuidado</h4>
+                    <h2>Mapa del cuidado</h2>
                 </div>
 
                 <!-- Menú de hamburguesa para versión móvil -->
@@ -34,20 +35,16 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-                        <span><img style="width: 3vh;margin: 0.5vh;" src="images/menu.svg"></span>
+                        <span><img style="width: 4vh;margin: 0vh;" src="images/menu.svg"></span>
                     </button>
                 </div>
 
                 <!-- Filtros para versión desktop -->
-                <div class="col-6 col-md-3 d-none d-md-block">
-                    <select class="form-select form-select-sm regionDropdown">
-                        <!-- Opciones de la lista desplegable para la región -->
-                    </select>
+                <div class="col-5 col-md-3 d-none d-md-block">
+                    <select class="form-select form-select-sm regionDropdown"></select>
                 </div>
-                <div class="col-6 col-md-3 d-none d-md-block">
-                    <!-- <input class="form-control form-control-sm searchComunaInput" type="text" placeholder="Filtrar comunas..."> -->
-                    <select class="form-select form-select-sm comunaDropdown">
-                    </select>
+                <div class="col-5 col-md-3 d-none d-md-block">
+                    <select class="form-select form-select-sm comunaDropdown"></select>
                 </div>
 
                 <!-- Botón de ubicación -->
@@ -86,7 +83,7 @@
                     <div class="folder">
                         Programas para personas mayores (SENAMA)
                     </div>
-                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
+                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione uno o más programas</div>
                     <div id="toggleCondominios" class="card layer col-12"
                     
                         style="display: flex; justify-content: space-between;">
@@ -138,7 +135,7 @@
                     <div class="folder">
                         Programa para personas con discapacidad (SENADIS)
                     </div>
-                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
+                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione uno o más programas</div>
                     <div id="toggleAdultosResidencias" class="card layer col-12" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -163,7 +160,7 @@
                     <div class="folder">
                         Cuidados y alivio a personas cuidadoras
                     </div>
-                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
+                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione uno o más programas</div>
                     <div id="togglePrograma4a7" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -188,7 +185,7 @@
                     <div class="folder">
                         Niñas, niños y adolescentes
                     </div>
-                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
+                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione uno o más programas</div>
                     <div id="toggleFIADI" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -222,7 +219,7 @@
                     <div class="folder">
                         Instituciones con atención preferente para personas cuidadoras
                     </div>
-                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione una o más capas a continuación:</div>
+                    <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione</div>
                     <div id="toggleCorreosDeChile" class="card layer col-12"
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
@@ -279,7 +276,7 @@
 
         <div class="categoriasFooter col-2" onclick="toggleFolders('folder5')">
             <div href="#">
-                <img style="width: 5vh;margin-top: 1vh;" src="images/edificio.png">
+                <img style="width: 5vh;margin-top: 1vh; margin-bottom: 1vh;" src="images/edificio.png">
                 <h6 class="footer-text">Instituciones con atención preferente</h6>
             </div>
         </div>

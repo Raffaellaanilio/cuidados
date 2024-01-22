@@ -7,14 +7,15 @@ const map = new maplibregl.Map({
     maxZoom: 18, // Establece el zoom máximo permitido
     zoom: 3.4,
     pitch: 0, // Configuración del ángulo de inclinación (establecer en 0 para desactivar la inclinación)
-    bearing: 0 // Configuración de la orientación del mapa
+    bearing: 0,
 });
 
 // Desactivar la función de inclinación
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
 
-map.addControl(new maplibregl.NavigationControl());
+// Puedes también ocultar el control de navegación de norte
+map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
 /* map.addControl(new maplibregl.FullscreenControl()); */
 
@@ -26,7 +27,7 @@ function locateUser() {
         // Centrar el mapa en la ubicación del usuario
         map.flyTo({
             center: userLocation,
-            zoom: 15
+            zoom: 17
         });
 
         // Añadir un marcador en la ubicación del usuario
@@ -130,7 +131,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
             // Oculta el spinner después de cargar la capa
             setTimeout(function () {
                 hideSpinner();
-            }, 20000);
+            }, 2000);
         }
 
         // Función para obtener el mapeo de propiedades según la layerId
@@ -195,12 +196,12 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
         <table class="table table-striped">
         <tbody>
         ${programa ? `<h5><b>${programa || ''}</b></h5>` : ''}
-        ${nombre ? `<tr><th scope="row">Nombre: </th><td>${nombre || ''}</td></tr>` : ''}
-        ${direccion ? `<tr><th scope="row">Dirección: </th><td>${direccion || ''}</td></tr>` : ''}
-        ${comuna ? `<tr><th scope="row">Comuna:</b> </th><td>${comuna || ''}</td></tr>` : ''}
+        ${nombre ? `<tr><th scope="row">Nombre </th><td>${nombre || ''}</td></tr>` : ''}
+        ${direccion ? `<tr><th scope="row">Dirección </th><td>${direccion || ''}</td></tr>` : ''}
+        ${comuna ? `<tr><th scope="row">Comuna</b> </th><td>${comuna || ''}</td></tr>` : ''}
         ${region ? `<tr><th scope="row">Región</b> </th><td>${region || ''}</td></tr>` : ''}
-        ${telefono ? `<tr><th scope="row">Teléfono</b>:</th><td> ${telefono || ''}</td></tr>` : ''}
-        ${correo ? `<tr><th scope="row">Correo</b>: </th><td>${correo || ''}</td></tr>` : ''}
+        ${telefono ? `<tr><th scope="row">Teléfono</b></th><td> ${telefono || ''}</td></tr>` : ''}
+        ${correo ? `<tr><th scope="row">Correo</b> </th><td>${correo || ''}</td></tr>` : ''}
         </tbody>
         </table>
         `
@@ -305,7 +306,7 @@ $("#toggleRedLocalMunicipios").on("click", function () {
     toggleLayer(
         "fill",
         "RedLocalMunicipios",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARedLocal2&outputFormat=application%2Fjson",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AredLocalSimplificado&maxFeatures=50&outputFormat=application%2Fjson",
         "images/RedLocalApoyosyCuidados.png"
     );
 });
@@ -632,14 +633,6 @@ var comunaOptions = [
         region: "La Araucanía",
         label: "Pucón",
         center: [-71.768712516246538, -39.267848966146154],
-        zoom: 10,
-    },
-    {
-        cut_reg: "09",
-        value: "09107",
-        region: "La Araucanía",
-        label: "Gorbea",
-        center: [-72.690481454957222, -39.092231681879149],
         zoom: 10,
     },
     {
@@ -2012,14 +2005,6 @@ var comunaOptions = [
     },
     {
         cut_reg: "08",
-        value: "08305",
-        region: "Biobío",
-        label: "Mulchén",
-        center: [-72.04201455151663, -37.889365094540821],
-        zoom: 10,
-    },
-    {
-        cut_reg: "08",
         value: "08203",
         region: "Biobío",
         label: "Cañete",
@@ -2104,14 +2089,6 @@ var comunaOptions = [
         region: "Atacama",
         label: "Chañaral",
         center: [-70.478239251302426, -26.364451830975959],
-        zoom: 10,
-    },
-    {
-        cut_reg: "16",
-        value: "16103",
-        region: "Ñuble",
-        label: "Chillán Viejo",
-        center: [-72.244796959628161, -36.667007974618357],
         zoom: 10,
     },
     {
@@ -2476,14 +2453,6 @@ var comunaOptions = [
     },
     {
         cut_reg: "05",
-        value: "05602",
-        region: "Valparaíso",
-        label: "Algarrobo",
-        center: [-71.622532360719319, -33.334218536760659],
-        zoom: 10,
-    },
-    {
-        cut_reg: "05",
         value: "05601",
         region: "Valparaíso",
         label: "San Antonio",
@@ -2512,14 +2481,6 @@ var comunaOptions = [
         region: "Atacama",
         label: "Copiapó",
         center: [-69.938196972717449, -27.514387236604424],
-        zoom: 10,
-    },
-    {
-        cut_reg: "06",
-        value: "06304",
-        region: "Libertador General Bernardo Ohiggins",
-        label: "Lolol",
-        center: [-71.707370192407723, -34.925438307615806],
         zoom: 10,
     },
     {
@@ -2752,14 +2713,6 @@ var comunaOptions = [
         region: "Libertador General Bernardo Ohiggins",
         label: "Lolol",
         center: [-71.678360102821074, -34.75926806391508],
-        zoom: 10,
-    },
-    {
-        cut_reg: "05",
-        value: "05503",
-        region: "Valparaíso",
-        label: "Hijuelas",
-        center: [-71.150271460874336, -32.795017403571229],
         zoom: 10,
     },
     {
