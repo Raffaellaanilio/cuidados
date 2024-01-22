@@ -14,20 +14,21 @@
 
 <body>
     <header class="card bg-light p-2 text-center">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row justify-content-end align-items-center">
 
-                <div id="flecha" class="col-4 col-md-1 toggle-button" onclick="togglePanel()">
-                    <img id="toggleIcon" src="images/flecha-izquierda.png" alt="Flecha">
+                <div id="flecha" class="col-2 col-md-1 toggle-button" onclick="togglePanel()">
+                    <img id="toggleIcon" style="width: 4vh;" src="images/flecha.svg" alt="Flecha">
                 </div>
-
-                <div class="col-6 col-md-2">
+                <div class="col-2 col-md-1">
                     <img id="logo" src="images/Banner_chilecuida.svg">
+                </div>
+                <div class="col-2 col-md-1">
                     <img id="logo" src="images/IDE-Chile-MBN2.png">
                 </div>
      
-                <div class="col-6 col-md-3">
-                    <h2>Mapa del cuidado</h2>
+                <div id="titulo" class="col-5 col-md-4">
+                    Mapa de cuidados
                 </div>
 
                 <!-- Menú de hamburguesa para versión móvil -->
@@ -35,15 +36,15 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-                        <span><img style="width: 4vh;margin: 0vh;" src="images/menu.svg"></span>
+                        <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/menu.svg"></span>
                     </button>
                 </div>
 
                 <!-- Filtros para versión desktop -->
-                <div class="col-5 col-md-3 d-none d-md-block">
+                <div class="col-1 col-md-2 d-none d-md-block">
                     <select class="form-select form-select-sm regionDropdown"></select>
                 </div>
-                <div class="col-5 col-md-3 d-none d-md-block">
+                <div class="col-1 col-md-2 d-none d-md-block">
                     <select class="form-select form-select-sm comunaDropdown"></select>
                 </div>
 
@@ -59,12 +60,12 @@
         <div class="collapse" id="navbarCollapse">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 col-md-2">
                         <select class="form-select form-select-sm regionDropdown">
                             <!-- Opciones de la lista desplegable para la región -->
                         </select>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 col-md-2">
                         <select class="form-select form-select-sm comunaDropdown">
                             <!-- Opciones de la lista desplegable para la comuna -->
                         </select>

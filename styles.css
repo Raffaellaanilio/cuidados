@@ -167,22 +167,11 @@ header {
 }
 
 #flecha {
-    border-radius: 30%;
-    position: fixed;
-    right: 170vh;
+    border-radius: 15%;
+    position: relative;
     width: fit-content;
-    background-color: whitesmoke;
-    border: 1px solid #ccc;
-    z-index: 6000;
-    grid-auto-flow: column;
-    max-height: 70vh;
-    overflow-y: auto;
-    top: 10px;
-    left: 10px;
     max-width: 300px;
-    padding: 10px;
-    margin: 2vh;
-    border: 1;
+    padding: 4px;
 }
 
 #floating-box {
@@ -259,6 +248,11 @@ header {
     color: black;
 }
 
+#titulo {
+    font-size: xx-large;
+    font-weight:bold ;
+}
+
 
 @media only screen and (max-width: 600px) {
 
@@ -272,8 +266,7 @@ header {
     }
 
     #logo {
-        width: 12vh;
-        margin: 1vh;
+        width: 7vh;
     }
 
     .panel {
@@ -281,12 +274,14 @@ header {
         height: 100%;
     }
 
-    #flecha {
-        margin: 0vh;
-    }
-
     .footer-text{
         font-size: xx-small;
+    }
+
+    #titulo {
+        font-size: medium;
+        font-weight: lighter;
+        padding: 1vh;
     }
 
 }
