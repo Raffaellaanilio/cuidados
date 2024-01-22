@@ -20,7 +20,7 @@ map.addControl(new maplibregl.NavigationControl());
 
 function locateUser() {
     // Obtener la ubicación del usuario
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
         const userLocation = [position.coords.longitude, position.coords.latitude];
 
         // Centrar el mapa en la ubicación del usuario
@@ -33,15 +33,15 @@ function locateUser() {
         new maplibregl.Marker()
             .setLngLat(userLocation)
             .addTo(map);
-    }, function(error) {
+    }, function (error) {
         console.error('Error al obtener la ubicación, se activa la opción 2', error);
-        alert("Error al obtener la ubicación. Prueba en otro navegador ó habilita los permisos de ubicación para poder continuar.")
-        map.addControl(new maplibregl.GeolocateControl({
-            positionOptions: {
-                enableHighAccuracy: true
-            },
-            trackUserLocation: true
-        }));
+        alert("Error al obtener tu ubicación. Habilita los permisos de ubicación para poder continuar.")
+        /*  map.addControl(new maplibregl.GeolocateControl({
+             positionOptions: {
+                 enableHighAccuracy: true
+             },
+             trackUserLocation: true
+         })); */
     });
 }
 
@@ -97,6 +97,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
             map.loadImage(iconUrl, function (error, image) {
                 if (error) throw error;
                 map.addImage(layerId + "-icon", image);
+
                 map.addLayer({
                     id: layerId,
                     type: "symbol",
@@ -104,9 +105,12 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
                     layout: {
                         "icon-image": layerId + "-icon",
                         "icon-size": 1,
+                        "icon-padding":20,
                         "icon-allow-overlap": true,
+                        "icon-ignore-placement": true, // Ignorar el posicionamiento para facilitar los clics
                     },
                 });
+
                 // Oculta el spinner después de cargar la capa
                 setTimeout(function () {
                     hideSpinner();
