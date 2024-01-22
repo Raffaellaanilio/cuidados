@@ -1,65 +1,52 @@
 const map = new maplibregl.Map({
     container: "map",
     style:
-        "https://api.maptiler.com/maps/streets-v2/style.json?key=LURvXrlYSjugh8dlAFR3",
+        "https://api.maptiler.com/maps/basic-v2/style.json?key=LURvXrlYSjugh8dlAFR3",
     center: [-71.543, -40.6751],
-    minZoom: 3, // Establece el zoom máximo permitido
+    minZoom: 3.4, // Establece el zoom máximo permitido
     maxZoom: 18, // Establece el zoom máximo permitido
-    zoom: 2,
+    zoom: 3.4,
+    pitch: 0, // Configuración del ángulo de inclinación (establecer en 0 para desactivar la inclinación)
+    bearing: 0 // Configuración de la orientación del mapa
 });
 
+// Desactivar la función de inclinación
+map.dragRotate.disable();
+map.touchZoomRotate.disableRotation();
+
 map.addControl(new maplibregl.NavigationControl());
-// Add geolocate control to the map.
-map.addControl(new maplibregl.GeolocateControl({
-        positionOptions: {
-            enableHighAccuracy: true
-        },
-        trackUserLocation: true
-    })
-);
 
 /* map.addControl(new maplibregl.FullscreenControl()); */
 
 function locateUser() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                var userLocation = [
-                    position.coords.longitude,
-                    position.coords.latitude,
-                ];
+    // Obtener la ubicación del usuario
+    navigator.geolocation.getCurrentPosition(function(position) {
+        const userLocation = [position.coords.longitude, position.coords.latitude];
 
-                // Mueve el mapa a la ubicación del usuario
-                map.flyTo({
-                    center: userLocation,
-                    zoom: 15,
-                });
+        // Centrar el mapa en la ubicación del usuario
+        map.flyTo({
+            center: userLocation,
+            zoom: 15
+        });
 
-                // Crea un elemento HTML para representar el marcador
-                var markerElement = document.createElement("div");
-                markerElement.className = "map-marker";
+        // Añadir un marcador en la ubicación del usuario
+        new maplibregl.Marker()
+            .setLngLat(userLocation)
+            .addTo(map);
+    }, function(error) {
+        console.error('Error obtaining location, se activa la opción 2', error);
 
-                // Crea una etiqueta (label) para el marcador
-                var label = document.createElement("div");
-                label.className = "map-label";
-                label.textContent = "Estás aquí";
-
-                // Agrega el marcador al mapa
-                new maplibregl.Marker(markerElement).setLngLat(userLocation).addTo(map);
-                // Adjunta la etiqueta al marcador
-                markerElement.appendChild(label);
+        map.addControl(new maplibregl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
             },
-            function (error) {
-                console.error(
-                    "Error al obtener la ubicación del usuario:",
-                    error.message
-                );
-            }
-        );
-    } else {
-        alert("Tu navegador no admite la geolocalización.");
-    }
+            trackUserLocation: true
+        }));
+
+
+    });
 }
+
 
 // Función para mostrar el spinner
 function showSpinner() {
