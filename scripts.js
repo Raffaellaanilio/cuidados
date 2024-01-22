@@ -34,16 +34,14 @@ function locateUser() {
             .setLngLat(userLocation)
             .addTo(map);
     }, function(error) {
-        console.error('Error obtaining location, se activa la opción 2', error);
-
+        console.error('Error al obtener la ubicación, se activa la opción 2', error);
+        alert("Error al obtener la ubicación. Prueba en otro navegador ó habilita los permisos de ubicación para poder continuar.")
         map.addControl(new maplibregl.GeolocateControl({
             positionOptions: {
                 enableHighAccuracy: true
             },
             trackUserLocation: true
         }));
-
-
     });
 }
 
