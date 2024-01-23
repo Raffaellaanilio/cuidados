@@ -285,7 +285,7 @@ header {
     }
 
     #toggleIcon {
-        transform: rotate(0deg); /* Restablecer transformaciones */
+        transform: rotate(0deg);
     }
 
 }
