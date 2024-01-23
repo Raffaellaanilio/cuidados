@@ -284,4 +284,8 @@ header {
         padding: 1vh;
     }
 
+    #toggleIcon {
+        transform: rotate(0deg); /* Restablecer transformaciones */
+    }
+
 }
