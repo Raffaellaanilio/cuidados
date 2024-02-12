@@ -1,3 +1,5 @@
+
+
 const map = new maplibregl.Map({
     container: "map",
     style: "https://api.maptiler.com/maps/basic-v2/style.json?key=LURvXrlYSjugh8dlAFR3",
@@ -68,11 +70,16 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
     //checkBox
     var checkboxId = document.getElementById("checkBox" + layerId);
 
-    if (checkboxId.style.display === "none" || checkboxId.style.display === "") {
-        checkboxId.style.display = "block";
-    } else {
-        checkboxId.style.display = "none";
+    if (carga != 'initial') {
+
+        if (checkboxId.style.display === "none" || checkboxId.style.display === "") {
+            checkboxId.style.display = "block";
+        } else {
+            checkboxId.style.display = "none";
+        }
+
     }
+
 
     var layer = map.getLayer(layerId);
     if (layer) {
@@ -144,7 +151,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                     }
                 })
                 .catch(function (error) {
-                    console.error("Error fetching data:", error);
+                    console.error(layerId ," Error fetching data:", error);
                 });
         }
 
@@ -401,31 +408,31 @@ function togglePanel() {
 
 //NO FUNCIONAN POR ALLOW CORS
 /* 'https://idembn.bienes.cl/geoserver/Sename/ows?service=WFS&version=1.0.0&request=GetFeature&typename=sename_comunas_cod&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
-
+ 
 'https://idembn.bienes.cl/geoserver/eleam_/ows?service=WFS&version=1.0.0&request=GetFeature&typename=ELEAM&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326'
-
+ 
 'https://idembn.bienes.cl/geoserver/SENADIS/ows?service=WFS&version=1.0.0&request=GetFeature&typename=SENADIS&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326' */
 
 /* //PRUEBA CON WFS (DEVUELVE ERROR DE QUE EL HEADER DE GEOSERVER NO TIENE ACTIVADO Access-Control-Allow-Origin)
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(layerId, wfsUrl, iconUrl) {
     var layer = map.getLayer(layerId);
-
+ 
     if (layer) {
         // Si está activa, la desactiva
         map.removeLayer(layerId);
         map.removeSource(layerId + 'Source');
     } else {
         // Si está desactivada, la activa
-
+ 
         // Muestra el spinner antes de cargar la capa
         showSpinner();
-
+ 
         // Realiza la solicitud WFS
         axios.get(wfsUrl)
             .then(function (response) {
                 var geojsonFeatures = response.data; // Asumiendo que la respuesta es un objeto GeoJSON
-
+ 
                 map.addSource(layerId + 'Source', {
                     type: 'geojson',
                     data: {
@@ -433,12 +440,12 @@ function toggleLayer(layerId, wfsUrl, iconUrl) {
                         features: geojsonFeatures.features
                     }
                 });
-
+ 
                 map.loadImage(iconUrl, function (error, image) {
                     if (error) throw error;
-
+ 
                     map.addImage(layerId + '-icon', image);
-
+ 
                     map.addLayer({
                         id: layerId,
                         type: 'symbol',
@@ -449,7 +456,7 @@ function toggleLayer(layerId, wfsUrl, iconUrl) {
                             'icon-allow-overlap': true
                         }
                     });
-
+ 
                     // Oculta el spinner después de cargar la capa
                     setTimeout(function () {
                         hideSpinner();
@@ -3418,3 +3425,35 @@ $(".comunaDropdown").change(function () {
 map.on("error", function (e) {
     console.error("Error:", e.error);
 });
+
+console.log(tree)
+
+activate_layers = () => {
+    $(".checkbox").css("display", "none")
+    /*
+        toggleLayer(
+        "symbol",
+        "CEDIAM",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326",
+        "images/ProgramasSENAMA1.png", "onload"
+    );
+    */
+
+    $.each(tree, (i, tree_branch) => {
+        if (tree_branch.id != 'folder5' ) {
+            $.each(tree_branch.capas, (n, tree_leaf) => {
+                //if (tree_leaf.layerId == 'Condominios') {
+                toggleLayer(tree_leaf.type, tree_leaf.layerId, tree_leaf.sourceUrl, tree_leaf.iconUrl, 'initial')
+                console.log(tree_leaf.type, tree_leaf.layerId, tree_leaf.sourceUrl, tree_leaf.iconUrl)
+                //}
+    
+            })
+        }
+
+    })
+
+
+}
+
+activate_layers()
+
