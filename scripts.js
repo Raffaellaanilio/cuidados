@@ -1,7 +1,6 @@
 const map = new maplibregl.Map({
     container: "map",
-    style:
-        "https://api.maptiler.com/maps/basic-v2/style.json?key=LURvXrlYSjugh8dlAFR3",
+    style: "https://api.maptiler.com/maps/basic-v2/style.json?key=LURvXrlYSjugh8dlAFR3",
     center: [-71.543, -40.6751],
     minZoom: 3.4, // Establece el zoom máximo permitido
     maxZoom: 18, // Establece el zoom máximo permitido
@@ -46,7 +45,6 @@ function locateUser() {
     });
 }
 
-
 // Función para mostrar el spinner
 function showSpinner() {
     document.getElementById("spinner").style.display = "block";
@@ -62,8 +60,11 @@ function closeFloatingBox() {
     document.getElementById("floating-box").style.display = "none";
 }
 
+
+
 // Función para manejar la activación/desactivación de capas
-function toggleLayer(type, layerId, sourceUrl, iconUrl) {
+function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
+
     //checkBox
     var checkboxId = document.getElementById("checkBox" + layerId);
 
@@ -88,50 +89,63 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
         showSpinner();
 
         //AddSource
+        if (type === "symbol" || type === "fill") {
+            fetch(sourceUrl)
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error("Error fetching data");
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    map.addSource(layerId + "Source", {
+                        type: "geojson",
+                        data: data,
+                    });
 
-        map.addSource(layerId + "Source", {
-            type: "geojson",
-            data: sourceUrl,
-        });
+                    if (type === "symbol") {
+                        map.loadImage(iconUrl, function (error, image) {
+                            if (error) throw error;
+                            map.addImage(layerId + "-icon", image);
 
-        if (type === "symbol") {
-            map.loadImage(iconUrl, function (error, image) {
-                if (error) throw error;
-                map.addImage(layerId + "-icon", image);
+                            map.addLayer({
+                                id: layerId,
+                                type: "symbol",
+                                source: layerId + "Source",
+                                layout: {
+                                    "icon-image": layerId + "-icon",
+                                    "icon-size": 1,
+                                    "icon-padding": 20,
+                                    "icon-allow-overlap": true,
+                                    "icon-ignore-placement": true, // Ignorar el posicionamiento para facilitar los clics
+                                },
+                            });
 
-                map.addLayer({
-                    id: layerId,
-                    type: "symbol",
-                    source: layerId + "Source",
-                    layout: {
-                        "icon-image": layerId + "-icon",
-                        "icon-size": 1,
-                        "icon-padding":20,
-                        "icon-allow-overlap": true,
-                        "icon-ignore-placement": true, // Ignorar el posicionamiento para facilitar los clics
-                    },
+                            // Oculta el spinner después de cargar la capa
+                            setTimeout(function () {
+                                hideSpinner();
+                            }, 1000);
+                        });
+                    } else if (type === "fill") {
+                        // Si la capa es de tipo polígono
+                        map.addLayer({
+                            id: layerId,
+                            type: "fill",
+                            source: layerId + "Source",
+                            paint: {
+                                "fill-color": "#820a82",
+                                "fill-opacity": 0.2,
+                            },
+                        });
+                        // Oculta el spinner después de cargar la capa
+                        setTimeout(function () {
+                            hideSpinner();
+                        }, 2000);
+                    }
+                })
+                .catch(function (error) {
+                    console.error("Error fetching data:", error);
                 });
-
-                // Oculta el spinner después de cargar la capa
-                setTimeout(function () {
-                    hideSpinner();
-                }, 1000);
-            });
-        } else if (type === "fill") {
-            // Si la capa es de tipo polígono
-            map.addLayer({
-                id: layerId,
-                type: "fill",
-                source: layerId + "Source",
-                paint: {
-                    "fill-color": "#820a82",
-                    "fill-opacity": 0.2,
-                },
-            });
-            // Oculta el spinner después de cargar la capa
-            setTimeout(function () {
-                hideSpinner();
-            }, 2000);
         }
 
         // Función para obtener el mapeo de propiedades según la layerId
@@ -173,7 +187,6 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
         }
 
         map.on('click', layerId, function (e) {
-
             // Define un mapeo de propiedades según la layerId
             var propertyMapping = getPropertyMapping(layerId);
 
@@ -185,7 +198,6 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
             var correo = propertyMapping.correo && e.features[0].properties[propertyMapping.correo];
             var servicio = propertyMapping.servicio && e.features[0].properties[propertyMapping.servicio];
             var programa = propertyMapping.programa && e.features[0].properties[propertyMapping.programa];
-
 
             console.log("POPUP OK")
 
@@ -216,15 +228,16 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl) {
         });
     }
 }
+
+
 // RECOGE PARAMETROS ID, SOURCE Y ENLACE DE ICONO.
 //1 CARPETA
-
 $("#toggleCondominios").on("click", function () {
     toggleLayer(
         "symbol",
         "Condominios",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&outputFormat=application%2Fjson",
-        "images/ProgramasSENAMA1.png"
+        "images/ProgramasSENAMA1.png", "onload"
     );
 });
 
@@ -233,7 +246,7 @@ $("#toggleCEDIAM").on("click", function () {
         "symbol",
         "CEDIAM",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326",
-        "images/ProgramasSENAMA1.png"
+        "images/ProgramasSENAMA1.png", "onload"
     );
 });
 
@@ -306,7 +319,7 @@ $("#toggleRedLocalMunicipios").on("click", function () {
     toggleLayer(
         "fill",
         "RedLocalMunicipios",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AredLocalSimplificado&maxFeatures=50&outputFormat=application%2Fjson",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AredLocalSimplificado&outputFormat=application%2Fjson",
         "images/RedLocalApoyosyCuidados.png"
     );
 });
@@ -345,11 +358,12 @@ $("#toggleCorreosDeChile").on("click", function () {
         "symbol",
         "CorreosDeChile",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_05_correos_20240108104609&outputFormat=application%2Fjson",
-        "images/correosChile.png"
+        "images/correosChile.png", "onclick"
     );
 });
 
-// ESTA FUNCION ES PARA HACER TOGGLE EN EL PANEL, Y ADEMÁS TRAER LAS CAPAS DE CADA CATEGORÍA. ESTA DEBE SER LA QUE OCASIONA PROBLEMA CON EL POP-UP
+
+// ESTA FUNCION ES PARA HACER TOGGLE EN EL PANEL, Y ADEMÁS TRAER LAS CAPAS DE CADA CATEGORÍA.
 function toggleFolders(folderId) {
     var panel = document.getElementById("panel");
 
@@ -360,7 +374,7 @@ function toggleFolders(folderId) {
     }
 
     // Ocultar todas las capas
-    var allLayers = document.querySelectorAll(".category"); // ME TINCA QUE AQUÍ PASA ALGO RARO
+    var allLayers = document.querySelectorAll(".category");
     allLayers.forEach(function (layer) {
         layer.style.display = "none";
     });
@@ -3400,47 +3414,6 @@ $(".comunaDropdown").change(function () {
     });
 });
 
-/*  
- //Filtro por texto
-document.addEventListener('DOMContentLoaded', function () {
-    const searchComunaInput = document.querySelector('.searchComunaInput');
-    const comunaDropdown = document.querySelector('.comunaDropdown');
-    const comunaOptions = Array.from(comunaDropdown.options);
-
-    searchComunaInput.addEventListener('input', function () {
-        const searchTerm = searchComunaInput.value.toLowerCase();
-
-        comunaOptions.forEach(function (option) {
-            const text = option.textContent.toLowerCase();
-
-            if (text.includes(searchTerm)) {
-                option.style.display = 'block';
-            } else {
-                option.style.display = 'none';
-            }
-        });
-    });
-}); 
- */
-
-/* //Filtro comunas
-function updateComunas() {
-    var selectedRegion = document.getElementById('region').value;
-    var comunasSelect = document.getElementById('comuna');
-
-    // Oculta todas las comunas
-    for (var i = 0; i < comunasSelect.options.length; i++) {
-        comunasSelect.options[i].style.display = 'none';
-    }
-
-    // Muestra solo las comunas de la región seleccionada
-    for (var i = 0; i < comunasSelect.options.length; i++) {
-        var option = comunasSelect.options[i];
-        if (option.getAttribute('data-region') === selectedRegion) {
-            option.style.display = 'block';
-        }
-    }
-} */
 
 map.on("error", function (e) {
     console.error("Error:", e.error);

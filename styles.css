@@ -8,6 +8,17 @@ html {
     font-family: 'Roboto', sans-serif;
 }
 
+a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.nombreCapa{
+    color: black;
+    text-decoration: none;
+}
+
 #map {
     flex: 1;
     position: relative;
@@ -55,9 +66,12 @@ header {
 }
 
 .card.layer.col-12 {
+    display: block;
     background-color: #f0f0f0;
     margin-top: 3vh;
     background-color: white;
+    display: flex;
+    justify-content:space-between;
 }
 
 .card.layer.col-12 img {
@@ -253,6 +267,13 @@ header {
     font-weight:bold ;
 }
 
+.subtitulo{
+    color:grey;
+    font-size: small; 
+    font-style: italic;
+    margin: 1vh;
+}
+
 
 @media only screen and (max-width: 600px) {
 
@@ -287,5 +308,7 @@ header {
     #toggleIcon {
         transform: rotate(0deg);
     }
+
+
 
 }
