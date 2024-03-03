@@ -64,12 +64,11 @@ var tree = [
             "capas": [
                 {
                     "nombreCapa": "Adultos en residencias",
-                    "trigger": "toggleSenadis",
-                    "layerId": "Senadis",
-                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&outputFormat=application%2Fjson",
+                    "trigger": "toggleAdultosResidencias",
+                    "layerId": "AdultosResidencias",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAdultosResidencias&outputFormat=application%2Fjson",
                     "iconUrl": "images/ProgramasSENADIS.png",
                     "type": "symbol",
-
                 },
                 {
                     "nombreCapa": "Desarrollo de organizaciones inclusivas (DOI)",
@@ -161,7 +160,7 @@ var tree = [
                     "layerId": "CorreosDeChile",
                     "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_05_correos_20240108104609&outputFormat=application%2Fjson",
                     "iconUrl": "images/correosChile.png",
-                    "type": "symbol",
+                    "type": "symbol"
 
                 }
             ]

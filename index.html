@@ -16,7 +16,6 @@
     <header class="card bg-light p-2 text-center">
         <div class="container-fluid">
             <div class="row justify-content-end align-items-center">
-
                 <div id="flecha" class="col-2 col-md-1 toggle-button" onclick="togglePanel()">
                     <img viewBox="0 0 ancho alto" style="width: 5vh;" id="toggleIcon" src="images/flecha.svg">
                 </div>
@@ -26,11 +25,9 @@
                 <div class="col-2 col-md-1">
                     <img id="logo" src="images/IDE-Chile-MBN2.png">
                 </div>
-     
                 <div id="titulo" class="col-5 col-md-4">
                     Mapa de cuidados
                 </div>
-
                 <!-- Menú de hamburguesa para versión móvil -->
                 <div class="card col-6 col-md-3 d-md-none">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -38,7 +35,6 @@
                         <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/menu.svg"></span>
                     </button>
                 </div>
-
                 <!-- Filtros para versión desktop -->
                 <div class="col-1 col-md-2 d-none d-md-block">
                     <select class="form-select form-select-sm regionDropdown"></select>
@@ -46,7 +42,6 @@
                 <div class="col-1 col-md-2 d-none d-md-block">
                     <select class="form-select form-select-sm comunaDropdown"></select>
                 </div>
-
                 <!-- Botón de ubicación -->
                 <div class="card col-6 col-md-1" id="locate-button" onclick="locateUser()">
                     <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/locate.svg"></span>
@@ -56,7 +51,7 @@
         </div>
 
         <!-- Menú colapsable para versión móvil -->
-        <div class="collapsed d-md-none" id="navbarCollapse">
+        <div class="collapse d-md-none show" id="navbarCollapse">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 col-md-2">
@@ -72,6 +67,7 @@
                 </div>
             </div>
         </div>
+        
     </header>
 
     <div id="map">
@@ -222,7 +218,7 @@
                         style="display: flex; justify-content: space-between;">
                         <a href="#" style="display: flex; align-items: center;">
                             <img src="images/correosChile.png" alt="Capa">
-                            <div class="checkbox" id="checkBoxCorreosDeChile" style="display: none;"><img src="images/check.svg"></div>
+                            <div class="checkbox notInitial" id="checkBoxCorreosDeChile" style="display: none;"><img src="images/check.svg"></div>
                             <div class="card-title" style="color: black;">Correos de Chile</div>
                         </a>
                     </div>

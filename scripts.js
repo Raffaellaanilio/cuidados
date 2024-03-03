@@ -1,5 +1,3 @@
-
-
 const map = new maplibregl.Map({
     container: "map",
     style: "https://api.maptiler.com/maps/basic-v2/style.json?key=LURvXrlYSjugh8dlAFR3",
@@ -38,12 +36,6 @@ function locateUser() {
     }, function (error) {
         console.error('Error al obtener la ubicación, se activa la opción 2', error);
         alert("Error al obtener tu ubicación. Habilita los permisos de ubicación para poder continuar.")
-        /*  map.addControl(new maplibregl.GeolocateControl({
-             positionOptions: {
-                 enableHighAccuracy: true
-             },
-             trackUserLocation: true
-         })); */
     });
 }
 
@@ -63,23 +55,21 @@ function closeFloatingBox() {
 }
 
 
-
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
-
+console.log(type, layerId, sourceUrl, iconUrl, carga)
     //checkBox
+
+
     var checkboxId = document.getElementById("checkBox" + layerId);
 
     if (carga != 'initial') {
-
-        if (checkboxId.style.display === "none" || checkboxId.style.display === "") {
-            checkboxId.style.display = "block";
-        } else {
+        if (checkboxId.style.display === "block" || checkboxId.style.display === "") {
             checkboxId.style.display = "none";
+        } else {
+            checkboxId.style.display = "block";
         }
-
     }
-
 
     var layer = map.getLayer(layerId);
     if (layer) {
@@ -237,6 +227,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
 }
 
 
+
 // RECOGE PARAMETROS ID, SOURCE Y ENLACE DE ICONO.
 //1 CARPETA
 $("#toggleCondominios").on("click", function () {
@@ -244,7 +235,7 @@ $("#toggleCondominios").on("click", function () {
         "symbol",
         "Condominios",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__02_Condominio&outputFormat=application%2Fjson",
-        "images/ProgramasSENAMA1.png", "onload"
+        "images/ProgramasSENAMA1.png"
     );
 });
 
@@ -253,7 +244,7 @@ $("#toggleCEDIAM").on("click", function () {
         "symbol",
         "CEDIAM",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326",
-        "images/ProgramasSENAMA1.png", "onload"
+        "images/ProgramasSENAMA1.png"
     );
 });
 
@@ -285,15 +276,6 @@ $("#toggleCentrosDomiciliarios").on("click", function () {
 });
 
 //2 CARPETA
-$("#toggleSenadis").on("click", function () {
-    toggleLayer(
-        "symbol",
-        "Senadis",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Asenadis_todos&outputFormat=application%2Fjson",
-        "images/ProgramasSENADIS.png"
-    );
-});
-
 $("#toggleAdultosResidencias").on("click", function () {
     toggleLayer(
         "symbol",
@@ -365,7 +347,7 @@ $("#toggleCorreosDeChile").on("click", function () {
         "symbol",
         "CorreosDeChile",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Alayer_05_correos_20240108104609&outputFormat=application%2Fjson",
-        "images/correosChile.png", "onclick"
+        "images/correosChile.png"
     );
 });
 
@@ -3429,16 +3411,8 @@ map.on("error", function (e) {
 console.log(tree)
 
 activate_layers = () => {
-    $(".checkbox").css("display", "none")
-    /*
-        toggleLayer(
-        "symbol",
-        "CEDIAM",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__01_Cediam&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326",
-        "images/ProgramasSENAMA1.png", "onload"
-    );
-    */
-
+    $(".checkbox").css("display", "block")
+    $(".notInitial").css("display", "none")
     $.each(tree, (i, tree_branch) => {
         if (tree_branch.id != 'folder5' ) {
             $.each(tree_branch.capas, (n, tree_leaf) => {
@@ -3446,13 +3420,9 @@ activate_layers = () => {
                 toggleLayer(tree_leaf.type, tree_leaf.layerId, tree_leaf.sourceUrl, tree_leaf.iconUrl, 'initial')
                 console.log(tree_leaf.type, tree_leaf.layerId, tree_leaf.sourceUrl, tree_leaf.iconUrl)
                 //}
-    
             })
         }
-
     })
-
-
 }
 
 activate_layers()
