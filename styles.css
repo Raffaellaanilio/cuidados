@@ -1,11 +1,15 @@
-body,
-html {
+* {
+    font-family: 'Roboto';
+    font-weight: 400;
+}
+
+body, html {
     display: flex;
     flex-direction: column;
     height: 100%;
     margin: 0;
     overflow: hidden;
-    font-family: 'Roboto', sans-serif;
+    color: #212529; 
 }
 
 a {
@@ -23,6 +27,7 @@ a {
     flex: 1;
     position: relative;
     width: 100%;
+    margin-top: 0%;
     height: 100%;
     z-index: 4000;
 }
@@ -213,7 +218,7 @@ header {
     width: 60vh;
     background-color: white;
     border: 1px solid #ccc;
-    opacity: 80%;
+    opacity: 90%;
     z-index: 10000;
     grid-auto-flow: column;
     max-height: 70vh;
@@ -221,6 +226,21 @@ header {
     top: 10px;
     max-width: 300px;
     padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#toggleActivateAll {
+    border-radius: 10%;
+    display: block;
+    position: absolute;
+    bottom:15vh;
+    right: 1vh;
+    background-color: white;
+    border: 1px solid #ccc;
+    opacity: 100%;
+    z-index: 10000;
+    padding: 5px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -279,8 +299,9 @@ header {
 }
 
 #titulo {
-    font-size: xx-large;
-    font-weight:bold ;
+    font-family: Roboto Slab;
+    font-size: 2.4rem;
+    font-weight: 400;   
 }
 
 .subtitulo{
@@ -294,21 +315,24 @@ header {
 @media only screen and (max-width: 600px) {
 
     #floating-box {
+        position: absolute;
+        bottom: 0;
         max-width: 95%;
         max-height: 30vh;
         height: fit-content;
         right: 1vh;
         scroll-behavior: auto;
-        opacity: 95%;
+        opacity: 98%;
     }
 
     #logo {
-        width: 7vh;
+        width: 6vh;
     }
 
     .panel {
+        height: 70%;
         width: 50%;
-        height: 100%;
+        overflow-y: auto;
     }
 
     .footer-text{
@@ -324,7 +348,5 @@ header {
     #toggleIcon {
         transform: rotate(0deg);
     }
-
-
 
 }

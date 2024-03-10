@@ -10,14 +10,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap" />
     <link rel="stylesheet" href="/styles.css">
+
+ <!-- Tipografías obtenidas con google fonts-->
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400">
+
+
 </head>
 
 <body>
     <header class="card bg-light p-2 text-center">
         <div class="container-fluid">
-            <div class="row justify-content-end align-items-center">
+            <div class="row justify-content-center align-items-center">
                 <div id="flecha" class="col-2 col-md-1 toggle-button" onclick="togglePanel()">
                     <img viewBox="0 0 ancho alto" style="width: 5vh;" id="toggleIcon" src="images/flecha.svg">
+                </div>
+                <div class="col-2 col-md-1">
+                    <img id="logo" src="images/gobierno.png">
                 </div>
                 <div class="col-2 col-md-1">
                     <img id="logo" src="images/Banner_chilecuida.svg">
@@ -25,53 +34,56 @@
                 <div class="col-2 col-md-1">
                     <img id="logo" src="images/IDE-Chile-MBN2.png">
                 </div>
-                <div id="titulo" class="col-5 col-md-4">
+                <div id="titulo" class="col-5 col-md-3">
                     Mapa de cuidados
                 </div>
-                <!-- Menú de hamburguesa para versión móvil -->
-                <div class="card col-6 col-md-3 d-md-none">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
-                        <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/menu.svg"></span>
-                    </button>
+                <!-- Menú de hamburguesa y botón de ubicación para versión móvil -->
+                <div class="col-6 col-md-3 d-md-none">
+                    <div class="row">
+                        <div class="card col-6">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
+                                <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/search.svg"></span>
+                            </button>
+                        </div>
+                        <div class="card col-6" id="locate-button" onclick="locateUser()">
+                            <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/locate.svg"></span>
+                            <h6 style="font-size: small;" class="d-none d-md-block">Tu ubicación</h6>
+                        </div>
+                    </div>
                 </div>
                 <!-- Filtros para versión desktop -->
-                <div class="col-1 col-md-2 d-none d-md-block">
+                <div class="col-4 col-md-2 d-none d-md-block">
                     <select class="form-select form-select-sm regionDropdown"></select>
                 </div>
-                <div class="col-1 col-md-2 d-none d-md-block">
+                <div class="col-4 col-md-2 d-none d-md-block">
                     <select class="form-select form-select-sm comunaDropdown"></select>
-                </div>
-                <!-- Botón de ubicación -->
-                <div class="card col-6 col-md-1" id="locate-button" onclick="locateUser()">
-                    <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/locate.svg"></span>
-                    <h6 style="font-size: small;" class="d-none d-md-block">Tu ubicación</h6>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menú colapsable para versión móvil -->
-        <div class="collapse d-md-none show" id="navbarCollapse">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-md-2">
-                        <select class="form-select form-select-sm regionDropdown">
-                            <!-- Opciones de la lista desplegable para la región -->
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <select class="form-select form-select-sm comunaDropdown">
-                            <!-- Opciones de la lista desplegable para la comuna -->
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
         
+
+        <!-- Menú colapsable para versión móvil -->
+     <!-- Menú colapsable para versión móvil -->
+<div class="collapse d-md-none show" id="navbarCollapse">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <select class="form-select form-select-sm regionDropdown">
+                    <!-- Opciones de la lista desplegable para la región -->
+                </select>
+            </div>
+            <div class="col-6 col-md-3">
+                <select class="form-select form-select-sm comunaDropdown">
+                    <!-- Opciones de la lista desplegable para la comuna -->
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
     </header>
 
     <div id="map">
-       
         <div id="panel" class="card panel">
             <div class="icon-buttons row">
                 <!-- Carpeta 1 -->
@@ -227,6 +239,8 @@
         </div>
 
         <!-- Este es el botón del POPUP -->
+        <div class="card" id="toggleActivateAll"><img class="hideAll" style="width: 3vh;" src="images/hideAll.svg"><img class="showAll" style="width: 3vh;display: none;" src="images/showAll.svg"></div>
+
         <div id="floating-box"></div>
 
         <!-- BOTÓN SPINNER -->
@@ -264,14 +278,14 @@
         <div class="categoriasFooter col-2" onclick="toggleFolders('folder4')">
             <div href="#">
                 <img style="width: 5vh;margin: 1vh;" src="images/ProgramasNNA.svg">
-                <h6 class="footer-text">Niñas, Niños y Adolescentes</h6>
+                <h6 class="footer-text">Niñez y Adolescencia</h6>
             </div>
         </div>
 
         <div class="categoriasFooter col-2" onclick="toggleFolders('folder5')">
             <div href="#">
                 <img style="width: 5vh;margin-top: 1vh; margin-bottom: 1vh;" src="images/edificio.png">
-                <h6 class="footer-text">Instituciones con atención preferente</h6>
+                <h6 class="footer-text">Atención preferente</h6>
             </div>
         </div>
     </div>

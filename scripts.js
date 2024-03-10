@@ -9,6 +9,7 @@ const map = new maplibregl.Map({
     bearing: 0,
 });
 
+
 // Desactivar la función de inclinación
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
@@ -21,13 +22,14 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 function locateUser() {
     // Obtener la ubicación del usuario
     navigator.geolocation.getCurrentPosition(function (position) {
-        const userLocation = [position.coords.longitude, position.coords.latitude];
+        var userLatitude = position.coords.latitude;
+        var userLongitude = position.coords.longitude;
+        var userLocation = [userLongitude, userLatitude];
+        console.log(userLocation)
 
         // Centrar el mapa en la ubicación del usuario
-        map.flyTo({
-            center: userLocation,
-            zoom: 17
-        });
+        map.setCenter(userLocation);
+        map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
 
         // Añadir un marcador en la ubicación del usuario
         new maplibregl.Marker()
@@ -38,6 +40,17 @@ function locateUser() {
         alert("Error al obtener tu ubicación. Habilita los permisos de ubicación para poder continuar.")
     });
 }
+
+function obtenerCoordenadas() {
+    // Obtener la ubicación del usuario
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var userLatitude = position.coords.latitude;
+        var userLongitude = position.coords.longitude;
+        var userLocation = [userLongitude, userLatitude];
+        console.log(userLocation)
+    })
+}
+
 
 // Función para mostrar el spinner
 function showSpinner() {
@@ -55,11 +68,35 @@ function closeFloatingBox() {
 }
 
 
+function toggleActivateAll(layerId) {
+    var layer = map.getLayer(layerId);
+    var visibility = map.getLayoutProperty(layerId, "visibility");
+    if (layer) {
+        // Si está activa, la desactiva
+        if (visibility === "visible") {
+            map.setLayoutProperty(layerId, "visibility", "none");
+            $(".checkbox").css("display", "none");
+            $(".hideAll").css("display", "none");
+            $(".showAll").css("display", "block");
+        } else { // Si la capa está oculta
+            map.setLayoutProperty(layerId, "visibility", "visible");
+            $(".checkbox").css("display", "block");
+            $(".checkbox").css("display", "block");
+            $(".showAll").css("display", "none");
+            $(".hideAll").css("display", "block");
+        }
+    } else {
+        showSpinner();
+    }
+}
+
+
+
+
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
-console.log(type, layerId, sourceUrl, iconUrl, carga)
+    console.log(type, layerId, sourceUrl, iconUrl, carga)
     //checkBox
-
 
     var checkboxId = document.getElementById("checkBox" + layerId);
 
@@ -100,7 +137,22 @@ console.log(type, layerId, sourceUrl, iconUrl, carga)
                         data: data,
                     });
 
-                    if (type === "symbol") {
+                    if (type === "fill") {
+                          // Si la capa es de tipo polígono
+                          map.addLayer({
+                            id: layerId,
+                            type: "fill",
+                            source: layerId + "Source",
+                            paint: {
+                                "fill-color": "#820a82",
+                                "fill-opacity": 0.2,
+                            },
+                        });
+                        // Oculta el spinner después de cargar la capa
+                        setTimeout(function () {
+                            hideSpinner();
+                        }, 2000);
+                    } else if (type === "symbol") {
                         map.loadImage(iconUrl, function (error, image) {
                             if (error) throw error;
                             map.addImage(layerId + "-icon", image);
@@ -121,69 +173,64 @@ console.log(type, layerId, sourceUrl, iconUrl, carga)
                             // Oculta el spinner después de cargar la capa
                             setTimeout(function () {
                                 hideSpinner();
-                            }, 1000);
+                            }, 2000);
                         });
-                    } else if (type === "fill") {
-                        // Si la capa es de tipo polígono
-                        map.addLayer({
-                            id: layerId,
-                            type: "fill",
-                            source: layerId + "Source",
-                            paint: {
-                                "fill-color": "#820a82",
-                                "fill-opacity": 0.2,
-                            },
-                        });
-                        // Oculta el spinner después de cargar la capa
-                        setTimeout(function () {
-                            hideSpinner();
-                        }, 2000);
                     }
                 })
                 .catch(function (error) {
-                    console.error(layerId ," Error fetching data:", error);
-                });
+                    console.error(layerId, " Error fetching data:", error);
+                })
+            locateUser()
+                ;
         }
+
+        $("#toggleActivateAll").on("click", function () {
+            toggleActivateAll(layerId)
+        });
+
 
         // Función para obtener el mapeo de propiedades según la layerId
         function getPropertyMapping(layerId) {
             // Implementa lógica para asignar propiedades según layerId
             switch (layerId) {
                 case 'Condominios':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI', latitud: 'Y', longitud: 'X' };
                 case 'CEDIAM':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI', latitud: 'Y', longitud: 'X' };
                 case 'ELEAM':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI', latitud: 'Y', longitud: 'X' };
                 case 'Referenciales':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI', latitud: 'Y', longitud: 'X' };
                 case 'CentrosDomiciliarios':
-                    return { nombre: 'Organismo', direccion: 'direccion', comuna: 'Comuna', programa: 'Subcatego' };
+                    return { nombre: 'Organismo', direccion: 'direccion', comuna: 'Comuna', programa: 'Subcatego', latitud: 'Y', longitud: 'X' };
                 case 'AdultosResidencias':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI', latitud: 'Y', longitud: 'X' };
                 case 'DOI':
-                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI' };
+                    return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI', latitud: 'Y', longitud: 'X' };
                 case 'Programa4a7':
-                    return { nombre: 'NOMBRE_DIS', direccion: 'direccion', programa: 'PROGRAMA', comuna: 'COMUNA', telefono: 'Telefono', correo: 'CORREO_ELE' };
+                    return { nombre: 'NOMBRE_DIS', direccion: 'direccion', programa: 'PROGRAMA', comuna: 'COMUNA', telefono: 'Telefono', correo: 'CORREO_ELE', latitud: 'Y', longitud: 'X' };
                 case 'RedLocalMunicipios':
-                    return { direccion: 'Direccion', comuna: 'COMUNA', region: 'REGION', programa: 'Servicio' };
+                    return { direccion: 'Direccion', comuna: 'COMUNA', region: 'REGION', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
                 /*   case 'RedLocalApoyo':
                       return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', servicio: 'TIPO_DE_DI' }; */
                 case 'FIADI':
-                    return { direccion: 'Dir_Com', correo: 'Contacto', programa: 'Servicio' };
+                    return { direccion: 'Dir_Com', correo: 'Contacto', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
                 case 'HEPI':
-                    return { direccion: 'Field8', programa: 'Servicio' };
+                    return { direccion: 'Field8', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
                 case 'NEP':
-                    return { direccion: 'Dir_Comple', region: 'region', programa: 'Servicio' };
+                    return { direccion: 'Dir_Comple', region: 'region', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
                 case 'CorreosDeChile':
-                    return { nombre: 'NOMBRE', direccion: 'DIRECCION_', comuna: 'COMUNA', programa: 'TIPO' };
+                    return { nombre: 'NOMBRE', direccion: 'DIRECCION_', comuna: 'COMUNA', programa: 'TIPO', latitud: 'LATITUD', longitud: 'LONGITUD' };
                 // Agrega más casos según sea necesario
                 default:
                     return { nombre: 'ND', direccion: 'ND', telefono: 'ND', programa: 'ND' };
             }
         }
 
+
         map.on('click', layerId, function (e) {
+
+            obtenerCoordenadas()
             // Define un mapeo de propiedades según la layerId
             var propertyMapping = getPropertyMapping(layerId);
 
@@ -195,6 +242,9 @@ console.log(type, layerId, sourceUrl, iconUrl, carga)
             var correo = propertyMapping.correo && e.features[0].properties[propertyMapping.correo];
             var servicio = propertyMapping.servicio && e.features[0].properties[propertyMapping.servicio];
             var programa = propertyMapping.programa && e.features[0].properties[propertyMapping.programa];
+            var latitud = propertyMapping.latitud && e.features[0].properties[propertyMapping.latitud];
+            var longitud = propertyMapping.longitud && e.features[0].properties[propertyMapping.longitud];
+            var userLocation = userLocation;
 
             console.log("POPUP OK")
 
@@ -211,6 +261,8 @@ console.log(type, layerId, sourceUrl, iconUrl, carga)
         ${region ? `<tr><th scope="row">Región</b> </th><td>${region || ''}</td></tr>` : ''}
         ${telefono ? `<tr><th scope="row">Teléfono</b></th><td> ${telefono || ''}</td></tr>` : ''}
         ${correo ? `<tr><th scope="row">Correo</b> </th><td>${correo || ''}</td></tr>` : ''}
+        ${latitud ? `<tr><td colspan="2"><a target="_blank" href="https://www.google.com/maps/dir/${userLocation}/${latitud},${longitud}" onclick="alert('Este enlace te llevará a Google Maps')"><b><img style="width:3vh" src="images/directions.svg"> ¿Cómo llegar?</b></a></td></tr>` : ''}
+
         </tbody>
         </table>
         `
@@ -3414,7 +3466,7 @@ activate_layers = () => {
     $(".checkbox").css("display", "block")
     $(".notInitial").css("display", "none")
     $.each(tree, (i, tree_branch) => {
-        if (tree_branch.id != 'folder5' ) {
+        if (tree_branch.id != 'folder5') {
             $.each(tree_branch.capas, (n, tree_leaf) => {
                 //if (tree_leaf.layerId == 'Condominios') {
                 toggleLayer(tree_leaf.type, tree_leaf.layerId, tree_leaf.sourceUrl, tree_leaf.iconUrl, 'initial')
