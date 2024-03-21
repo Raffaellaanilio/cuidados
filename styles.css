@@ -35,7 +35,7 @@ a {
 header {
     position: relative;
     top: 0;
-    background-color: #CFE1F3;
+    background-color: #0A132D;
     z-index: 5000;
 }
 
@@ -300,8 +300,9 @@ header {
 
 #titulo {
     font-family: Roboto Slab;
-    font-size: 2.4rem;
-    font-weight: 400;   
+    font-size: 2rem;
+    font-weight: 400;
+    color: white;
 }
 
 .subtitulo{
@@ -318,7 +319,7 @@ header {
         position: absolute;
         bottom: 0;
         max-width: 95%;
-        max-height: 30vh;
+        max-height: 40vh;
         height: fit-content;
         right: 1vh;
         scroll-behavior: auto;
@@ -340,8 +341,8 @@ header {
     }
 
     #titulo {
-        font-size: medium;
-        font-weight: lighter;
+        font-size: large;
+        font-weight: bold;
         padding: 1vh;
     }
 

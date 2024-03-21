@@ -25,7 +25,6 @@ function locateUser() {
         var userLatitude = position.coords.latitude;
         var userLongitude = position.coords.longitude;
         var userLocation = [userLongitude, userLatitude];
-        console.log(userLocation)
 
         // Centrar el mapa en la ubicación del usuario
         map.setCenter(userLocation);
@@ -40,17 +39,6 @@ function locateUser() {
         alert("Error al obtener tu ubicación. Habilita los permisos de ubicación para poder continuar.")
     });
 }
-
-function obtenerCoordenadas() {
-    // Obtener la ubicación del usuario
-    navigator.geolocation.getCurrentPosition(function (position) {
-        var userLatitude = position.coords.latitude;
-        var userLongitude = position.coords.longitude;
-        var userLocation = [userLongitude, userLatitude];
-        console.log(userLocation)
-    })
-}
-
 
 // Función para mostrar el spinner
 function showSpinner() {
@@ -69,54 +57,39 @@ function closeFloatingBox() {
 
 
 function toggleActivateAll(layerId) {
-    var layer = map.getLayer(layerId);
+    // Cambiar el estado de visibilidad de todas las capas
     var visibility = map.getLayoutProperty(layerId, "visibility");
-    if (layer) {
-        // Si está activa, la desactiva
-        if (visibility === "visible") {
-            map.setLayoutProperty(layerId, "visibility", "none");
-            $(".checkbox").css("display", "none");
-            $(".hideAll").css("display", "none");
-            $(".showAll").css("display", "block");
-        } else { // Si la capa está oculta
-            map.setLayoutProperty(layerId, "visibility", "visible");
-            $(".checkbox").css("display", "block");
-            $(".checkbox").css("display", "block");
-            $(".showAll").css("display", "none");
-            $(".hideAll").css("display", "block");
-        }
-    } else {
-        showSpinner();
-    }
+    var newVisibility = (visibility === "visible") ? "none" : "visible";
+
+    map.setLayoutProperty(layerId, "visibility", newVisibility);
+
+    // Actualizar la visibilidad de los elementos de la interfaz de usuario
+    $(".checkbox").css("display", newVisibility === "visible" ? "block" : "none");
+    $(".showAll").css("display", newVisibility === "visible" ? "none" : "block");
+    $(".hideAll").css("display", newVisibility === "visible" ? "block" : "none");
 }
-
-
-
 
 // Función para manejar la activación/desactivación de capas
 function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
+
     console.log(type, layerId, sourceUrl, iconUrl, carga)
     //checkBox
 
     var checkboxId = document.getElementById("checkBox" + layerId);
 
-    if (carga != 'initial') {
-        if (checkboxId.style.display === "block" || checkboxId.style.display === "") {
-            checkboxId.style.display = "none";
-        } else {
-            checkboxId.style.display = "block";
-        }
-    }
-
     var layer = map.getLayer(layerId);
     if (layer) {
         // Si está activa, la desactiva
         var visibility = map.getLayoutProperty(layerId, "visibility");
+
         if (visibility == "none") {
             map.setLayoutProperty(layerId, "visibility", "visible");
+            checkboxId.style.display = "block";
         } else {
             map.setLayoutProperty(layerId, "visibility", "none");
+            checkboxId.style.display = "none";
         }
+
     } else {
         // Si está desactivada, la activa
         // Muestra el spinner antes de cargar la capa
@@ -138,8 +111,8 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                     });
 
                     if (type === "fill") {
-                          // Si la capa es de tipo polígono
-                          map.addLayer({
+                        // Si la capa es de tipo polígono
+                        map.addLayer({
                             id: layerId,
                             type: "fill",
                             source: layerId + "Source",
@@ -179,15 +152,13 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                 })
                 .catch(function (error) {
                     console.error(layerId, " Error fetching data:", error);
-                })
-            locateUser()
-                ;
+                });
+            locateUser();
         }
 
         $("#toggleActivateAll").on("click", function () {
-            toggleActivateAll(layerId)
+            toggleActivateAll(layerId);
         });
-
 
         // Función para obtener el mapeo de propiedades según la layerId
         function getPropertyMapping(layerId) {
@@ -211,8 +182,6 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                     return { nombre: 'NOMBRE_DIS', direccion: 'direccion', programa: 'PROGRAMA', comuna: 'COMUNA', telefono: 'Telefono', correo: 'CORREO_ELE', latitud: 'Y', longitud: 'X' };
                 case 'RedLocalMunicipios':
                     return { direccion: 'Direccion', comuna: 'COMUNA', region: 'REGION', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
-                /*   case 'RedLocalApoyo':
-                      return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', telefono: 'NUMERO', servicio: 'TIPO_DE_DI' }; */
                 case 'FIADI':
                     return { direccion: 'Dir_Com', correo: 'Contacto', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
                 case 'HEPI':
@@ -227,10 +196,24 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
             }
         }
 
-
         map.on('click', layerId, function (e) {
+            async function obtenerCoordenadas() {
+                try {
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject);
+                    });
+                    const userLatitude = position.coords.latitude;
+                    const userLongitude = position.coords.longitude;
+                    ubicacionUsuario = [userLatitude, userLongitude];
+                    console.log('ubicacion del usuario:', ubicacionUsuario); // Now this will log the actual coordinates
+                } catch (error) {
+                    console.error('Error obteniendo la ubicación del usuario:', error);
+                }
+            }
+            
 
-            obtenerCoordenadas()
+            obtenerCoordenadas();
+
             // Define un mapeo de propiedades según la layerId
             var propertyMapping = getPropertyMapping(layerId);
 
@@ -244,40 +227,45 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
             var programa = propertyMapping.programa && e.features[0].properties[propertyMapping.programa];
             var latitud = propertyMapping.latitud && e.features[0].properties[propertyMapping.latitud];
             var longitud = propertyMapping.longitud && e.features[0].properties[propertyMapping.longitud];
-            var userLocation = userLocation;
+
 
             console.log("POPUP OK")
 
-            // Actualiza el contenido de la caja flotante
-            document.getElementById('floating-box').innerHTML =
-                `
-        <div id="close-btn" onclick="closeFloatingBox()">X</div>    
-        <table class="table table-striped">
-        <tbody>
-        ${programa ? `<h5><b>${programa || ''}</b></h5>` : ''}
-        ${nombre ? `<tr><th scope="row">Nombre </th><td>${nombre || ''}</td></tr>` : ''}
-        ${direccion ? `<tr><th scope="row">Dirección </th><td>${direccion || ''}</td></tr>` : ''}
-        ${comuna ? `<tr><th scope="row">Comuna</b> </th><td>${comuna || ''}</td></tr>` : ''}
-        ${region ? `<tr><th scope="row">Región</b> </th><td>${region || ''}</td></tr>` : ''}
-        ${telefono ? `<tr><th scope="row">Teléfono</b></th><td> ${telefono || ''}</td></tr>` : ''}
-        ${correo ? `<tr><th scope="row">Correo</b> </th><td>${correo || ''}</td></tr>` : ''}
-        ${latitud ? `<tr><td colspan="2"><a target="_blank" href="https://www.google.com/maps/dir/${userLocation}/${latitud},${longitud}" onclick="alert('Este enlace te llevará a Google Maps')"><b><img style="width:3vh" src="images/directions.svg"> ¿Cómo llegar?</b></a></td></tr>` : ''}
+            obtenerCoordenadas().then(() => {
+                // Actualiza el contenido de la caja flotante
+                document.getElementById('floating-box').innerHTML =
+                    `
+                    <div id="close-btn" onclick="closeFloatingBox()">X</div>    
+                    <table class="table table-striped">
+                    <tbody>
+                    ${programa ? `<h5><b>${programa || ''}</b></h5>` : ''}
+                    ${nombre ? `<tr><th scope="row">Nombre </th><td>${nombre || ''}</td></tr>` : ''}
+                    ${direccion ? `<tr><th scope="row">Dirección </th><td>${direccion || ''}</td></tr>` : ''}
+                    ${comuna ? `<tr><th scope="row">Comuna</b> </th><td>${comuna || ''}</td></tr>` : ''}
+                    ${region ? `<tr><th scope="row">Región</b> </th><td>${region || ''}</td></tr>` : ''}
+                    ${telefono ? `<tr><th scope="row">Teléfono</b></th><td> ${telefono || ''}</td></tr>` : ''}
+                    ${correo ? `<tr><th scope="row">Correo</b> </th><td>${correo || ''}</td></tr>` : ''}
+                    ${latitud ? `<tr><td colspan="2"><a style="font-size:1rem" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=${ubicacionUsuario}&destination=${latitud},${longitud}&travelmode=TRANSIT" onclick="alert('Este enlace te llevará a Google Maps')"><b><img style="width:1.5rem" src="images/directions.svg"> ¿Cómo llegar?</b></a></td></tr>` : ''}
+                    </tbody>
+                    </table>
+                    `
 
-        </tbody>
-        </table>
-        `
-            // Muestra la caja flotante
-            document.getElementById('floating-box').style.display = 'block';
+                // Muestra la caja flotante
+                document.getElementById('floating-box').style.display = 'block';
+            });
         });
+
         map.on('mouseenter', layerId, function () {
             map.getCanvas().style.cursor = 'pointer';
         });
+
         map.on('mouseleave', layerId, function () {
             map.getCanvas().style.cursor = '';
         });
     }
 }
 
+          
 
 
 // RECOGE PARAMETROS ID, SOURCE Y ENLACE DE ICONO.

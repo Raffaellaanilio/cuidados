@@ -19,10 +19,10 @@
 </head>
 
 <body>
-    <header class="card bg-light p-2 text-center">
+    <header style="background-color:#0A132D;" class="card p-1 text-center">
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
-                <div id="flecha" class="col-2 col-md-1 toggle-button" onclick="togglePanel()">
+                <div id="flecha" class="col-1 col-md-1 toggle-button" onclick="togglePanel()">
                     <img viewBox="0 0 ancho alto" style="width: 5vh;" id="toggleIcon" src="images/flecha.svg">
                 </div>
                 <div class="col-2 col-md-1">
@@ -34,46 +34,51 @@
                 <div class="col-2 col-md-1">
                     <img id="logo" src="images/IDE-Chile-MBN2.png">
                 </div>
-                <div id="titulo" class="col-5 col-md-3">
+                <div id="titulo" class="col-12 col-md-3">
                     Mapa de cuidados
                 </div>
+                  <!-- Filtros para versión desktop -->
+                  <div class="col-2 col-md-2 d-none d-md-block">
+                    <select class="form-select form-select-sm regionDropdown"></select>
+                </div>
+                <div class="col-2 col-md-2 d-none d-md-block">
+                    <select class="form-select form-select-sm comunaDropdown"></select>
+                </div>
+                <div class="card col-1 col-md-1 d-none d-md-block" id="locate-button" onclick="locateUser()">
+                    <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/locate.svg"></span>
+                    <h6 style="font-size: small;" class="d-none d-md-block">Tu ubicación</h6>
+                </div>
+
                 <!-- Menú de hamburguesa y botón de ubicación para versión móvil -->
-                <div class="col-6 col-md-3 d-md-none">
+                <div class="col-12 col-md-3 d-md-none">
                     <div class="row">
                         <div class="card col-6">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
-                                <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/search.svg"></span>
+                                <span><img style="width: 1rem;margin: 0.5rem;" src="images/search.svg">Buscar</span>
                             </button>
                         </div>
                         <div class="card col-6" id="locate-button" onclick="locateUser()">
-                            <span><img style="width: 2.5vh;margin: 0.5vh;" src="images/locate.svg"></span>
-                            <h6 style="font-size: small;" class="d-none d-md-block">Tu ubicación</h6>
+                            <span><img style="width: 1rem;margin: 0.5rem;" src="images/locate.svg">Ubicación</span>
+            
                         </div>
                     </div>
                 </div>
-                <!-- Filtros para versión desktop -->
-                <div class="col-4 col-md-2 d-none d-md-block">
-                    <select class="form-select form-select-sm regionDropdown"></select>
-                </div>
-                <div class="col-4 col-md-2 d-none d-md-block">
-                    <select class="form-select form-select-sm comunaDropdown"></select>
-                </div>
+              
             </div>
         </div>
         
-
         <!-- Menú colapsable para versión móvil -->
      <!-- Menú colapsable para versión móvil -->
 <div class="collapse d-md-none show" id="navbarCollapse">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-6 col-md-3">
+        <div class="col-12 justify-content-center align-items-center">
+            <div class="col-12 col-md-3 m-0 p-0">
                 <select class="form-select form-select-sm regionDropdown">
                     <!-- Opciones de la lista desplegable para la región -->
                 </select>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-12 col-md-3 m-0 p-0">
                 <select class="form-select form-select-sm comunaDropdown">
                     <!-- Opciones de la lista desplegable para la comuna -->
                 </select>
@@ -164,7 +169,7 @@
                 <!-- Contenido dentro de Carpeta 3 -->
                 <div id="folder3Layers" class="category">
                     <div class="folder">
-                        Cuidados y alivio a personas cuidadoras
+                        Cuidados para personas cuidadoras
                     </div>
                     <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione uno o más programas</div>
                     <div id="togglePrograma4a7" class="card layer col-12"
@@ -223,7 +228,7 @@
                 <!-- Contenido dentro de Carpeta 5 -->
                 <div id="folder5Layers" class="category">
                     <div class="folder">
-                        Instituciones con atención preferente para personas cuidadoras
+                        Atención preferente
                     </div>
                     <div style="color:grey; font-size: small; font-style: italic;margin: 1vh;">Seleccione</div>
                     <div id="toggleCorreosDeChile" class="card layer col-12"
