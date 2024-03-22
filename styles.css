@@ -282,8 +282,8 @@ header {
     margin-bottom: 10px;
 }
 
-#logo {
-    width: 10vh;
+.logo {
+ max-width: 80%;
 }
 
 .foto {
@@ -326,8 +326,8 @@ header {
         opacity: 98%;
     }
 
-    #logo {
-        width: 6vh;
+    .logo {
+        width: 100%;
     }
 
     .panel {
