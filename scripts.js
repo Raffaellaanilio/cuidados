@@ -20,32 +20,57 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 /* map.addControl(new maplibregl.FullscreenControl()); */
 
 
+// Variable global para almacenar la ubicación del usuario
+var userLocation;
+var userLatitude;
+var userLongitude;
+
+// Función para obtener la ubicación del usuario
 function locateUser() {
     var defaultLocation = [-70.669265, -33.448333]; // Ejemplo para Santiago, Chile
 
-    // Obtener la ubicación del usuario
-    navigator.geolocation.getCurrentPosition(function (position) {
-        var userLatitude = position.coords.latitude;
-        var userLongitude = position.coords.longitude;
-        var userLocation = [userLongitude, userLatitude];
+    // Retorna una promesa para la ubicación del usuario
+    return new Promise(function(resolve, reject) {
+        // Obtener la ubicación del usuario
+        navigator.geolocation.getCurrentPosition(function (position) {
+            // Asigna los valores a las variables globales
+            userLatitude = position.coords.latitude;
+            userLongitude = position.coords.longitude;
+            userLocation = [userLongitude, userLatitude]; // Almacena la ubicación del usuario en la variable global
 
-        // Centrar el mapa en la ubicación del usuario
-        map.setCenter(userLocation);
-        map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
+            // Centrar el mapa en la ubicación del usuario
+            map.setCenter(userLocation);
+            map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
 
-        // Añadir un marcador en la ubicación del usuario
-        new maplibregl.Marker()
-            .setLngLat(userLocation)
-            .addTo(map);
-    }, function (error) {
-        // Manejar el error de geolocalización
-        console.log('Ubicación denegada. Usando ubicación predeterminada.');
-        
-        // Centrar el mapa en la ubicación predeterminada
-        map.setCenter(defaultLocation);
-        map.setZoom(5); // Ajusta el nivel de zoom según tus necesidades
+            // Añadir un marcador en la ubicación del usuario
+            new maplibregl.Marker()
+                .setLngLat(userLocation)
+                .addTo(map);
+
+            // Resolver la promesa con la ubicación del usuario
+            resolve(userLocation);
+        }, function (error) {
+            // Manejar el error de geolocalización
+            console.log('Ubicación denegada. Usando ubicación predeterminada.');
+            
+            // Centrar el mapa en la ubicación predeterminada
+            map.setCenter(defaultLocation);
+            map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
+            
+            // Resolver la promesa con la ubicación predeterminada
+            resolve(defaultLocation);
+        });
     });
 }
+
+// Llama a la función locateUser() cuando se carga la página para obtener la ubicación del usuario inicialmente
+locateUser().then(function(location) {
+    // En este punto, la ubicación del usuario ya está disponible y almacenada en las variables globales userLatitude y userLongitude
+    console.log('Ubicación del usuario:', userLocation);
+    console.log('Latitud del usuario:', userLatitude);
+    console.log('Longitud del usuario:', userLongitude);
+});
+
 
 
 // Función para mostrar el spinner
@@ -207,24 +232,9 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
         }
 
         map.on('click', layerId, function (e) {
-            async function obtenerCoordenadas() {
-                try {
-                    const position = await new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject);
-                    });
-                    const userLatitude = position.coords.latitude;
-                    const userLongitude = position.coords.longitude;
-                    ubicacionUsuario = [userLatitude, userLongitude];
-                    console.log('ubicacion del usuario:', ubicacionUsuario); // Now this will log the actual coordinates
-                } catch (error) {
-                    console.error('Error obteniendo la ubicación del usuario:', error);
-                }
-            }
-            
+        
 
-            obtenerCoordenadas();
-
-            // Define un mapeo de propiedades según la layerId
+              // Define un mapeo de propiedades según la layerId
             var propertyMapping = getPropertyMapping(layerId);
 
             var nombre = propertyMapping.nombre && e.features[0].properties[propertyMapping.nombre];
@@ -241,7 +251,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
 
             console.log("POPUP OK")
 
-            obtenerCoordenadas().then(() => {
+     
                 // Actualiza el contenido de la caja flotante
                 document.getElementById('floating-box').innerHTML =
                     `
@@ -255,14 +265,14 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                     ${region ? `<tr><th scope="row">Región</b> </th><td>${region || ''}</td></tr>` : ''}
                     ${telefono ? `<tr><th scope="row">Teléfono</b></th><td> ${telefono || ''}</td></tr>` : ''}
                     ${correo ? `<tr><th scope="row">Correo</b> </th><td>${correo || ''}</td></tr>` : ''}
-                    ${latitud ? `<tr><td colspan="2"><a style="font-size:1rem" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=${ubicacionUsuario}&destination=${latitud},${longitud}&travelmode=TRANSIT" onclick="alert('Este enlace te llevará a Google Maps')"><b><img style="width:1.5rem" src="images/directions.svg"> ¿Cómo llegar?</b></a></td></tr>` : ''}
+                    ${latitud ? `<tr><td colspan="2"><a style="font-size:1rem" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=${userLatitude},${userLongitude}&destination=${latitud},${longitud}&travelmode=TRANSIT" onclick="alert('Este enlace te llevará a Google Maps')"><b><img style="width:1.5rem" src="images/directions.svg"> ¿Cómo llegar?</b></a></td></tr>` : ''}
                     </tbody>
                     </table>
                     `
 
                 // Muestra la caja flotante
                 document.getElementById('floating-box').style.display = 'block';
-            });
+            ;
         });
 
         map.on('mouseenter', layerId, function () {
