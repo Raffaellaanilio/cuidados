@@ -19,27 +19,32 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
 /* map.addControl(new maplibregl.FullscreenControl()); */
 
+
 function locateUser() {
+    var defaultLocation = [-70.669265, -33.448333]; // Ejemplo para Santiago, Chile
+
     // Obtener la ubicación del usuario
-    try {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var userLatitude = position.coords.latitude;
-            var userLongitude = position.coords.longitude;
-            var userLocation = [userLongitude, userLatitude];
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var userLatitude = position.coords.latitude;
+        var userLongitude = position.coords.longitude;
+        var userLocation = [userLongitude, userLatitude];
 
-            // Centrar el mapa en la ubicación del usuario
-            map.setCenter(userLocation);
-            map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
+        // Centrar el mapa en la ubicación del usuario
+        map.setCenter(userLocation);
+        map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
 
-            // Añadir un marcador en la ubicación del usuario
-            new maplibregl.Marker()
-                .setLngLat(userLocation)
-                .addTo(map);
-        });
-    } catch (error) {
+        // Añadir un marcador en la ubicación del usuario
+        new maplibregl.Marker()
+            .setLngLat(userLocation)
+            .addTo(map);
+    }, function (error) {
         // Manejar el error de geolocalización
-        console.error('Error al obtener la ubicación:', error.message);
-    }
+        console.log('Ubicación denegada. Usando ubicación predeterminada.');
+        
+        // Centrar el mapa en la ubicación predeterminada
+        map.setCenter(defaultLocation);
+        map.setZoom(5); // Ajusta el nivel de zoom según tus necesidades
+    });
 }
 
 
