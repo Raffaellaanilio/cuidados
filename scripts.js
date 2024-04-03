@@ -96,6 +96,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
         showSpinner();
 
         //AddSource
+        
         if (type === "symbol" || type === "fill") {
             fetch(sourceUrl)
                 .then(function (response) {
@@ -110,26 +111,11 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                         data: data,
                     });
 
-                    if (type === "fill") {
-                        // Si la capa es de tipo polígono
-                        map.addLayer({
-                            id: layerId,
-                            type: "fill",
-                            source: layerId + "Source",
-                            paint: {
-                                "fill-color": "#820a82",
-                                "fill-opacity": 0.2,
-                            },
-                        });
-                        // Oculta el spinner después de cargar la capa
-                        setTimeout(function () {
-                            hideSpinner();
-                        }, 2000);
-                    } else if (type === "symbol") {
+                    if (type === "symbol") {
                         map.loadImage(iconUrl, function (error, image) {
                             if (error) throw error;
                             map.addImage(layerId + "-icon", image);
-
+                    
                             map.addLayer({
                                 id: layerId,
                                 type: "symbol",
@@ -142,13 +128,29 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                                     "icon-ignore-placement": true, // Ignorar el posicionamiento para facilitar los clics
                                 },
                             });
-
-                            // Oculta el spinner después de cargar la capa
                             setTimeout(function () {
                                 hideSpinner();
                             }, 2000);
                         });
+                    } else if (type === "fill") {
+                        // Si la capa es de tipo polígono
+                        map.addLayer({
+                            id: layerId,
+                            type: "fill",
+                            source: layerId + "Source",
+                            paint: {
+                                "fill-color": "#820a82",
+                                "fill-opacity": 0.2,
+                            },
+                        });
+
+               
+                        // Oculta el spinner después de cargar la capa
+                        setTimeout(function () {
+                            hideSpinner();
+                        }, 2000);
                     }
+                    
                 })
                 .catch(function (error) {
                     console.error(layerId, " Error fetching data:", error);
