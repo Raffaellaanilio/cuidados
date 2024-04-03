@@ -21,23 +21,27 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
 function locateUser() {
     // Obtener la ubicación del usuario
-    navigator.geolocation.getCurrentPosition(function (position) {
-        var userLatitude = position.coords.latitude;
-        var userLongitude = position.coords.longitude;
-        var userLocation = [userLongitude, userLatitude];
+    try {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var userLatitude = position.coords.latitude;
+            var userLongitude = position.coords.longitude;
+            var userLocation = [userLongitude, userLatitude];
 
-        // Centrar el mapa en la ubicación del usuario
-        map.setCenter(userLocation);
-        map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
+            // Centrar el mapa en la ubicación del usuario
+            map.setCenter(userLocation);
+            map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
 
-        // Añadir un marcador en la ubicación del usuario
-        new maplibregl.Marker()
-            .setLngLat(userLocation)
-            .addTo(map);
-    }, function (error) {
-        console.error('Error al obtener la ubicación', error);
-    });
+            // Añadir un marcador en la ubicación del usuario
+            new maplibregl.Marker()
+                .setLngLat(userLocation)
+                .addTo(map);
+        });
+    } catch (error) {
+        // Manejar el error de geolocalización
+        console.error('Error al obtener la ubicación:', error.message);
+    }
 }
+
 
 // Función para mostrar el spinner
 function showSpinner() {
