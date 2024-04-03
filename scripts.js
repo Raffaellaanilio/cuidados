@@ -35,8 +35,7 @@ function locateUser() {
             .setLngLat(userLocation)
             .addTo(map);
     }, function (error) {
-        console.error('Error al obtener la ubicación, se activa la opción 2', error);
-        alert("Error al obtener tu ubicación. Habilita los permisos de ubicación para poder continuar.")
+        console.error('Error al obtener la ubicación', error);
     });
 }
 
