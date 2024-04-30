@@ -50,12 +50,14 @@ function locateUser() {
             // Resolver la promesa con la ubicación del usuario
             resolve(userLocation);
         }, function (error) {
-            // Manejar el error de geolocalización
+            // Manejar la denegación de geolocalización
             console.log('Ubicación denegada. Usando ubicación predeterminada.');
             
             // Centrar el mapa en la ubicación predeterminada
             map.setCenter(defaultLocation);
             map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
+                // Habilitar la interacción del mapa
+      map.setInteractive(true);
             
             // Resolver la promesa con la ubicación predeterminada
             resolve(defaultLocation);
@@ -214,7 +216,7 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                 case 'DOI':
                     return { nombre: 'NOMBRE_DEL', direccion: 'DIRECCION', comuna: 'COMUNA', programa: 'TIPO_DE_DI', latitud: 'Y', longitud: 'X' };
                 case 'Programa4a7':
-                    return { nombre: 'NOMBRE_DIS', direccion: 'direccion', programa: 'PROGRAMA', comuna: 'COMUNA', telefono: 'Telefono', correo: 'CORREO_ELE', latitud: 'Y', longitud: 'X' };
+                    return { nombre: 'Establecim', direccion: 'direccion', comuna: 'Comuna', telefono: 'Telefono', correo: 'CORREO_ELE', latitud: 'LATITUD', longitud: 'LONGITUD' };
                 case 'RedLocalMunicipios':
                     return { direccion: 'Direccion', comuna: 'COMUNA', region: 'REGION', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
                 case 'FIADI':
@@ -222,9 +224,13 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                 case 'HEPI':
                     return { direccion: 'Field8', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
                 case 'NEP':
-                    return { direccion: 'Dir_Comple', region: 'region', programa: 'Servicio', latitud: 'Y', longitud: 'X' };
+                    return { direccion: 'direccion', region: 'region', programa: 'Programa', latitud: 'LATITUD_1', longitud: 'LONGITUD_1', telefono:'telefono'};
                 case 'CorreosDeChile':
                     return { nombre: 'NOMBRE', direccion: 'DIRECCION_', comuna: 'COMUNA', programa: 'TIPO', latitud: 'LATITUD', longitud: 'LONGITUD' };
+                case 'RegistroCivil':
+                      return { programa:'Nombre', nombre: 'Nombre', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
+                case 'CCCP':
+                     return { programa:'Organizaci', nombre: 'Organizaci', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
                 // Agrega más casos según sea necesario
                 default:
                     return { nombre: 'ND', direccion: 'ND', telefono: 'ND', programa: 'ND' };
@@ -261,10 +267,10 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                     ${programa ? `<h5><b>${programa || ''}</b></h5>` : ''}
                     ${nombre ? `<tr><th scope="row">Nombre </th><td>${nombre || ''}</td></tr>` : ''}
                     ${direccion ? `<tr><th scope="row">Dirección </th><td>${direccion || ''}</td></tr>` : ''}
-                    ${comuna ? `<tr><th scope="row">Comuna</b> </th><td>${comuna || ''}</td></tr>` : ''}
-                    ${region ? `<tr><th scope="row">Región</b> </th><td>${region || ''}</td></tr>` : ''}
                     ${telefono ? `<tr><th scope="row">Teléfono</b></th><td> ${telefono || ''}</td></tr>` : ''}
                     ${correo ? `<tr><th scope="row">Correo</b> </th><td>${correo || ''}</td></tr>` : ''}
+                    ${comuna ? `<tr><th scope="row">Comuna</b> </th><td>${comuna || ''}</td></tr>` : ''}
+                    ${region ? `<tr><th scope="row">Región</b> </th><td>${region || ''}</td></tr>` : ''}
                     ${latitud ? `<tr><td colspan="2"><a style="font-size:1rem" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=${userLatitude},${userLongitude}&destination=${latitud},${longitud}&travelmode=TRANSIT" onclick="alert('Este enlace te llevará a Google Maps')"><b><img style="width:1.5rem" src="images/directions.svg"> ¿Cómo llegar?</b></a></td></tr>` : ''}
                     </tbody>
                     </table>
@@ -359,7 +365,7 @@ $("#togglePrograma4a7").on("click", function () {
     toggleLayer(
         "symbol",
         "Programa4a7",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&outputFormat=application%2Fjson",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Ap4a7cod&outputFormat=application%2Fjson",
         "images/programasCuidados.png"
     );
 });
@@ -369,6 +375,15 @@ $("#toggleRedLocalMunicipios").on("click", function () {
         "fill",
         "RedLocalMunicipios",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AredLocalSimplificado&outputFormat=application%2Fjson",
+        "images/RedLocalApoyosyCuidados.png"
+    );
+});
+
+$("#toggle140Comunas").on("click", function () {
+    toggleLayer(
+        "fill",
+        "140Comunas",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas&outputFormat=application%2Fjson",
         "images/RedLocalApoyosyCuidados.png"
     );
 });
@@ -396,7 +411,7 @@ $("#toggleNEP").on("click", function () {
     toggleLayer(
         "symbol",
         "NEP",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&outputFormat=application%2Fjson",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP_cod&outputFormat=application%2Fjson",
         "images/ProgramasNNA.png"
     );
 });
@@ -411,6 +426,27 @@ $("#toggleCorreosDeChile").on("click", function () {
     );
 });
 
+$("#toggleRegistroCivil").on("click", function () {
+    toggleLayer(
+        "symbol",
+        "RegistroCivil",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARegistrosCiviles&outputFormat=application%2Fjson",
+        "images/registroCivil.png"
+    );
+});
+
+
+$("#toggleCCCP").on("click", function () {
+    toggleLayer(
+        "symbol",
+        "CCCP",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAvances_CCCP&outputFormat=application%2Fjson",
+        "images/CCCP.png"
+    );
+});
+
+
+
 
 // ESTA FUNCION ES PARA HACER TOGGLE EN EL PANEL, Y ADEMÁS TRAER LAS CAPAS DE CADA CATEGORÍA.
 function toggleFolders(folderId) {
@@ -419,7 +455,7 @@ function toggleFolders(folderId) {
     if (panel.style.display === "none" || panel.style.display === "") {
         panel.style.display = "block";
     } else {
-        panel.style.display = "none";
+        panel.style.display = "block";
     }
 
     // Ocultar todas las capas

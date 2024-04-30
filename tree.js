@@ -93,7 +93,7 @@ var tree = [
                     "nombreCapa": "Programas del 4 al 7",
                     "trigger": "togglePrograma4a7",
                     "layerId": "Programa4a7",
-                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3APrograma4a7&outputFormat=application%2Fjson",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Ap4a7cod&outputFormat=application%2Fjson",
                     "iconUrl": "images/programasCuidados.png",
                     "type": "symbol",
 
@@ -103,6 +103,15 @@ var tree = [
                     "trigger": "toggleRedLocalMunicipios",
                     "layerId": "RedLocalMunicipios",
                     "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AredLocalSimplificado&maxFeatures=50&outputFormat=application%2Fjson",
+                    "iconUrl": "images/RedLocalApoyosyCuidados.png",
+                    "type": "fill",
+
+                },
+                {
+                    "nombreCapa": "140 comunas de arribo territorial",
+                    "trigger": "toggle140Comunas",
+                    "layerId": "140Comunas",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas&maxFeatures=50&outputFormat=application%2Fjson",
                     "iconUrl": "images/RedLocalApoyosyCuidados.png",
                     "type": "fill",
 
@@ -139,7 +148,7 @@ var tree = [
                     "nombreCapa": "Programa de Apoyo: Taller Nadie es Perfecto (NEP)",
                     "trigger": "toggleNEP",
                     "layerId": "NEP",
-                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP&outputFormat=application%2Fjson",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ANEP_cod&outputFormat=application%2Fjson",
                     "iconUrl": "images/ProgramasNNA.png",
                     "type": "symbol",
 
@@ -162,7 +171,26 @@ var tree = [
                     "iconUrl": "images/correosChile.png",
                     "type": "symbol"
 
-                }
+                },
+                {
+                    "nombreCapa": "Registro Civil",
+                    "trigger": "toggleRegistroCivil",
+                    "layerId": "RegistroCivil",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARegistrosCiviles&outputFormat=application%2Fjson",
+                    "iconUrl": "images/registroCivil.png",
+                    "type": "symbol"
+
+                },
+                {
+                    "nombreCapa": "Centros Comuninitarios de Cuidados",
+                    "trigger": "toggleCCCP",
+                    "layerId": "CCCP",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3AAvances_CCCP&outputFormat=application%2Fjson",
+                    "iconUrl": "images/CCCP.png",
+                    "type": "symbol"
+
+                },
+    
             ]
         },
     ]
