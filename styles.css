@@ -312,6 +312,12 @@ header {
     margin: 1vh;
 }
 
+.mapboxgl-interactive:active {
+    fill-opacity: 0.5; /* Cambia la opacidad cuando se pasa el cursor sobre la característica */
+    stroke: red; /* Cambia el color del borde */
+    stroke-width: 0px; /* Cambia el ancho del borde */
+}
+
 
 @media only screen and (max-width: 600px) {
 

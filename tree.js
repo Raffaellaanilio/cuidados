@@ -111,7 +111,7 @@ var tree = [
                     "nombreCapa": "140 comunas de arribo territorial",
                     "trigger": "toggle140Comunas",
                     "layerId": "140Comunas",
-                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas&maxFeatures=50&outputFormat=application%2Fjson",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas0&maxFeatures=50&outputFormat=application%2Fjson",
                     "iconUrl": "images/RedLocalApoyosyCuidados.png",
                     "type": "fill",
 
@@ -176,7 +176,7 @@ var tree = [
                     "nombreCapa": "Registro Civil",
                     "trigger": "toggleRegistroCivil",
                     "layerId": "RegistroCivil",
-                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARegistrosCiviles&outputFormat=application%2Fjson",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARegistroCivil&outputFormat=application%2Fjson",
                     "iconUrl": "images/registroCivil.png",
                     "type": "symbol"
 
@@ -190,6 +190,26 @@ var tree = [
                     "type": "symbol"
 
                 },
+    
+            ]
+        },
+        {
+            "id": "folder6",
+            "nombre": "Comunas Chile Cuida",
+            "subtitulo": "Seleccione",
+            "icono": "images/Red.png",
+            "descripcion": "", // Descripción que puede salir en el panel de la izquierda respecto a cada folder
+            "imagen": "", // Imagen que puede salir en el panel de la izquierda respecto a cada folder
+            "capas": [
+                {
+                    "nombreCapa": "140 comunas de arribo territorial",
+                    "trigger": "toggle140Comunas",
+                    "layerId": "140Comunas",
+                    "sourceUrl": "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas&maxFeatures=50&outputFormat=application%2Fjson",
+                    "iconUrl": "images/RedLocalApoyosyCuidados.png",
+                    "type": "fill",
+
+                }    
     
             ]
         },

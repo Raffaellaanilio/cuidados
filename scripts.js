@@ -40,7 +40,7 @@ function locateUser() {
 
             // Centrar el mapa en la ubicación del usuario
             map.setCenter(userLocation);
-            map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
+            map.setZoom(12); // Ajusta el nivel de zoom según tus necesidades
 
             // Añadir un marcador en la ubicación del usuario
             new maplibregl.Marker()
@@ -55,7 +55,7 @@ function locateUser() {
             
             // Centrar el mapa en la ubicación predeterminada
             map.setCenter(defaultLocation);
-            map.setZoom(10); // Ajusta el nivel de zoom según tus necesidades
+            map.setZoom(12); // Ajusta el nivel de zoom según tus necesidades
                 // Habilitar la interacción del mapa
       map.setInteractive(true);
             
@@ -73,8 +73,6 @@ locateUser().then(function(location) {
     console.log('Longitud del usuario:', userLongitude);
 });
 
-
-
 // Función para mostrar el spinner
 function showSpinner() {
     document.getElementById("spinner").style.display = "block";
@@ -89,7 +87,6 @@ function closeFloatingBox() {
     // Oculta la caja flotante
     document.getElementById("floating-box").style.display = "none";
 }
-
 
 function toggleActivateAll(layerId) {
     // Cambiar el estado de visibilidad de todas las capas
@@ -169,21 +166,33 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                         });
                     } else if (type === "fill") {
                         // Si la capa es de tipo polígono
-                        map.addLayer({
-                            id: layerId,
-                            type: "fill",
-                            source: layerId + "Source",
-                            paint: {
-                                "fill-color": "#820a82",
-                                "fill-opacity": 0.2,
-                            },
-                        });
+                        if (layerId === "RedLocalMunicipios") {
+                            map.addLayer({
+                                id: layerId,
+                                type: "fill",
+                                source: layerId + "Source",
+                                paint: {
+                                    "fill-color": "#820a82",
+                                    "fill-opacity": 0.2,
+                                },
+                            });
+                        } else if (layerId === "140Comunas") {
+                            map.addLayer({
+                                id: layerId,
+                                type: "fill",
+                                source: layerId + "Source",
+                                paint: {
+                                    "fill-color": "#f73c3c",
+                                    "fill-opacity": 0.5,
+                                },
+                            });
+                        }
 
                
                         // Oculta el spinner después de cargar la capa
                         setTimeout(function () {
                             hideSpinner();
-                        }, 2000);
+                        }, 10000);
                     }
                     
                 })
@@ -228,9 +237,11 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                 case 'CorreosDeChile':
                     return { nombre: 'NOMBRE', direccion: 'DIRECCION_', comuna: 'COMUNA', programa: 'TIPO', latitud: 'LATITUD', longitud: 'LONGITUD' };
                 case 'RegistroCivil':
-                      return { programa:'Nombre', nombre: 'Nombre', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
+                      return { programa: 'servicio', nombre: 'Nombre', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
                 case 'CCCP':
-                     return { programa:'Organizaci', nombre: 'Organizaci', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
+                     return { programa: 'servicio', nombre: 'Organizaci', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
+                case '140Comunas':
+                     return { programa: 'tipo', comuna: 'COMUNA', region: 'REGION'};
                 // Agrega más casos según sea necesario
                 default:
                     return { nombre: 'ND', direccion: 'ND', telefono: 'ND', programa: 'ND' };
@@ -253,7 +264,6 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
             var programa = propertyMapping.programa && e.features[0].properties[propertyMapping.programa];
             var latitud = propertyMapping.latitud && e.features[0].properties[propertyMapping.latitud];
             var longitud = propertyMapping.longitud && e.features[0].properties[propertyMapping.longitud];
-
 
             console.log("POPUP OK")
 
@@ -379,14 +389,6 @@ $("#toggleRedLocalMunicipios").on("click", function () {
     );
 });
 
-$("#toggle140Comunas").on("click", function () {
-    toggleLayer(
-        "fill",
-        "140Comunas",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas&outputFormat=application%2Fjson",
-        "images/RedLocalApoyosyCuidados.png"
-    );
-});
 
 //4 CARPETA
 $("#toggleFIADI").on("click", function () {
@@ -430,7 +432,7 @@ $("#toggleRegistroCivil").on("click", function () {
     toggleLayer(
         "symbol",
         "RegistroCivil",
-        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARegistrosCiviles&outputFormat=application%2Fjson",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3ARegistroCivil&outputFormat=application%2Fjson",
         "images/registroCivil.png"
     );
 });
@@ -445,7 +447,15 @@ $("#toggleCCCP").on("click", function () {
     );
 });
 
-
+//CARPETA 6
+$("#toggle140Comunas").on("click", function () {
+    toggleLayer(
+        "fill",
+        "140Comunas",
+        "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas0&outputFormat=application%2Fjson",
+        "images/RedLocalApoyosyCuidados.png"
+    );
+});
 
 
 // ESTA FUNCION ES PARA HACER TOGGLE EN EL PANEL, Y ADEMÁS TRAER LAS CAPAS DE CADA CATEGORÍA.
@@ -3499,7 +3509,6 @@ $(".comunaDropdown").change(function () {
     });
 });
 
-
 map.on("error", function (e) {
     console.error("Error:", e.error);
 });
@@ -3523,3 +3532,11 @@ activate_layers = () => {
 
 activate_layers()
 
+/* 
+
+$("#toggleCCCP").on("click", function () {
+    $("#checkBoxCCCP").css("display", "block")
+    $("#checkBoxCCCP").css("display", "none")
+});
+
+ */
