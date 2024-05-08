@@ -127,80 +127,89 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
         // Muestra el spinner antes de cargar la capa
         showSpinner();
 
-        //AddSource
-        
-        if (type === "symbol" || type === "fill") {
-            fetch(sourceUrl)
+        map.on('style.load', function() {
+            // Agrega tus fuentes y capas aquí
+            if (type === "symbol" || type === "fill") {
+              fetch(sourceUrl)
                 .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error("Error fetching data");
-                    }
-                    return response.json();
+                  if (!response.ok) {
+                    throw new Error("Error fetching data");
+                  }
+                  return response.json();
                 })
                 .then(function (data) {
-                    map.addSource(layerId + "Source", {
-                        type: "geojson",
-                        data: data,
-                    });
-
-                    if (type === "symbol") {
-                        map.loadImage(iconUrl, function (error, image) {
-                            if (error) throw error;
-                            map.addImage(layerId + "-icon", image);
-                    
-                            map.addLayer({
-                                id: layerId,
-                                type: "symbol",
-                                source: layerId + "Source",
-                                layout: {
-                                    "icon-image": layerId + "-icon",
-                                    "icon-size": 1,
-                                    "icon-padding": 20,
-                                    "icon-allow-overlap": true,
-                                    "icon-ignore-placement": true, // Ignorar el posicionamiento para facilitar los clics
-                                },
-                            });
-                            setTimeout(function () {
-                                hideSpinner();
-                            }, 2000);
-                        });
-                    } else if (type === "fill") {
-                        // Si la capa es de tipo polígono
-                        if (layerId === "RedLocalMunicipios") {
-                            map.addLayer({
-                                id: layerId,
-                                type: "fill",
-                                source: layerId + "Source",
-                                paint: {
-                                    "fill-color": "#820a82",
-                                    "fill-opacity": 0.2,
-                                },
-                            });
-                        } else if (layerId === "140Comunas") {
-                            map.addLayer({
-                                id: layerId,
-                                type: "fill",
-                                source: layerId + "Source",
-                                paint: {
-                                    "fill-color": "#f73c3c",
-                                    "fill-opacity": 0.5,
-                                },
-                            });
-                        }
-
-               
-                        // Oculta el spinner después de cargar la capa
-                        setTimeout(function () {
-                            hideSpinner();
-                        }, 10000);
+                  map.addSource(layerId + "Source", {
+                    type: "geojson",
+                    data: data,
+                  });
+          
+                  if (type === "fill") {
+                    // Si la capa es de tipo polígono
+                    if (layerId === "RedLocalMunicipios") {
+                      map.addLayer({
+                        id: layerId,
+                        type: "fill",
+                        source: layerId + "Source",
+                        paint: {
+                          "fill-color": "#820a82",
+                          "fill-opacity": 0.2,
+                        },
+                      });
+                    } else if (layerId === "140Comunass") {
+                      map.addLayer({
+                        id: layerId,
+                        type: "fill",
+                        source: layerId + "Source",
+                        paint: {
+                          "fill-color": "#f73c3c",
+                          "fill-opacity": 0.5,
+                        },
+                        'symbol-z-order': 1
+                      });
                     }
-                    
+          
+                    // Oculta el spinner después de cargar la capa
+                    setTimeout(function () {
+                      hideSpinner();
+                    }, 10000);
+                  }
+          
+                  // **Carga los símbolos después de las capas de relleno**
+                  
+                  if (type === "symbol") {
+                    map.loadImage(iconUrl, function (error, image) {
+                      if (error) throw error;
+                      map.addImage(layerId + "-icon", image);
+          
+                      map.addLayer({
+                        id: layerId,
+                        type: "symbol",
+                        source: layerId + "Source",
+                        layout: {
+                          "icon-image": layerId + "-icon",
+                          "icon-size": 1,
+                          "icon-padding": 20,
+                          "icon-allow-overlap": true,
+                          "icon-ignore-placement": true, // Ignorar el posicionamiento para facilitar los clics
+                        },
+                           // Set symbol-z-order to a high value to render on top
+                     'symbol-z-order': 2
+                      });
+                    });
+                  }
+                })
+                .then(function () { // Esta función se ejecutará después de cargarse tanto las capas de relleno como los símbolos
+                  setTimeout(function () {
+                    hideSpinner();
+                  }, 2000);
                 })
                 .catch(function (error) {
-                    console.error(layerId, " Error fetching data:", error);
+                  console.error(layerId, " Error fetching data:", error);
                 });
+            }
             locateUser();
-        }
+          });
+            
 
         $("#toggleActivateAll").on("click", function () {
             toggleActivateAll(layerId);
@@ -240,8 +249,8 @@ function toggleLayer(type, layerId, sourceUrl, iconUrl, carga) {
                       return { programa: 'servicio', nombre: 'Nombre', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
                 case 'CCCP':
                      return { programa: 'servicio', nombre: 'Organizaci', direccion: 'direccion', comuna: 'Comuna', latitud: 'Latitud', longitud: 'Longitud' };
-                case '140Comunas':
-                     return { programa: 'tipo', comuna: 'COMUNA', region: 'REGION'};
+             /*    case '140Comunas':
+                     return { programa: 'tipo', comuna: 'COMUNA', region: 'REGION'}; */
                 // Agrega más casos según sea necesario
                 default:
                     return { nombre: 'ND', direccion: 'ND', telefono: 'ND', programa: 'ND' };
@@ -448,14 +457,14 @@ $("#toggleCCCP").on("click", function () {
 });
 
 //CARPETA 6
-$("#toggle140Comunas").on("click", function () {
+/* $("#toggle140Comunas").on("click", function () {
     toggleLayer(
         "fill",
         "140Comunas",
         "https://geoportal.cepal.org/geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode%3Aa__140_comunas0&outputFormat=application%2Fjson",
         "images/RedLocalApoyosyCuidados.png"
     );
-});
+}); */
 
 
 // ESTA FUNCION ES PARA HACER TOGGLE EN EL PANEL, Y ADEMÁS TRAER LAS CAPAS DE CADA CATEGORÍA.
